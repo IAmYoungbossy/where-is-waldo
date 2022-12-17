@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 export const StyledApp = styled.div`
-  background-color: #212529;
-  min-height: 100vh;
   color: white;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #212529;
 `
