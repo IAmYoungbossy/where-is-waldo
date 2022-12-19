@@ -1,13 +1,13 @@
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
-import { SignIn } from "../SignIn/SignIn";
+import { Main } from "../Main/Main";
 import { StyledApp } from "./App.styled";
 
 function App() {
   return (
     <StyledApp>
       <Header />
-      <SignIn />
+      <Main />
       <Footer />
     </StyledApp>
   );

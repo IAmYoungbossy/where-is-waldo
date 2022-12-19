@@ -9,7 +9,7 @@ export const StyledForm = styled.form`
   width: fit-content;
   font-family: cursive;
   flex-direction: column;
-  background-color: #292123;
+  background-color: rgb(41 33 35 / 80%);
 
   input {
     width: 300px;
@@ -41,7 +41,7 @@ export const StyledForm = styled.form`
   p {
     margin: auto;
     margin-top: 10px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 
     span {
       color: #0d6efd;
