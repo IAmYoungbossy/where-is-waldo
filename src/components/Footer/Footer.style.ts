@@ -6,7 +6,7 @@ export const StyledFooter = styled.footer`
   margin-top: auto;
   text-align: center;
   border-top: 2px solid;
-  background-color: #131520;
+  background-color: #040610;
 
   i {
     color: white;

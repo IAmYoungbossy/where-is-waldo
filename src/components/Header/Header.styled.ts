@@ -5,7 +5,7 @@ export const StyledHeader = styled.header`
   padding: 20px 25px;
   align-items: center;
   border-bottom: 2px solid;
-  background-color: #131520;
+  background-color: #040610;
   justify-content: space-between;
 
   button {
