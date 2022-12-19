@@ -2,41 +2,44 @@ import styled from "styled-components";
 
 export const StyledForm = styled.form`
   gap: 5px;
+  width: 100%;
   margin: auto;
   padding: 25px;
   display: flex;
-  margin-top: 100px;
-  width: fit-content;
+  margin-top: 10vh;
+  max-width: 350px;
   font-family: cursive;
   flex-direction: column;
-  background-color: rgb(25 48 209 / 9%);
   box-shadow: 0px 2px 20px 2px black;
+  background-color: rgb(25 48 209 / 20%);
 
   input {
-    width: 300px;
+    width: 100%;
     margin: auto;
     padding: 10px;
+    max-width: 300px;
   }
 
   button {
+    width: 100%;
     border: none;
-    width: 300px;
     margin: auto;
     padding: 10px;
     color: #7777a7;
     font-size: 1rem;
-  }
-
-  button:first-of-type {
-    color: white;
-    font-weight: 600;
-    background-color: #0d6efd;
+    max-width: 300px;
   }
 
   button:last-of-type {
     color: black;
     font-weight: 900;
     background-color: #ffc107;
+  }
+
+  button:first-of-type {
+    color: white;
+    font-weight: 600;
+    background-color: #0d6efd;
   }
 
   p {
