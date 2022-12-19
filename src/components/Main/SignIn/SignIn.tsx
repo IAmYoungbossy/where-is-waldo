@@ -1,4 +1,5 @@
 import { StyledForm } from "./SignIn.styled";
+import { Link } from "react-router-dom";
 
 export function SignIn() {
   return (
@@ -16,7 +17,10 @@ export function SignIn() {
         <button type="button">Sign in with GitHub</button>
         <button type="button">Try Me</button>
         <p>
-          dont have an account? <span>Sign-up</span>
+          dont have an account?{" "}
+          <span>
+            <Link to="/sign-up">Sign-up</Link>
+          </span>
         </p>
       </StyledForm>
     </div>
