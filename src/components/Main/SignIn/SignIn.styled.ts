@@ -9,7 +9,8 @@ export const StyledForm = styled.form`
   width: fit-content;
   font-family: cursive;
   flex-direction: column;
-  background-color: rgb(41 33 35 / 80%);
+  background-color: rgb(25 48 209 / 9%);
+  box-shadow: 0px 2px 20px 2px black;
 
   input {
     width: 300px;

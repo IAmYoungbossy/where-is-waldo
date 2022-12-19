@@ -6,8 +6,8 @@ export const StyledApp = styled.div`
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.525), rgba(0, 0, 0, 0.8)),
-    url(${BackgroundImage});
-  background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(${BackgroundImage});
 `;

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
 export const StyledMain = styled.main`
-  background-color: rgb(240 248 255 / 0%);
+  flex: 1;
+  background-color: rgb(0 0 0 / 70%); ;
 `;

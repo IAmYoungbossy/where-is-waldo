@@ -5,9 +5,9 @@ export const StyledHeader = styled.header`
   padding: 20px 25px;
   align-items: center;
   border-bottom: 2px solid;
-  background-color: #292123;
+  background-color: #131520;
   justify-content: space-between;
-  
+
   button {
     border: none;
     height: 30px;
@@ -16,4 +16,4 @@ export const StyledHeader = styled.header`
     border-radius: 5px;
     background-color: #6c757d;
   }
-`
+`;
