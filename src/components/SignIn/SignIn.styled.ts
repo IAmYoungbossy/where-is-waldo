@@ -3,11 +3,13 @@ import styled from "styled-components";
 export const StyledForm = styled.form`
   gap: 5px;
   margin: auto;
+  padding: 25px;
   display: flex;
-  max-width: 500px;
-  margin-top: 120px;
+  margin-top: 100px;
+  width: fit-content;
   font-family: cursive;
   flex-direction: column;
+  background-color: #292123;
 
   input {
     width: 300px;
