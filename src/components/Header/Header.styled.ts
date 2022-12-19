@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const StyledHeader = styled.header`
-  padding: 5px;
   display: flex;
   padding: 20px 25px;
   align-items: center;
@@ -17,4 +16,4 @@ export const StyledHeader = styled.header`
     border-radius: 5px;
     background-color: #6c757d;
   }
-`;
+`
