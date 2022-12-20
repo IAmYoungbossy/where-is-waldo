@@ -15,7 +15,9 @@ export function SignIn() {
         <button type="button">Login</button>
         <button type="button">Sign in with Google</button>
         <button type="button">Sign in with GitHub</button>
-        <button type="button">Try Me</button>
+        <button type="button">
+          <Link to="/dashboard">Try Me</Link>
+        </button>
         <p>
           dont have an account?{" "}
           <span>
