@@ -49,6 +49,10 @@ export const StyledForm = styled.form`
 
     span {
       color: #0d6efd;
+
+      a {
+        color: cadetblue;
+      }
     }
   }
 `;
