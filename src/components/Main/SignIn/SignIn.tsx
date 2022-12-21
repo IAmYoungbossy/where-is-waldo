@@ -1,7 +1,7 @@
 import { StyledForm } from "./SignIn.styled";
 import { Link } from "react-router-dom";
 
-export function SignIn() {
+export function SignIn(): JSX.Element {
   return (
     <div>
       <StyledForm>

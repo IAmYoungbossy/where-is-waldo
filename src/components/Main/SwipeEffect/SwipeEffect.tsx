@@ -16,8 +16,9 @@ import Dreamcast from "../../assets/Dreamcast.jpg";
 
 // import required modules
 import { Pagination, Navigation } from "swiper";
+import { Link } from "react-router-dom";
 
-export default function SwipeEffect() {
+export default function SwipeEffect(): JSX.Element {
   return (
     <>
       <Swiper
@@ -40,22 +41,34 @@ export default function SwipeEffect() {
         className="mySwiper"
       >
         <SwiperSlide>
-          <img src={N64} alt="Game console" />
+          <Link to="/dashboard/N64">
+            <img src={N64} alt="N64" />
+          </Link>
         </SwiperSlide>
         <SwiperSlide>
-          <img src={PS1} alt="game" />
+          <Link to="/dashboard/PS1">
+            <img src={PS1} alt="PS1" />
+          </Link>
         </SwiperSlide>
         <SwiperSlide>
-          <img src={Dreamcast} alt="Dreamcast" />
+          <Link to="/dashboard/Dreamcast">
+            <img src={Dreamcast} alt="Dreamcast" />
+          </Link>
         </SwiperSlide>
         <SwiperSlide>
-          <img src={PS2} alt="PS2" />
+          <Link to="/dashboard/PS2">
+            <img src={PS2} alt="PS2" />
+          </Link>
         </SwiperSlide>
         <SwiperSlide>
-          <img src={LocNar} alt="game" />
+          <Link to="/dashboard/LocNar">
+            <img src={LocNar} alt="LocNar" />
+          </Link>
         </SwiperSlide>
         <SwiperSlide>
-          <img src={PS4} alt="PS4" />
+          <Link to="/dashboard/PS4">
+            <img src={PS4} alt="PS4" />
+          </Link>
         </SwiperSlide>
       </Swiper>
     </>
