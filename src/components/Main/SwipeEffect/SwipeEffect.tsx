@@ -18,11 +18,19 @@ export default function SwipeEffect() {
   return (
     <>
       <Swiper
-        slidesPerView={3}
-        spaceBetween={30}
         loop={true}
         pagination={{
           clickable: true,
+        }}
+        breakpoints={{
+          500: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          750: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
         }}
         navigation={true}
         modules={[Pagination, Navigation]}
