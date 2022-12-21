@@ -17,8 +17,11 @@ import Dreamcast from "../../assets/Dreamcast.jpg";
 // import required modules
 import { Pagination, Navigation } from "swiper";
 import { Link } from "react-router-dom";
+import { MainProps } from "../Main";
 
-export default function SwipeEffect(): JSX.Element {
+export default function SwipeEffect({
+  handleDisplayHiddenFolks,
+}: MainProps): JSX.Element {
   return (
     <>
       <Swiper
@@ -47,27 +50,47 @@ export default function SwipeEffect(): JSX.Element {
         </SwiperSlide>
         <SwiperSlide>
           <Link to="/dashboard/PS1">
-            <img src={PS1} alt="PS1" />
+            <img
+              src={PS1}
+              alt="PS1"
+              onClick={handleDisplayHiddenFolks.bind(null, "PS1")}
+            />
           </Link>
         </SwiperSlide>
         <SwiperSlide>
           <Link to="/dashboard/Dreamcast">
-            <img src={Dreamcast} alt="Dreamcast" />
+            <img
+              src={Dreamcast}
+              alt="Dreamcast"
+              onClick={handleDisplayHiddenFolks.bind(null, "Dreamcast")}
+            />
           </Link>
         </SwiperSlide>
         <SwiperSlide>
           <Link to="/dashboard/PS2">
-            <img src={PS2} alt="PS2" />
+            <img
+              src={PS2}
+              alt="PS2"
+              onClick={handleDisplayHiddenFolks.bind(null, "PS2")}
+            />
           </Link>
         </SwiperSlide>
         <SwiperSlide>
           <Link to="/dashboard/LocNar">
-            <img src={LocNar} alt="LocNar" />
+            <img
+              src={LocNar}
+              alt="LocNar"
+              onClick={handleDisplayHiddenFolks.bind(null, "LocNar")}
+            />
           </Link>
         </SwiperSlide>
         <SwiperSlide>
           <Link to="/dashboard/PS4">
-            <img src={PS4} alt="PS4" />
+            <img
+              src={PS4}
+              alt="PS4"
+              onClick={handleDisplayHiddenFolks.bind(null, "PS4")}
+            />
           </Link>
         </SwiperSlide>
       </Swiper>

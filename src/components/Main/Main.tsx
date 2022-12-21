@@ -11,36 +11,40 @@ import PS1 from "../assets/P-PS1-min.jpg";
 import PS2 from "../assets/P-PS2-min.jpg";
 import PS4 from "../assets/P-PS4-min.jpg";
 
-export function Main(): JSX.Element {
+export interface MainProps {
+  handleDisplayHiddenFolks: (alt: string) => void;
+}
+
+export function Main({ ...props }: MainProps): JSX.Element {
   return (
     <StyledMain>
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/dashboard" element={<SwipeEffect />} />
+        <Route path="/dashboard" element={<SwipeEffect {...props} />} />
         <Route
           path="/dashboard/N64"
-          element={<MapImage src={N64} alt="N64" />}
+          element={<MapImage src={N64} alt="N64" {...props} />}
         />
         <Route
           path="/dashboard/PS1"
-          element={<MapImage src={PS1} alt="PS1" />}
+          element={<MapImage src={PS1} alt="PS1" {...props} />}
         />
         <Route
           path="/dashboard/PS2"
-          element={<MapImage src={PS2} alt="PS2" />}
+          element={<MapImage src={PS2} alt="PS2" {...props} />}
         />
         <Route
           path="/dashboard/PS4"
-          element={<MapImage src={PS4} alt="PS4" />}
+          element={<MapImage src={PS4} alt="PS4" {...props} />}
         />
         <Route
           path="/dashboard/LocNar"
-          element={<MapImage src={LocNar} alt="LocNar" />}
+          element={<MapImage src={LocNar} alt="LocNar" {...props} />}
         />
         <Route
           path="/dashboard/Dreamcast"
-          element={<MapImage src={Dreamcast} alt="Dreamcast" />}
+          element={<MapImage src={Dreamcast} alt="Dreamcast" {...props} />}
         />
       </Routes>
     </StyledMain>

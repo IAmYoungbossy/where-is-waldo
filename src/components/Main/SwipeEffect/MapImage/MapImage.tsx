@@ -8,7 +8,12 @@ const ImageWrapper = styled.div`
   }
 `;
 
-export default function MapImage({ src, alt }: { src: string; alt: string }) {
+interface ImageProps {
+  src: string;
+  alt: string;
+}
+
+export default function MapImage({ src, alt }: ImageProps) {
   return (
     <ImageWrapper>
       <img src={src} alt={alt} />
