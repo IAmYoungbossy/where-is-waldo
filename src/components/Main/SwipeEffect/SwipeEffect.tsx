@@ -3,12 +3,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
+import "./SwipeEffect.css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import "./SwipeEffect.css";
 import PS1 from "../../assets/PS1.jpg";
+import PS2 from "../../assets/PS2.jpg";
+import PS4 from "../../assets/PS4.jpg";
 import N64 from "../../assets/N64.jpg";
+import LocNar from "../../assets/Loc-nar.jpg";
 import Dreamcast from "../../assets/Dreamcast.jpg";
 
 // import required modules
@@ -43,7 +46,16 @@ export default function SwipeEffect() {
           <img src={PS1} alt="game" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={Dreamcast} alt="game" />
+          <img src={Dreamcast} alt="Dreamcast" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src={PS2} alt="PS2" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src={LocNar} alt="game" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src={PS4} alt="PS4" />
         </SwiperSlide>
       </Swiper>
     </>
