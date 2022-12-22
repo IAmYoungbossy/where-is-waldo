@@ -16,7 +16,6 @@ function App() {
   // This function sets the hidden characters to search for.
   const handleDisplayHiddenFolks = (alt: string): void => {
     hiddenFolksArray.forEach((image) => {
-      console.log(image.Card, alt);
       if (image.Card === alt) {
         setHiddenFolks(image.Folks);
       }
