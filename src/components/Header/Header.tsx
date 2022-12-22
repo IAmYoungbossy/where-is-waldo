@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { hiddenFolksType } from "../App/App";
 import { StyledHeader } from "./Header.styled";
 
@@ -16,29 +15,15 @@ export default function Header({ hiddenFolks }: FolksProps): JSX.Element {
   );
 }
 
-const FolkCard = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  img {
-    width: 20px;
-  }
-`;
-
-const FolksWrapper = styled.div`
-  display: flex;
-`;
-
 function Folks({ hiddenFolks }: FolksProps): JSX.Element {
   const HiddenFolks = hiddenFolks.map(
     (folk, index): JSX.Element => (
-      <FolkCard key={index}>
+      <div key={index}>
         <img src={folk.url} alt={folk.Name} />
-        <h3>{folk.Name}</h3>
-      </FolkCard>
+        <p>{folk.Name}</p>
+      </div>
     )
   );
 
-  return <FolksWrapper>{HiddenFolks}</FolksWrapper>;
+  return <div>{HiddenFolks}</div>;
 }

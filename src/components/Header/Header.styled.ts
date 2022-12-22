@@ -4,7 +4,7 @@ export const StyledHeader = styled.header`
   z-index: 1;
   display: flex;
   position: fixed;
-  padding: 20px 25px;
+  padding: 0px 25px;
   align-items: center;
   border-bottom: 2px solid;
   background-color: #040610;
@@ -18,5 +18,32 @@ export const StyledHeader = styled.header`
     padding: 0px 15px;
     border-radius: 5px;
     background-color: #6c757d;
+  }
+
+  h1 {
+    padding: 20px;
+  }
+
+  /* Div container for all hidden folks */
+  div {
+    gap: 5px;
+    display: flex;
+
+    /* Div for each hidden folks */
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      /* Hidden folk image */
+      img {
+        width: 40px;
+        transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+        &:hover {
+          width: 90px;
+        }
+      }
+    }
   }
 `;

@@ -10,7 +10,7 @@ body {
 }
 
 .swiper-slide {
-    transition: all 0.2s cubic-bezier(0.4, 0, 1, 1);
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 2px solid #feffb7;
     text-align: center;
     font-size: 18px;
