@@ -4,6 +4,7 @@ export const StyledMain = styled.main`
   flex: 1;
   padding: 5px;
   display: flex;
+  margin-top: 79px;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px);

@@ -1,19 +1,31 @@
-// import { useState } from "react";
+import { useState } from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import { Main } from "../Main/Main";
 import { StyledApp } from "./App.styled";
+import { hiddenFolksArray } from "./hiddenFolksArray";
+
+export type hiddenFolksType = {
+  Name: string;
+  url: string;
+};
 
 function App() {
-  // const [hiddenFolks, setHiddenFolks] = useState<string[][]>([]);
+  const [hiddenFolks, setHiddenFolks] = useState<hiddenFolksType[]>([]);
 
+  // This function sets the hidden characters to search for.
   const handleDisplayHiddenFolks = (alt: string): void => {
-    console.log(alt);
+    hiddenFolksArray.forEach((image) => {
+      console.log(image.Card, alt);
+      if (image.Card === alt) {
+        setHiddenFolks(image.Folks);
+      }
+    });
   };
 
   return (
     <StyledApp>
-      <Header />
+      <Header hiddenFolks={hiddenFolks} />
       <Main handleDisplayHiddenFolks={handleDisplayHiddenFolks} />
       <Footer />
     </StyledApp>

@@ -45,7 +45,11 @@ export default function SwipeEffect({
       >
         <SwiperSlide>
           <Link to="/dashboard/N64">
-            <img src={N64} alt="N64" />
+            <img
+              src={N64}
+              alt="N64"
+              onClick={handleDisplayHiddenFolks.bind(null, "N64")}
+            />
           </Link>
         </SwiperSlide>
         <SwiperSlide>
