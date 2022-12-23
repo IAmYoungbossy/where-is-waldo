@@ -40,3 +40,11 @@ export const StyledMousePointer = styled.div.attrs(
     height: 5px;
   }
 `;
+
+/**Note To Self:
+ *
+ * Whenever I'm using the attrs method from styled component for dynamic
+ * styling with TypeScript always remember to make the type of returned
+ * value from the callback function to be the same with the Props passed
+ * to it from whee it's being used.
+ */
