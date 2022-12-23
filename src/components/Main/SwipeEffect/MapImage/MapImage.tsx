@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ImageWrapper, TargetPointer } from "./MapImage.styled";
+import { StyledImageWrapper, StyledMousePointer } from "./MapImage.styled";
 
 interface ImageProps {
   src: string;
@@ -35,11 +35,11 @@ export default function MapImage({ src, alt }: ImageProps) {
   };
 
   return (
-    <ImageWrapper onMouseMove={updateMousePosition}>
-      <TargetPointer style={style}>
+    <StyledImageWrapper onMouseMove={updateMousePosition}>
+      <StyledMousePointer style={style}>
         <div></div>
-      </TargetPointer>
+      </StyledMousePointer>
       <img src={src} alt={alt} onClick={onClickGetMousePosition} />
-    </ImageWrapper>
+    </StyledImageWrapper>
   );
 }

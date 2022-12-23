@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-export const ImageWrapper = styled.div`
+// Div container that wraps the image where hidden folks are searched for
+export const StyledImageWrapper = styled.div`
   width: 100%;
   position: relative;
 
@@ -13,12 +14,15 @@ interface ComponentInt {
   style: { top: string; left: string };
 }
 
-export const TargetPointer = styled.div.attrs(({ style }: ComponentInt) => ({
-  style: {
-    top: style.top,
-    left: style.left,
-  },
-}))`
+// This is target pointer used in clicking where the hidden folks are
+export const StyledMousePointer = styled.div.attrs(
+  ({ style }: ComponentInt) => ({
+    style: {
+      top: style.top,
+      left: style.left,
+    },
+  })
+)`
   border: 2px dotted #fbfbfb;
   background-color: #ffffff1f;
   position: absolute;
