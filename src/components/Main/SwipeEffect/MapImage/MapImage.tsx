@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ImageWrapper, StyledMousePointer } from "./MapImage.styled";
+import { ImageWrapper, TargetPointer } from "./MapImage.styled";
 
 interface ImageProps {
   src: string;
@@ -7,8 +7,7 @@ interface ImageProps {
 }
 
 export default function MapImage({ src, alt }: ImageProps) {
-  const [positionX, setPositionX] = useState(0);
-  const [positionY, setPositionY] = useState(0);
+  const [style, setStyle] = useState({ top: "0px", left: "0px" });
 
   const onClickGetMousePosition = (e: React.MouseEvent<HTMLDivElement>) => {
     // Gets current image element
@@ -32,15 +31,14 @@ export default function MapImage({ src, alt }: ImageProps) {
   const updateMousePosition = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
-    setPositionX(e.clientX);
-    setPositionY(e.clientY);
+    setStyle({ top: `${e.clientY}px`, left: `${e.clientX}px` });
   };
 
   return (
     <ImageWrapper onMouseMove={updateMousePosition}>
-      <StyledMousePointer X={positionX} Y={positionY}>
+      <TargetPointer style={style}>
         <div></div>
-      </StyledMousePointer>
+      </TargetPointer>
       <img src={src} alt={alt} onClick={onClickGetMousePosition} />
     </ImageWrapper>
   );
