@@ -28,10 +28,13 @@ export default function MapImage({ src, alt }: ImageProps) {
     return { percentHeight, percentWidth };
   };
 
+  // This function gets the X and Y coordinates for the style mouse pointer.
   const updateMousePosition = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
-    setStyle({ top: `${e.clientY}px`, left: `${e.clientX}px` });
+    // Subtracting 118 and 40 from Y and X coordinate makes the custume
+    // mouse pointer center at the tip of mouse aarrow.
+    setStyle({ top: `${e.pageY - 118}px`, left: `${e.pageX - 40}px` });
   };
 
   return (

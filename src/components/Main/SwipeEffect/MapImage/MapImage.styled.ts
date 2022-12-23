@@ -23,21 +23,21 @@ export const StyledMousePointer = styled.div.attrs(
     },
   })
 )`
-  border: 2px dotted #fbfbfb;
-  background-color: #ffffff1f;
-  position: absolute;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   display: flex;
+  border-radius: 50%;
+  position: absolute;
   align-items: center;
   justify-content: center;
+  border: 5px dotted black;
+  background-color: #00000054;
 
   div {
-    background-color: red;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    width: 5px;
-    height: 5px;
+    background-color: white;
   }
 `;
 
