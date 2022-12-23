@@ -1,11 +1,5 @@
-import styled from "styled-components";
-
-const ImageWrapper = styled.div`
-  width: 100%;
-  img {
-    width: 100%;
-  }
-`;
+import { useState } from "react";
+import { ImageWrapper, StyledMousePointer } from "./MapImage.styled";
 
 interface ImageProps {
   src: string;
@@ -13,6 +7,9 @@ interface ImageProps {
 }
 
 export default function MapImage({ src, alt }: ImageProps) {
+  const [positionX, setPositionX] = useState(0);
+  const [positionY, setPositionY] = useState(0);
+
   const onClickGetMousePosition = (e: React.MouseEvent<HTMLDivElement>) => {
     // Gets current image element
     const image = e.currentTarget;
@@ -21,7 +18,7 @@ export default function MapImage({ src, alt }: ImageProps) {
     const imageHeight = image.offsetHeight;
     const imageWidth = image.offsetWidth;
 
-    // Gets height and width of clicked area
+    // Gets X and Y coordinates of clicked area
     const clickedHeight = e.nativeEvent.offsetY;
     const clickedWidth = e.nativeEvent.offsetX;
 
@@ -29,11 +26,21 @@ export default function MapImage({ src, alt }: ImageProps) {
     const percentHeight = (clickedHeight * 100) / imageHeight;
     const percentWidth = (clickedWidth * 100) / imageWidth;
 
-    console.log(`Height: ${percentHeight} And Width: ${percentWidth}`);
+    return { percentHeight, percentWidth };
+  };
+
+  const updateMousePosition = (
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>
+  ) => {
+    setPositionX(e.clientX);
+    setPositionY(e.clientY);
   };
 
   return (
-    <ImageWrapper>
+    <ImageWrapper onMouseMove={updateMousePosition}>
+      <StyledMousePointer X={positionX} Y={positionY}>
+        <div></div>
+      </StyledMousePointer>
       <img src={src} alt={alt} onClick={onClickGetMousePosition} />
     </ImageWrapper>
   );
