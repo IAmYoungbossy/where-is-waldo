@@ -6,7 +6,17 @@ interface ImageProps {
   alt: string;
 }
 
-export default function MapImage({ src, alt }: ImageProps) {
+interface StyledPointerProps {
+  cursorLocation: { top: string; left: string };
+}
+
+const StyledPointer = ({ cursorLocation }: StyledPointerProps): JSX.Element => (
+  <StyledMousePointer style={cursorLocation}>
+    <div />
+  </StyledMousePointer>
+);
+
+export default function MapImage({ src, alt }: ImageProps): JSX.Element {
   // This get the percentage of custume mouse in both X and Y coordinate.
   const [cursorLocationInPercentage, setCursorLocationInPercentage] = useState({
     width: 0,
@@ -33,8 +43,8 @@ export default function MapImage({ src, alt }: ImageProps) {
     if (
       percentWidth > 95 ||
       percentWidth < 4 ||
-      percentHeight > 95 ||
-      percentHeight < 4
+      percentHeight > 99 ||
+      percentHeight < 0
     ) {
       setShowCustumeCursor(false);
       setCursorStyle("default");
@@ -84,11 +94,7 @@ export default function MapImage({ src, alt }: ImageProps) {
         setShowCustumeCursor(false);
       }}
     >
-      {showCustumeCursor && (
-        <StyledMousePointer style={cursorLocation}>
-          <div></div>
-        </StyledMousePointer>
-      )}
+      {showCustumeCursor && <StyledPointer cursorLocation={cursorLocation} />}
       <img
         src={src}
         alt={alt}
