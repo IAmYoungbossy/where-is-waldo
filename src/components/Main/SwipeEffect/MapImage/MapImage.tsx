@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { StyledImageWrapper, StyledMousePointer } from "./MapImage.styled";
+import {
+  StyledImageWrapper,
+  StyledMousePointer,
+  StyledTargetFolks,
+} from "./MapImage.styled";
 
 interface ImageProps {
   src: string;
@@ -16,24 +20,48 @@ const StyledPointer = ({ cursorLocation }: StyledPointerProps): JSX.Element => (
   </StyledMousePointer>
 );
 
-export default function MapImage({ src, alt }: ImageProps): JSX.Element {
-  // This get the percentage of custume mouse in both X and Y coordinate.
-  const [cursorLocationInPercentage, setCursorLocationInPercentage] = useState({
-    width: 0,
-    height: 0,
-  });
+const StyledTarget = ({
+  clickedTarget,
+}: {
+  clickedTarget: {
+    top: string;
+    left: string;
+  };
+}): JSX.Element => {
+  return (
+    <StyledTargetFolks top={clickedTarget.top} left={clickedTarget.left}>
+      <div />
+      <div />
+    </StyledTargetFolks>
+  );
+};
 
-  // This is used in updating realtime location of the custume mouse.
+export default function MapImage({ src, alt }: ImageProps): JSX.Element {
+  // This get the percentage of cursor pointer in both X and Y coordinates.
+  // const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
+  //   width: 0,
+  //   height: 0,
+  // });
+
+  // This controls when to show default cursor based on its position.
+  const [showCustumeCursor, setShowCustumeCursor] = useState(true);
+
+  // This is used in updating realtime location of the styled cursor.
   const [cursorLocation, setCursorLocation] = useState({
     top: "0px",
     left: "10px",
   });
 
-  // This controls showing default cursor or not
-  const [showCustumeCursor, setShowCustumeCursor] = useState(true);
-
   // This does same as above except it sets the property
   const [cursorStyle, setCursorStyle] = useState("none");
+
+  // This state control when to display clicked target.
+  const [clickedTarget, setClickedTarget] = useState({
+    top: "0px",
+    left: "10px",
+  });
+
+  const [showClickedTarget, setShowClickedTarget] = useState(false);
 
   // Function makes sure the custume mouse doesn't get off the view
   const removeShowCustumeCursor = (
@@ -71,10 +99,10 @@ export default function MapImage({ src, alt }: ImageProps): JSX.Element {
     const percentWidth = (clickedWidth * 100) / imageWidth;
 
     removeShowCustumeCursor(percentWidth, percentHeight);
-    setCursorLocationInPercentage({
-      width: percentWidth,
-      height: percentHeight,
-    });
+    // setClickedTargetInPercentage({
+    //   width: percentWidth,
+    //   height: percentHeight,
+    // });
   };
 
   // This function gets the X and Y coordinates for the style mouse pointer.
@@ -92,8 +120,14 @@ export default function MapImage({ src, alt }: ImageProps): JSX.Element {
       onMouseMove={updateMousePosition}
       onMouseDown={() => {
         setShowCustumeCursor(false);
+        setClickedTarget({
+          top: cursorLocation.top,
+          left: cursorLocation.left,
+        });
+        setShowClickedTarget(showClickedTarget ? false : true);
       }}
     >
+      {showClickedTarget && <StyledTarget clickedTarget={clickedTarget} />}
       {showCustumeCursor && <StyledPointer cursorLocation={cursorLocation} />}
       <img
         src={src}

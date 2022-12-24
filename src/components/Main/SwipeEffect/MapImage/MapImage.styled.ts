@@ -52,6 +52,38 @@ export const StyledMousePointer = styled.div.attrs(
   }
 `;
 
+export const StyledTargetFolks = styled.div<{ top: string; left: string }>`
+  width: 70px;
+  height: 70px;
+  display: flex;
+  position: absolute;
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;
+  border: 5px dotted black;
+  top: ${({ top }) => top};
+  left: ${({ left }) => left};
+  background-color: #00000054;
+
+  div:first-of-type {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+  }
+
+  div:last-of-type {
+    left: 65px;
+    width: 75px;
+    height: 110px;
+    bottom: -75px;
+    border-radius: 5px;
+    position: absolute;
+    border: 1px solid black;
+    background-color: #0000008c;
+  }
+`;
+
 /**Note To Self:
  *
  * Whenever I'm using the attrs method from styled component for dynamic
