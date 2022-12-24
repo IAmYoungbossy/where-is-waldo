@@ -4,9 +4,17 @@ import styled from "styled-components";
 export const StyledImageWrapper = styled.div`
   width: 100%;
   position: relative;
+  &:hover {
+    cursor: none;
+  }
 
   img {
     width: 100%;
+    pointer-events: all;
+
+    &:hover {
+      cursor: none;
+    }
   }
 `;
 
@@ -29,15 +37,24 @@ export const StyledMousePointer = styled.div.attrs(
   border-radius: 50%;
   position: absolute;
   align-items: center;
+  pointer-events: none;
   justify-content: center;
   border: 5px dotted black;
   background-color: #00000054;
+
+  &:hover {
+    cursor: none;
+  }
 
   div {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background-color: white;
+
+    &:hover {
+      cursor: none;
+    }
   }
 `;
 

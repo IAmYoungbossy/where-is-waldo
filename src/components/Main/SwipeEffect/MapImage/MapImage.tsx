@@ -7,9 +7,27 @@ interface ImageProps {
 }
 
 export default function MapImage({ src, alt }: ImageProps) {
-  const [style, setStyle] = useState({ top: "0px", left: "0px" });
+  const [custumeMouse, setCustumeMouse] = useState(true);
 
-  const onClickGetMousePosition = (e: React.MouseEvent<HTMLDivElement>) => {
+  // This is used in updating the custume mouse.
+  const [style, setStyle] = useState({ top: "10px", left: "50px" });
+
+  // This get the percentage of custume mouse in both X and Y coordinate.
+  const [mouseLocation, setMouseLocation] = useState({ width: 0, height: 0 });
+
+  // Function makes sure the custume mouse doesn't get off the view
+  const removeCustumeMouse = (percentWidth: number, percentHeight: number) => {
+    if (
+      percentWidth > 95 ||
+      percentWidth < 4 ||
+      percentHeight > 95 ||
+      percentHeight < 4
+    )
+      setCustumeMouse(false);
+    else setCustumeMouse(true);
+  };
+
+  const getMouseLocationInPercent = (e: React.MouseEvent<HTMLDivElement>) => {
     // Gets current image element
     const image = e.currentTarget;
 
@@ -25,7 +43,8 @@ export default function MapImage({ src, alt }: ImageProps) {
     const percentHeight = (clickedHeight * 100) / imageHeight;
     const percentWidth = (clickedWidth * 100) / imageWidth;
 
-    return { percentHeight, percentWidth };
+    removeCustumeMouse(percentWidth, percentHeight);
+    setMouseLocation({ width: percentWidth, height: percentHeight });
   };
 
   // This function gets the X and Y coordinates for the style mouse pointer.
@@ -38,11 +57,26 @@ export default function MapImage({ src, alt }: ImageProps) {
   };
 
   return (
-    <StyledImageWrapper onMouseMove={updateMousePosition}>
-      <StyledMousePointer style={style}>
-        <div></div>
-      </StyledMousePointer>
-      <img src={src} alt={alt} onClick={onClickGetMousePosition} />
+    <StyledImageWrapper
+      onMouseMove={updateMousePosition}
+      onMouseDown={() => {
+        setCustumeMouse(false);
+      }}
+    >
+      {custumeMouse && (
+        <StyledMousePointer style={style}>
+          <div></div>
+        </StyledMousePointer>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        onMouseUp={(e) => {
+          getMouseLocationInPercent(e);
+          setCustumeMouse(true);
+        }}
+        onMouseMove={getMouseLocationInPercent}
+      />
     </StyledImageWrapper>
   );
 }
