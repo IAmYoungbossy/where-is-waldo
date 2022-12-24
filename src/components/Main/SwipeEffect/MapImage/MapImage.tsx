@@ -7,24 +7,41 @@ interface ImageProps {
 }
 
 export default function MapImage({ src, alt }: ImageProps) {
-  const [custumeMouse, setCustumeMouse] = useState(true);
-
-  // This is used in updating the custume mouse.
-  const [style, setStyle] = useState({ top: "10px", left: "50px" });
-
   // This get the percentage of custume mouse in both X and Y coordinate.
-  const [mouseLocation, setMouseLocation] = useState({ width: 0, height: 0 });
+  const [cursorLocationInPercentage, setCursorLocationInPercentage] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  // This is used in updating realtime location of the custume mouse.
+  const [cursorLocation, setCursorLocation] = useState({
+    top: "0px",
+    left: "10px",
+  });
+
+  // This controls showing default cursor or not
+  const [showCustumeCursor, setShowCustumeCursor] = useState(true);
+
+  // This does same as above except it sets the property
+  const [cursorStyle, setCursorStyle] = useState("none");
 
   // Function makes sure the custume mouse doesn't get off the view
-  const removeCustumeMouse = (percentWidth: number, percentHeight: number) => {
+  const removeShowCustumeCursor = (
+    percentWidth: number,
+    percentHeight: number
+  ) => {
     if (
       percentWidth > 95 ||
       percentWidth < 4 ||
       percentHeight > 95 ||
       percentHeight < 4
-    )
-      setCustumeMouse(false);
-    else setCustumeMouse(true);
+    ) {
+      setShowCustumeCursor(false);
+      setCursorStyle("default");
+    } else {
+      setShowCustumeCursor(true);
+      setCursorStyle("none");
+    }
   };
 
   const getMouseLocationInPercent = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -43,8 +60,11 @@ export default function MapImage({ src, alt }: ImageProps) {
     const percentHeight = (clickedHeight * 100) / imageHeight;
     const percentWidth = (clickedWidth * 100) / imageWidth;
 
-    removeCustumeMouse(percentWidth, percentHeight);
-    setMouseLocation({ width: percentWidth, height: percentHeight });
+    removeShowCustumeCursor(percentWidth, percentHeight);
+    setCursorLocationInPercentage({
+      width: percentWidth,
+      height: percentHeight,
+    });
   };
 
   // This function gets the X and Y coordinates for the style mouse pointer.
@@ -53,18 +73,19 @@ export default function MapImage({ src, alt }: ImageProps) {
   ) => {
     // Subtracting 118 and 40 from Y and X coordinate makes the custume
     // mouse pointer center at the tip of mouse aarrow.
-    setStyle({ top: `${e.pageY - 118}px`, left: `${e.pageX - 40}px` });
+    setCursorLocation({ top: `${e.pageY - 118}px`, left: `${e.pageX - 40}px` });
   };
 
   return (
     <StyledImageWrapper
+      cursorPointer={cursorStyle}
       onMouseMove={updateMousePosition}
       onMouseDown={() => {
-        setCustumeMouse(false);
+        setShowCustumeCursor(false);
       }}
     >
-      {custumeMouse && (
-        <StyledMousePointer style={style}>
+      {showCustumeCursor && (
+        <StyledMousePointer style={cursorLocation}>
           <div></div>
         </StyledMousePointer>
       )}
@@ -73,7 +94,7 @@ export default function MapImage({ src, alt }: ImageProps) {
         alt={alt}
         onMouseUp={(e) => {
           getMouseLocationInPercent(e);
-          setCustumeMouse(true);
+          setShowCustumeCursor(true);
         }}
         onMouseMove={getMouseLocationInPercent}
       />

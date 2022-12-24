@@ -1,30 +1,32 @@
 import styled from "styled-components";
 
-// Div container that wraps the image where hidden folks are searched for
-export const StyledImageWrapper = styled.div`
+interface StyledImageWrapperProps {
+  cursorPointer: string;
+}
+
+// Div container that wraps the image where hidden folks are searched for.
+export const StyledImageWrapper = styled.div<StyledImageWrapperProps>`
   width: 100%;
   position: relative;
   &:hover {
-    cursor: none;
+    cursor: ${({ cursorPointer }) => cursorPointer};
   }
-
   img {
     width: 100%;
     pointer-events: all;
-
     &:hover {
-      cursor: none;
+      cursor: ${({ cursorPointer }) => cursorPointer};
     }
   }
 `;
 
-interface ComponentInt {
+interface StyledMousePointerProps {
   style: { top: string; left: string };
 }
 
 // This is target pointer used in clicking where the hidden folks are
 export const StyledMousePointer = styled.div.attrs(
-  ({ style }: ComponentInt) => ({
+  ({ style }: StyledMousePointerProps) => ({
     style: {
       top: style.top,
       left: style.left,
@@ -42,19 +44,11 @@ export const StyledMousePointer = styled.div.attrs(
   border: 5px dotted black;
   background-color: #00000054;
 
-  &:hover {
-    cursor: none;
-  }
-
   div {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background-color: white;
-
-    &:hover {
-      cursor: none;
-    }
   }
 `;
 
