@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { hiddenFolksType } from "../../../App/App";
 
 interface StyledImageWrapperProps {
   cursorPointer: string;
@@ -52,7 +53,11 @@ export const StyledMousePointer = styled.div.attrs(
   }
 `;
 
-export const StyledTargetFolks = styled.div<{ top: string; left: string }>`
+export const StyledTargetFolks = styled.div<{
+  top: string;
+  left: string;
+  hiddenFolks?: hiddenFolksType[] | null;
+}>`
   z-index: 10;
   width: 70px;
   height: 70px;
@@ -82,6 +87,34 @@ export const StyledTargetFolks = styled.div<{ top: string; left: string }>`
     position: absolute;
     border: 1px solid white;
     background-color: #0000008c;
+
+    ul {
+      height: 100%;
+      padding: 5px;
+      display: flex;
+      list-style: none;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    & li {
+      flex: 1;
+    }
+
+    & button {
+      color: red;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    & button:hover {
+      color: white;
+      border-radius: 1px;
+      background-color: black;
+      border: 1px solid black;
+    }
   }
 `;
 

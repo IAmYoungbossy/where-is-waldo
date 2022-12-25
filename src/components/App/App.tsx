@@ -25,7 +25,10 @@ function App() {
   return (
     <StyledApp>
       <Header hiddenFolks={hiddenFolks} />
-      <Main handleDisplayHiddenFolks={handleDisplayHiddenFolks} />
+      <Main
+        handleDisplayHiddenFolks={handleDisplayHiddenFolks}
+        hiddenFolks={hiddenFolks}
+      />
       <Footer />
     </StyledApp>
   );

@@ -10,9 +10,11 @@ import N64 from "../assets/P-N64-min.jpg";
 import PS1 from "../assets/P-PS1-min.jpg";
 import PS2 from "../assets/P-PS2-min.jpg";
 import PS4 from "../assets/P-PS4-min.jpg";
+import { hiddenFolksType } from "../App/App";
 
 export interface MainProps {
   handleDisplayHiddenFolks: (alt: string) => void;
+  hiddenFolks: hiddenFolksType[];
 }
 
 export function Main({ ...props }: MainProps): JSX.Element {
