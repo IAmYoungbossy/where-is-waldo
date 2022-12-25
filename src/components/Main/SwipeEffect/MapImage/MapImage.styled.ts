@@ -53,6 +53,7 @@ export const StyledMousePointer = styled.div.attrs(
 `;
 
 export const StyledTargetFolks = styled.div<{ top: string; left: string }>`
+  z-index: 10;
   width: 70px;
   height: 70px;
   display: flex;
@@ -73,10 +74,10 @@ export const StyledTargetFolks = styled.div<{ top: string; left: string }>`
   }
 
   div:last-of-type {
-    left: 65px;
+    left: -9px;
     width: 75px;
     height: 110px;
-    bottom: -75px;
+    bottom: -117px;
     border-radius: 5px;
     position: absolute;
     border: 1px solid white;
@@ -89,5 +90,5 @@ export const StyledTargetFolks = styled.div<{ top: string; left: string }>`
  * Whenever I'm using the attrs method from styled component for dynamic
  * styling with TypeScript always remember to make the type of returned
  * value from the callback function to be the same with the Props passed
- * to it from whee it's being used.
+ * to it from where it's being used.
  */

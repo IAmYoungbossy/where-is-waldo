@@ -5,6 +5,7 @@ export const StyledMain = styled.main`
   padding: 5px;
   display: flex;
   margin-top: 79px;
+  overflow: hidden;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px);
