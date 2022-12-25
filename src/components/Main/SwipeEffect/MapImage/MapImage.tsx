@@ -127,9 +127,11 @@ export default function MapImage({ src, alt }: ImageProps): JSX.Element {
   };
 
   useEffect(() => {
+    // This condtion is to make the cursor not go off the image in target.
     if (
       clickedTargetInPercentage.width > 88 ||
-      clickedTargetInPercentage.width < 4
+      clickedTargetInPercentage.width < 4 ||
+      clickedTargetInPercentage.height > 90
     ) {
       setShowCustumeCursor(false);
       return;
