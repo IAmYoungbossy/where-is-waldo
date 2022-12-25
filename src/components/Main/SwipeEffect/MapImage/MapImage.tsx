@@ -94,7 +94,7 @@ export default function MapImage({
     if (
       percentWidth > 97 ||
       percentWidth < 3 ||
-      percentHeight > 95 ||
+      percentHeight > 98 ||
       percentHeight < 0
     ) {
       setShowCustomCursor(false);
@@ -140,7 +140,7 @@ export default function MapImage({
     if (
       clickedTargetInPercentage.width > 97 ||
       clickedTargetInPercentage.width < 3 ||
-      clickedTargetInPercentage.height > 95
+      clickedTargetInPercentage.height > 98
     ) {
       setShowCustomCursor(false);
       return;
