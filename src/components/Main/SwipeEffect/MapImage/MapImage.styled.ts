@@ -60,7 +60,7 @@ export const StyledTargetFolks = styled.div<{ top: string; left: string }>`
   border-radius: 50px;
   align-items: center;
   justify-content: center;
-  border: 5px dotted black;
+  border: 5px dotted white;
   top: ${({ top }) => top};
   left: ${({ left }) => left};
   background-color: #00000054;
@@ -79,7 +79,7 @@ export const StyledTargetFolks = styled.div<{ top: string; left: string }>`
     bottom: -75px;
     border-radius: 5px;
     position: absolute;
-    border: 1px solid black;
+    border: 1px solid white;
     background-color: #0000008c;
   }
 `;

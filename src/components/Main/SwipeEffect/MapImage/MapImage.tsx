@@ -1,4 +1,6 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import {
   StyledImageWrapper,
   StyledMousePointer,
@@ -38,10 +40,10 @@ const StyledTarget = ({
 
 export default function MapImage({ src, alt }: ImageProps): JSX.Element {
   // This get the percentage of cursor pointer in both X and Y coordinates.
-  // const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
-  //   width: 0,
-  //   height: 0,
-  // });
+  const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
+    width: 0,
+    height: 0,
+  });
 
   // This controls when to show default cursor based on its position.
   const [showCustumeCursor, setShowCustumeCursor] = useState(true);
@@ -61,7 +63,7 @@ export default function MapImage({ src, alt }: ImageProps): JSX.Element {
     left: "10px",
   });
 
-  const [showClickedTarget, setShowClickedTarget] = useState(false);
+  const [showClickedTarget, setShowClickedTarget] = useState(true);
 
   // Function makes sure the custume mouse doesn't get off the view
   const removeShowCustumeCursor = (
@@ -74,11 +76,6 @@ export default function MapImage({ src, alt }: ImageProps): JSX.Element {
       percentHeight > 99 ||
       percentHeight < 0
     ) {
-      setShowCustumeCursor(false);
-      setCursorStyle("default");
-    } else {
-      setShowCustumeCursor(true);
-      setCursorStyle("none");
     }
   };
 
@@ -99,10 +96,10 @@ export default function MapImage({ src, alt }: ImageProps): JSX.Element {
     const percentWidth = (clickedWidth * 100) / imageWidth;
 
     removeShowCustumeCursor(percentWidth, percentHeight);
-    // setClickedTargetInPercentage({
-    //   width: percentWidth,
-    //   height: percentHeight,
-    // });
+    setClickedTargetInPercentage({
+      width: percentWidth,
+      height: percentHeight,
+    });
   };
 
   // This function gets the X and Y coordinates for the style mouse pointer.
@@ -114,30 +111,29 @@ export default function MapImage({ src, alt }: ImageProps): JSX.Element {
     setCursorLocation({ top: `${e.pageY - 118}px`, left: `${e.pageX - 40}px` });
   };
 
+  useEffect(() => {
+    setClickedTarget({
+      top: cursorLocation.top,
+      left: cursorLocation.left,
+    });
+    setShowClickedTarget(showClickedTarget ? false : true);
+    // setCursorStyle(cursorStyle === "none" ? "default" : "none");
+  }, [showCustumeCursor]);
+
   return (
     <StyledImageWrapper
       cursorPointer={cursorStyle}
       onMouseMove={updateMousePosition}
-      onMouseDown={() => {
-        setShowCustumeCursor(false);
-        setClickedTarget({
-          top: cursorLocation.top,
-          left: cursorLocation.left,
-        });
-        setShowClickedTarget(showClickedTarget ? false : true);
+      onMouseDown={updateMousePosition}
+      onClick={(e) => {
+        getMouseLocationInPercent(e);
+        setShowCustumeCursor(showCustumeCursor ? false : true);
+        setCursorStyle(cursorStyle === "none" ? "default" : "none");
       }}
     >
       {showClickedTarget && <StyledTarget clickedTarget={clickedTarget} />}
       {showCustumeCursor && <StyledPointer cursorLocation={cursorLocation} />}
-      <img
-        src={src}
-        alt={alt}
-        onMouseUp={(e) => {
-          getMouseLocationInPercent(e);
-          setShowCustumeCursor(true);
-        }}
-        onMouseMove={getMouseLocationInPercent}
-      />
+      <img src={src} alt={alt} onMouseMove={getMouseLocationInPercent} />
     </StyledImageWrapper>
   );
 }
