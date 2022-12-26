@@ -159,6 +159,16 @@ export default function MapImage({
     setShowClickedTarget(!showClickedTarget);
   }, [updateUseEffect]);
 
+  // This maps the clicked area and displays possible name there
+  const namesOfFolks = showClickedTarget && (
+    <StyledTarget clickedTarget={clickedTarget} hiddenFolks={hiddenFolks} />
+  );
+
+  // This controls when to show a customizes mouse pointer
+  const customizedCursor = showCustomCursor && (
+    <StyledPointer cursorLocation={cursorLocation} />
+  );
+
   return (
     <>
       <Header hiddenFolks={hiddenFolks} />
@@ -173,15 +183,8 @@ export default function MapImage({
             setShowCustomCursor(false);
           }}
         >
-          {showClickedTarget && (
-            <StyledTarget
-              clickedTarget={clickedTarget}
-              hiddenFolks={hiddenFolks}
-            />
-          )}
-          {showCustomCursor && (
-            <StyledPointer cursorLocation={cursorLocation} />
-          )}
+          {namesOfFolks}
+          {customizedCursor}
           <img src={src} alt={alt} onMouseMove={getMouseLocationInPercent} />
         </StyledImageWrapper>
       </StyledMain>
