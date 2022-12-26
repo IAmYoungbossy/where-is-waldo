@@ -2,7 +2,7 @@ import { hiddenFolksType } from "../App/App";
 import { StyledHeader } from "./Header.styled";
 
 type FolksProps = {
-  hiddenFolks: hiddenFolksType[];
+  hiddenFolks?: hiddenFolksType[];
 };
 
 export default function Header({ hiddenFolks }: FolksProps): JSX.Element {
@@ -16,7 +16,7 @@ export default function Header({ hiddenFolks }: FolksProps): JSX.Element {
 }
 
 function Folks({ hiddenFolks }: FolksProps): JSX.Element {
-  const HiddenFolks = hiddenFolks.map(
+  const HiddenFolks = hiddenFolks?.map(
     (folk, index): JSX.Element => (
       <div key={index}>
         <img src={folk.url} alt={folk.Name} />

@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { hiddenFolksType } from "../../../App/App";
+import Header from "../../../Header/Header";
+import { StyledMain } from "../../Main.styled";
 import {
   StyledImageWrapper,
   StyledMousePointer,
@@ -95,7 +97,7 @@ export default function MapImage({
       percentWidth > 97 ||
       percentWidth < 3 ||
       percentHeight > 98 ||
-      percentHeight < 0
+      percentHeight < 1
     ) {
       setShowCustomCursor(false);
       setCursorStyle("default");
@@ -140,7 +142,8 @@ export default function MapImage({
     if (
       clickedTargetInPercentage.width > 97 ||
       clickedTargetInPercentage.width < 3 ||
-      clickedTargetInPercentage.height > 98
+      clickedTargetInPercentage.height > 98 ||
+      clickedTargetInPercentage.height < 1
     ) {
       setShowCustomCursor(false);
       return;
@@ -157,21 +160,31 @@ export default function MapImage({
   }, [updateUseEffect]);
 
   return (
-    <StyledImageWrapper
-      cursorPointer={cursorStyle}
-      onMouseMove={updateMousePosition}
-      onMouseDown={updateMousePosition}
-      onClick={(e) => {
-        getMouseLocationInPercent(e);
-        setUpdateUseEffect(updateUseEffect ? false : true);
-        setShowCustomCursor(false);
-      }}
-    >
-      {showClickedTarget && (
-        <StyledTarget clickedTarget={clickedTarget} hiddenFolks={hiddenFolks} />
-      )}
-      {showCustomCursor && <StyledPointer cursorLocation={cursorLocation} />}
-      <img src={src} alt={alt} onMouseMove={getMouseLocationInPercent} />
-    </StyledImageWrapper>
+    <>
+      <Header hiddenFolks={hiddenFolks} />
+      <StyledMain>
+        <StyledImageWrapper
+          cursorPointer={cursorStyle}
+          onMouseMove={updateMousePosition}
+          onMouseDown={updateMousePosition}
+          onClick={(e) => {
+            getMouseLocationInPercent(e);
+            setUpdateUseEffect(updateUseEffect ? false : true);
+            setShowCustomCursor(false);
+          }}
+        >
+          {showClickedTarget && (
+            <StyledTarget
+              clickedTarget={clickedTarget}
+              hiddenFolks={hiddenFolks}
+            />
+          )}
+          {showCustomCursor && (
+            <StyledPointer cursorLocation={cursorLocation} />
+          )}
+          <img src={src} alt={alt} onMouseMove={getMouseLocationInPercent} />
+        </StyledImageWrapper>
+      </StyledMain>
+    </>
   );
 }

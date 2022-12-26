@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
 import { Main } from "../Main/Main";
 import { StyledApp } from "./App.styled";
 import { hiddenFolksArray } from "./hiddenFolksArray";
@@ -24,7 +23,6 @@ function App() {
 
   return (
     <StyledApp>
-      <Header hiddenFolks={hiddenFolks} />
       <Main
         handleDisplayHiddenFolks={handleDisplayHiddenFolks}
         hiddenFolks={hiddenFolks}

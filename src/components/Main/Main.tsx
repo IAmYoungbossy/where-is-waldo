@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { StyledMain } from "./Main.styled";
 import { SignIn } from "./SignIn/SignIn";
 import { SignUp } from "./SignUp/SignUp";
 import MapImage from "./SwipeEffect/MapImage/MapImage";
@@ -19,7 +18,7 @@ export interface MainProps {
 
 export function Main({ ...props }: MainProps): JSX.Element {
   return (
-    <StyledMain>
+    <>
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
@@ -49,6 +48,6 @@ export function Main({ ...props }: MainProps): JSX.Element {
           element={<MapImage src={Dreamcast} alt="Dreamcast" {...props} />}
         />
       </Routes>
-    </StyledMain>
+    </>
   );
 }

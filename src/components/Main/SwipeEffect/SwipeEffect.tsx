@@ -18,86 +18,91 @@ import Dreamcast from "../../assets/Dreamcast.jpg";
 import { Pagination, Navigation } from "swiper";
 import { Link } from "react-router-dom";
 import { MainProps } from "../Main";
+import Header from "../../Header/Header";
+import { StyledMain } from "../Main.styled";
 
 export default function SwipeEffect({
   handleDisplayHiddenFolks,
 }: MainProps): JSX.Element {
   return (
     <>
-      <Swiper
-        loop={true}
-        pagination={{
-          clickable: true,
-        }}
-        breakpoints={{
-          500: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          750: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-          },
-        }}
-        navigation={true}
-        modules={[Pagination, Navigation]}
-        className="mySwiper"
-      >
-        <SwiperSlide>
-          <Link to="/dashboard/N64">
-            <img
-              src={N64}
-              alt="N64"
-              onClick={handleDisplayHiddenFolks.bind(null, "N64")}
-            />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Link to="/dashboard/PS1">
-            <img
-              src={PS1}
-              alt="PS1"
-              onClick={handleDisplayHiddenFolks.bind(null, "PS1")}
-            />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Link to="/dashboard/Dreamcast">
-            <img
-              src={Dreamcast}
-              alt="Dreamcast"
-              onClick={handleDisplayHiddenFolks.bind(null, "Dreamcast")}
-            />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Link to="/dashboard/PS2">
-            <img
-              src={PS2}
-              alt="PS2"
-              onClick={handleDisplayHiddenFolks.bind(null, "PS2")}
-            />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Link to="/dashboard/LocNar">
-            <img
-              src={LocNar}
-              alt="LocNar"
-              onClick={handleDisplayHiddenFolks.bind(null, "LocNar")}
-            />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Link to="/dashboard/PS4">
-            <img
-              src={PS4}
-              alt="PS4"
-              onClick={handleDisplayHiddenFolks.bind(null, "PS4")}
-            />
-          </Link>
-        </SwiperSlide>
-      </Swiper>
+      <Header />
+      <StyledMain>
+        <Swiper
+          loop={true}
+          pagination={{
+            clickable: true,
+          }}
+          breakpoints={{
+            500: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            750: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
+          }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
+        >
+          <SwiperSlide>
+            <Link to="/dashboard/N64">
+              <img
+                src={N64}
+                alt="N64"
+                onClick={handleDisplayHiddenFolks.bind(null, "N64")}
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to="/dashboard/PS1">
+              <img
+                src={PS1}
+                alt="PS1"
+                onClick={handleDisplayHiddenFolks.bind(null, "PS1")}
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to="/dashboard/Dreamcast">
+              <img
+                src={Dreamcast}
+                alt="Dreamcast"
+                onClick={handleDisplayHiddenFolks.bind(null, "Dreamcast")}
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to="/dashboard/PS2">
+              <img
+                src={PS2}
+                alt="PS2"
+                onClick={handleDisplayHiddenFolks.bind(null, "PS2")}
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to="/dashboard/LocNar">
+              <img
+                src={LocNar}
+                alt="LocNar"
+                onClick={handleDisplayHiddenFolks.bind(null, "LocNar")}
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to="/dashboard/PS4">
+              <img
+                src={PS4}
+                alt="PS4"
+                onClick={handleDisplayHiddenFolks.bind(null, "PS4")}
+              />
+            </Link>
+          </SwiperSlide>
+        </Swiper>
+      </StyledMain>
     </>
   );
 }
