@@ -11,6 +11,7 @@ import {
   signInWithGoogle,
 } from "../../utilities/firebase";
 import { FcGoogle } from "react-icons/fc";
+import { AiFillFacebook } from "react-icons/ai";
 
 export function SignUp() {
   const [name, setName] = useState("");
@@ -66,13 +67,20 @@ export function SignUp() {
           <button type="button" onClick={register}>
             Sign Up
           </button>
-          <button
-            className="register__btn register__google"
-            onClick={signInWithGoogle}
-          >
-            <FcGoogle />
-            Register with Google
-          </button>
+          <div>
+            <button
+              className="register__btn register__google"
+              onClick={signInWithGoogle}
+            >
+              <FcGoogle />
+            </button>
+            <button
+              className="register__btn register__google"
+              onClick={signInWithGoogle}
+            >
+              <AiFillFacebook />
+            </button>
+          </div>
           <p>
             Already have an account?{" "}
             <span>

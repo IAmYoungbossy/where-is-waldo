@@ -34,6 +34,10 @@ export const StyledForm = styled.form`
     color: black;
     font-weight: 900;
     background-color: #ffc107;
+
+    a {
+      text-decoration: none;
+    }
   }
 
   button:first-of-type {
@@ -44,26 +48,60 @@ export const StyledForm = styled.form`
 
   button:nth-of-type(2),
   button:nth-of-type(3) {
+    gap: 10px;
     display: flex;
     position: relative;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    span {
+      padding: 0 0 0 50px;
+    }
     svg {
       position: absolute;
-      left: 20px;
+      left: 10px;
+      height: 2.5rem;
+      width: 2.5rem;
     }
   }
 
   p {
     margin: auto;
-    margin-top: 10px;
-    font-size: 1.1rem;
+    font-size: 1rem;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
 
     span {
       color: #0d6efd;
 
       a {
         color: cadetblue;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  div {
+    display: flex;
+    padding-top: 5px;
+    background-color: #00008b36;
+
+    button {
+      width: 100px;
+      padding: 0;
+      background-color: #02122a00 !important;
+
+      svg {
+        height: 2.5rem;
+        width: 2.5rem;
+        border-radius: 50%;
+        box-shadow: 1px 1px 7px 0px black;
+      }
+
+      svg:last-of-type {
+        color: white;
       }
     }
   }

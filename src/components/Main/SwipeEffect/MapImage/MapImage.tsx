@@ -1,7 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 import { hiddenFolksType } from "../../../App/App";
 import Header from "../../../Header/Header";
+import { auth } from "../../../utilities/firebase";
 import { StyledMain } from "../../Main.styled";
 import {
   StyledImageWrapper,
@@ -88,6 +91,9 @@ export default function MapImage({
     left: "10px",
   });
 
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+
   // Prevents custom cursor from going off the image
   const preventCustomCursorFromGoingOffImage = (
     percentWidth: number,
@@ -138,6 +144,8 @@ export default function MapImage({
   };
 
   useEffect(() => {
+    if (!user) return navigate("/");
+
     // Prevents the cursor from going off the image in the target
     if (
       clickedTargetInPercentage.width > 97 ||
@@ -171,23 +179,31 @@ export default function MapImage({
 
   return (
     <>
-      <Header hiddenFolks={hiddenFolks} />
-      <StyledMain>
-        <StyledImageWrapper
-          cursorPointer={cursorStyle}
-          onMouseMove={updateMousePosition}
-          onMouseDown={updateMousePosition}
-          onClick={(e) => {
-            getMouseLocationInPercent(e);
-            setUpdateUseEffect(updateUseEffect ? false : true);
-            setShowCustomCursor(false);
-          }}
-        >
-          {namesOfFolks}
-          {customizedCursor}
-          <img src={src} alt={alt} onMouseMove={getMouseLocationInPercent} />
-        </StyledImageWrapper>
-      </StyledMain>
+      {user && (
+        <>
+          <Header hiddenFolks={hiddenFolks} />
+          <StyledMain>
+            <StyledImageWrapper
+              cursorPointer={cursorStyle}
+              onMouseMove={updateMousePosition}
+              onMouseDown={updateMousePosition}
+              onClick={(e) => {
+                getMouseLocationInPercent(e);
+                setUpdateUseEffect(updateUseEffect ? false : true);
+                setShowCustomCursor(false);
+              }}
+            >
+              {namesOfFolks}
+              {customizedCursor}
+              <img
+                src={src}
+                alt={alt}
+                onMouseMove={getMouseLocationInPercent}
+              />
+            </StyledImageWrapper>
+          </StyledMain>
+        </>
+      )}
     </>
   );
 }

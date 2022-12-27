@@ -62,6 +62,7 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
     console.error(err);
+    alert("User Not Found");
   }
 };
 

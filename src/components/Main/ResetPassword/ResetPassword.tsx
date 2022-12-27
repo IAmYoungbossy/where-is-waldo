@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { sendPasswordResetEmail } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Header/Header";
-import { auth } from "../../utilities/firebase";
+import { auth, sendPasswordReset } from "../../utilities/firebase";
 import { StyledMain } from "../Main.styled";
 import { StyledForm } from "../SignIn/SignIn.styled";
 
@@ -33,7 +32,7 @@ export const ResetPassword = () => {
           <button
             type="button"
             className="reset__btn"
-            onClick={() => sendPasswordResetEmail(auth, email)}
+            onClick={() => sendPasswordReset(email)}
           >
             Send password reset email
           </button>

@@ -6,9 +6,12 @@ import Header from "../../Header/Header";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import { auth, signInWithGoogle } from "../../utilities/firebase";
+import {
+  auth,
+  logInWithEmailAndPassword,
+  signInWithGoogle,
+} from "../../utilities/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 export function SignIn(): JSX.Element {
   const [password, setPassword] = useState("");
@@ -49,22 +52,22 @@ export function SignIn(): JSX.Element {
             />
             <button
               type="button"
-              onClick={() => signInWithEmailAndPassword(auth, email, password)}
+              onClick={() => logInWithEmailAndPassword(email, password)}
             >
               Login
             </button>
             <button type="button" onClick={signInWithGoogle}>
-              <FcGoogle /> Sign in with Google
+              <FcGoogle /> <span>Sign in with Google</span>
             </button>
             <button type="button">
-              <AiFillFacebook /> Sign in with Facebook
+              <AiFillFacebook /> <span>Sign in with Facebook</span>
             </button>
             <button type="button">
               <Link to="/dashboard">Try Me</Link>
             </button>
-            <div>
-              <Link to="/reset-password">Forgot Password</Link>
-            </div>
+            <p>
+              <Link to="/reset-password">Forgot Password?</Link>
+            </p>
             <p>
               dont have an account?{" "}
               <span>
