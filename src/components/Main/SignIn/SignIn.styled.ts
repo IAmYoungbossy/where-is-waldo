@@ -42,6 +42,18 @@ export const StyledForm = styled.form`
     background-color: #0d6efd;
   }
 
+  button:nth-of-type(2),
+  button:nth-of-type(3) {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    svg {
+      position: absolute;
+      left: 20px;
+    }
+  }
+
   p {
     margin: auto;
     margin-top: 10px;

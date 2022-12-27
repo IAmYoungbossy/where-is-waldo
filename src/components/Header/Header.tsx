@@ -3,14 +3,26 @@ import { StyledHeader } from "./Header.styled";
 
 type FolksProps = {
   hiddenFolks?: hiddenFolksType[];
+  name?: string;
+  signOut?: () => void;
+  avatar?: string | null | undefined;
 };
 
-export default function Header({ hiddenFolks }: FolksProps): JSX.Element {
+export default function Header({
+  hiddenFolks,
+  name,
+  signOut,
+  avatar,
+}: FolksProps): JSX.Element {
   return (
     <StyledHeader>
       <h1>Hidden Folks</h1>
       <Folks hiddenFolks={hiddenFolks} />
-      <button>Log Out</button>
+      <div>
+        <div>{avatar && <img src={avatar} alt="Avatar" />}</div>
+        <p>{name}</p>
+        {name && <button onClick={signOut}>Log Out</button>}
+      </div>
     </StyledHeader>
   );
 }

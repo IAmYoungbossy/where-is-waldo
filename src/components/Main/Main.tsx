@@ -10,6 +10,7 @@ import PS1 from "../assets/P-PS1-min.jpg";
 import PS2 from "../assets/P-PS2-min.jpg";
 import PS4 from "../assets/P-PS4-min.jpg";
 import { hiddenFolksType } from "../App/App";
+import { ResetPassword } from "./ResetPassword/ResetPassword";
 
 export interface MainProps {
   handleDisplayHiddenFolks: (alt: string) => void;
@@ -22,6 +23,7 @@ export function Main({ ...props }: MainProps): JSX.Element {
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/dashboard" element={<SwipeEffect {...props} />} />
         <Route
           path="/dashboard/N64"

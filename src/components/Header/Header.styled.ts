@@ -20,6 +20,12 @@ export const StyledHeader = styled.header`
     background-color: #6c757d;
   }
 
+  div {
+    gap: 5px;
+    display: flex;
+    align-items: center;
+  }
+
   h1 {
     padding: 20px;
   }
