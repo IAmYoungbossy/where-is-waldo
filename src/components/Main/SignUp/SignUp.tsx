@@ -8,6 +8,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import {
   auth,
   registerWithEmailAndPassword,
+  signInWithFacebook,
   signInWithGoogle,
 } from "../../utilities/firebase";
 import { FcGoogle } from "react-icons/fc";
@@ -70,7 +71,7 @@ export function SignUp() {
           <div>
             <button
               className="register__btn register__google"
-              onClick={signInWithGoogle}
+              onClick={signInWithFacebook}
             >
               <FcGoogle />
             </button>

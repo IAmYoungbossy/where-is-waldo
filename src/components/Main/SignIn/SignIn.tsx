@@ -10,6 +10,7 @@ import {
   auth,
   logInWithEmailAndPassword,
   signInWithGoogle,
+  signInWithFacebook,
 } from "../../utilities/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -24,7 +25,7 @@ export function SignIn(): JSX.Element {
       // TODO: loading screen
       return;
     }
-
+    console.log(user);
     if (user) navigate("/dashboard");
   }, [user, loading]);
 
@@ -59,7 +60,7 @@ export function SignIn(): JSX.Element {
             <button type="button" onClick={signInWithGoogle}>
               <FcGoogle /> <span>Sign in with Google</span>
             </button>
-            <button type="button">
+            <button type="button" onClick={signInWithFacebook}>
               <AiFillFacebook /> <span>Sign in with Facebook</span>
             </button>
             <button type="button">

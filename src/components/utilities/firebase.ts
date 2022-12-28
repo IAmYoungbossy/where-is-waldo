@@ -8,6 +8,8 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
+  FacebookAuthProvider,
+  updateProfile,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -49,6 +51,34 @@ const signInWithGoogle = async () => {
         uid: user.uid,
         name: user.displayName,
         authProvider: "google",
+        email: user.email,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const facebookProvider = new FacebookAuthProvider();
+const signInWithFacebook = async () => {
+  try {
+    const res = await signInWithPopup(auth, facebookProvider);
+    const user = res.user;
+    const q = query(collection(db, "users"), where("uid", "==", user.uid));
+    const docs = await getDocs(q);
+
+    // Used in getting facebook profile picture
+    const credential = await FacebookAuthProvider.credentialFromResult(res);
+    const token = credential?.accessToken;
+    let photoUrl = res.user.photoURL + "?height=500&access_token=" + token;
+    if (auth.currentUser)
+      await updateProfile(auth.currentUser, { photoURL: photoUrl });
+
+    if (docs.docs.length === 0) {
+      await addDoc(collection(db, "users"), {
+        uid: user.uid,
+        name: user.displayName,
+        authProvider: "facebook",
         email: user.email,
       });
     }
@@ -102,6 +132,7 @@ export {
   auth,
   db,
   signInWithGoogle,
+  signInWithFacebook,
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
   sendPasswordReset,
