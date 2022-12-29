@@ -18,6 +18,7 @@ interface ImageProps {
   src: string;
   alt: string;
   hiddenFolks: hiddenFolksType[];
+  setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
 interface StyledPointerProps {
@@ -29,37 +30,53 @@ interface StyledTargetProps {
     top: string;
     left: string;
   };
-  hiddenFolks?: hiddenFolksType[];
-  getCoords: (imageName: string, folkName: string) => void;
-  setCheckStatus: (status: string) => void;
-  setShowCustomCursor: (status: boolean) => void;
-  setUpdateUseEffect: (status: boolean) => void;
   updateUseEffect: boolean;
+  hiddenFolks?: hiddenFolksType[];
+  setCheckStatus: (status: string) => void;
+  setUpdateUseEffect: (status: boolean) => void;
+  setShowCustomCursor: (status: boolean) => void;
+  getCoords: (imageName: string, folkName: string) => void;
+  setFolkName: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface CheckStatusProps {
+  status: string;
+  background: string;
 }
 
 const StyledTarget = ({
-  setShowCustomCursor,
-  setUpdateUseEffect,
-  updateUseEffect,
-  setCheckStatus,
-  clickedTarget,
-  hiddenFolks,
   getCoords,
+  hiddenFolks,
+  setFolkName,
+  clickedTarget,
+  setCheckStatus,
+  updateUseEffect,
+  setUpdateUseEffect,
+  setShowCustomCursor,
 }: StyledTargetProps): JSX.Element => {
+  const handleClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    folk: hiddenFolksType
+  ) => {
+    e.stopPropagation();
+    setFolkName(folk.Name);
+    setShowCustomCursor(false);
+    setCheckStatus("Checking...");
+    getCoords(folk.imageName, folk.Name);
+    setUpdateUseEffect(updateUseEffect ? false : true);
+  };
+
   const nameOfHiddenFolks = hiddenFolks?.map((folk, index) => {
     return (
       <li key={index}>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowCustomCursor(false);
-            setCheckStatus("Checking...");
-            getCoords(folk.imageName, folk.Name);
-            setUpdateUseEffect(updateUseEffect ? false : true);
-          }}
-        >
-          {folk.Name}
-        </button>
+        {!folk.checked && (
+          <button onClick={(e) => handleClick(e, folk)}>{folk.Name}</button>
+        )}
+        {folk.checked && (
+          <button disabled onClick={(e) => handleClick(e, folk)}>
+            {folk.Name}
+          </button>
+        )}
       </li>
     );
   });
@@ -80,13 +97,7 @@ const StyledPointer = ({ cursorLocation }: StyledPointerProps): JSX.Element => (
   </StyledMousePointer>
 );
 
-export const CheckStatus = ({
-  status,
-  background,
-}: {
-  status: string;
-  background: string;
-}) => {
+export const CheckStatus = ({ status, background }: CheckStatusProps) => {
   return (
     <StyledStatusChecker background={background}>
       <p>{status}</p>
@@ -98,6 +109,7 @@ export default function MapImage({
   src,
   alt,
   hiddenFolks,
+  setHiddenFolks,
 }: ImageProps): JSX.Element {
   // State for clicked target in percentage. Use for backend validation
   const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
@@ -136,6 +148,7 @@ export default function MapImage({
 
   const [checkStatus, setCheckStatus] = useState("");
   const [background, setBackground] = useState("black");
+  const [folkName, setFolkName] = useState("");
 
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
@@ -229,8 +242,15 @@ export default function MapImage({
       clickedTarget.height <= correctCoords.height.max &&
       clickedTarget.width !== 0
     ) {
+      hiddenFolks.forEach((folk, index) => {
+        if (folk.Name === folkName) {
+          const hiddenFolksCopy = [...hiddenFolks];
+          hiddenFolksCopy[index] = { ...folk, checked: true };
+          setHiddenFolks(hiddenFolksCopy);
+        }
+      });
       setBackground("green");
-      setCheckStatus("Correct");
+      setCheckStatus(`Congrats! You found ${folkName}`);
       setTimeout(() => {
         setCheckStatus("");
         setBackground("black");
@@ -244,6 +264,12 @@ export default function MapImage({
       }, 5000);
     }
   }, [correctCoords]);
+
+  useEffect(() => {
+    if (hiddenFolks.length === 0) return;
+    const allTrue = hiddenFolks.every((folk) => folk.checked);
+    if (allTrue) console.log("Yo! You made it.");
+  }, [hiddenFolks]);
 
   const getHiddenFolksCoords = async (imageName: string, folkName: string) => {
     const pathToCoords = collection(db, "coords", imageName, folkName);
@@ -259,6 +285,7 @@ export default function MapImage({
   // This maps the clicked area and displays possible name there
   const namesOfFolks = showClickedTarget && (
     <StyledTarget
+      setFolkName={setFolkName}
       hiddenFolks={hiddenFolks}
       clickedTarget={clickedTarget}
       setCheckStatus={setCheckStatus}

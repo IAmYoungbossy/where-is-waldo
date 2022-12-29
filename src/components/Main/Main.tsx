@@ -15,6 +15,7 @@ import { ResetPassword } from "./ResetPassword/ResetPassword";
 export interface MainProps {
   handleDisplayHiddenFolks: (alt: string) => void;
   hiddenFolks: hiddenFolksType[];
+  setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
 export function Main({ ...props }: MainProps): JSX.Element {

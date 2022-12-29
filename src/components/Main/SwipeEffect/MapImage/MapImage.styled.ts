@@ -62,6 +62,7 @@ export const StyledTargetFolks = styled.div<{
   width: 70px;
   height: 70px;
   display: flex;
+  cursor: default;
   position: absolute;
   border-radius: 50px;
   align-items: center;
@@ -117,19 +118,37 @@ export const StyledTargetFolks = styled.div<{
       background-color: black;
       border: 1px solid black;
     }
+
+    button:disabled {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    & button:disabled:hover {
+      cursor: default;
+      pointer-events: none;
+    }
   }
 `;
 
 export const StyledStatusChecker = styled.div<{ background: string }>`
-  top: 83px;
-  left: 41vw;
+  top: 90px;
+  width: 100%;
   color: white;
   padding: 2px 15px;
   font-weight: bold;
   border-radius: 5px;
   position: absolute;
   font-family: monospace;
-  background-color: ${({ background }) => background};
+
+  p {
+    margin: auto;
+    font-size: 1.1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: fit-content;
+    background-color: ${({ background }) => background};
+  }
 `;
 
 /**Note To Self:

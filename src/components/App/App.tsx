@@ -5,8 +5,9 @@ import { StyledApp } from "./App.styled";
 import { hiddenFolksArray } from "./hiddenFolksArray";
 
 export type hiddenFolksType = {
-  Name: string;
   url: string;
+  Name: string;
+  checked: boolean;
   imageName: string;
 };
 
@@ -19,6 +20,7 @@ function App() {
       if (image.Card === alt) {
         const folksCopy = [...image.Folks].map((folk) => ({
           ...folk,
+          checked: false,
           imageName: alt,
         }));
         setHiddenFolks(folksCopy);
@@ -30,6 +32,7 @@ function App() {
     <StyledApp>
       <Main
         handleDisplayHiddenFolks={handleDisplayHiddenFolks}
+        setHiddenFolks={setHiddenFolks}
         hiddenFolks={hiddenFolks}
       />
       <Footer />
