@@ -1,14 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { hiddenFolksType } from "../../../App/App";
 import Header from "../../../Header/Header";
-import { auth } from "../../../utilities/firebase";
+import { auth, db } from "../../../utilities/firebase";
 import { StyledMain } from "../../Main.styled";
 import {
   StyledImageWrapper,
   StyledMousePointer,
+  StyledStatusChecker,
   StyledTargetFolks,
 } from "./MapImage.styled";
 
@@ -22,20 +24,42 @@ interface StyledPointerProps {
   cursorLocation: { top: string; left: string };
 }
 
-const StyledTarget = ({
-  clickedTarget,
-  hiddenFolks,
-}: {
+interface StyledTargetProps {
   clickedTarget: {
     top: string;
     left: string;
   };
   hiddenFolks?: hiddenFolksType[];
-}): JSX.Element => {
+  getCoords: (imageName: string, folkName: string) => void;
+  setCheckStatus: (status: string) => void;
+  setShowCustomCursor: (status: boolean) => void;
+  setUpdateUseEffect: (status: boolean) => void;
+  updateUseEffect: boolean;
+}
+
+const StyledTarget = ({
+  setShowCustomCursor,
+  setUpdateUseEffect,
+  updateUseEffect,
+  setCheckStatus,
+  clickedTarget,
+  hiddenFolks,
+  getCoords,
+}: StyledTargetProps): JSX.Element => {
   const nameOfHiddenFolks = hiddenFolks?.map((folk, index) => {
     return (
       <li key={index}>
-        <button>{folk.Name}</button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowCustomCursor(false);
+            setCheckStatus("Checking...");
+            getCoords(folk.imageName, folk.Name);
+            setUpdateUseEffect(updateUseEffect ? false : true);
+          }}
+        >
+          {folk.Name}
+        </button>
       </li>
     );
   });
@@ -55,6 +79,20 @@ const StyledPointer = ({ cursorLocation }: StyledPointerProps): JSX.Element => (
     <div />
   </StyledMousePointer>
 );
+
+export const CheckStatus = ({
+  status,
+  background,
+}: {
+  status: string;
+  background: string;
+}) => {
+  return (
+    <StyledStatusChecker background={background}>
+      <p>{status}</p>
+    </StyledStatusChecker>
+  );
+};
 
 export default function MapImage({
   src,
@@ -91,6 +129,14 @@ export default function MapImage({
     left: "10px",
   });
 
+  const [correctCoords, setCorrectCoords] = useState({
+    height: { max: 0, min: 0 },
+    width: { max: 0, min: 0 },
+  });
+
+  const [checkStatus, setCheckStatus] = useState("");
+  const [background, setBackground] = useState("black");
+
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -115,7 +161,7 @@ export default function MapImage({
     }
   };
 
-  const getMouseLocationInPercent = (e: React.MouseEvent<HTMLDivElement>) => {
+  const mousePosition = (e: React.MouseEvent<HTMLDivElement>) => {
     const image = e.currentTarget;
     const imageHeight = image.offsetHeight;
     const imageWidth = image.offsetWidth;
@@ -123,7 +169,16 @@ export default function MapImage({
     const clickedWidth = e.nativeEvent.offsetX;
     const percentHeight = (clickedHeight * 100) / imageHeight;
     const percentWidth = (clickedWidth * 100) / imageWidth;
+    return { percentHeight, percentWidth };
+  };
 
+  const getMouseLocationInPercent = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { percentHeight, percentWidth } = mousePosition(e);
+    preventCustomCursorFromGoingOffImage(percentWidth, percentHeight);
+  };
+
+  const getMousePositionOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { percentHeight, percentWidth } = mousePosition(e);
     preventCustomCursorFromGoingOffImage(percentWidth, percentHeight);
     setClickedTargetInPercentage({
       width: percentWidth,
@@ -132,9 +187,7 @@ export default function MapImage({
   };
 
   // This function gets the X and Y coordinates for the style mouse pointer.
-  const updateMousePosition = (
-    e: React.MouseEvent<HTMLImageElement, MouseEvent>
-  ) => {
+  const updateMousePosition = (e: React.MouseEvent<HTMLDivElement>) => {
     // Subtracts 118 and 40 from the Y and X coordinates to center the custom
     // mouse pointer at the tip of the mouse arrow
     setCursorLocation({
@@ -167,9 +220,53 @@ export default function MapImage({
     setShowClickedTarget(!showClickedTarget);
   }, [updateUseEffect]);
 
+  useEffect(() => {
+    const clickedTarget = clickedTargetInPercentage;
+    if (
+      clickedTarget.width >= correctCoords.width.min &&
+      clickedTarget.width <= correctCoords.width.max &&
+      clickedTarget.height >= correctCoords.height.min &&
+      clickedTarget.height <= correctCoords.height.max &&
+      clickedTarget.width !== 0
+    ) {
+      setBackground("green");
+      setCheckStatus("Correct");
+      setTimeout(() => {
+        setCheckStatus("");
+        setBackground("black");
+      }, 5000);
+    } else if (clickedTarget.width !== 0) {
+      setBackground("red");
+      setCheckStatus("Keep searching");
+      setTimeout(() => {
+        setCheckStatus("");
+        setBackground("black");
+      }, 5000);
+    }
+  }, [correctCoords]);
+
+  const getHiddenFolksCoords = async (imageName: string, folkName: string) => {
+    const pathToCoords = collection(db, "coords", imageName, folkName);
+    const coordsDoc = await getDocs(pathToCoords);
+    const coordsArr = coordsDoc.docs.map((doc) => ({ [doc.id]: doc.data() }));
+
+    setCorrectCoords({
+      height: { max: coordsArr[0].height.max, min: coordsArr[0].height.min },
+      width: { max: coordsArr[1].width.max, min: coordsArr[1].width.min },
+    });
+  };
+
   // This maps the clicked area and displays possible name there
   const namesOfFolks = showClickedTarget && (
-    <StyledTarget clickedTarget={clickedTarget} hiddenFolks={hiddenFolks} />
+    <StyledTarget
+      hiddenFolks={hiddenFolks}
+      clickedTarget={clickedTarget}
+      setCheckStatus={setCheckStatus}
+      getCoords={getHiddenFolksCoords}
+      updateUseEffect={updateUseEffect}
+      setUpdateUseEffect={setUpdateUseEffect}
+      setShowCustomCursor={setShowCustomCursor}
+    />
   );
 
   // This controls when to show a customizes mouse pointer
@@ -181,25 +278,28 @@ export default function MapImage({
     <>
       {user && (
         <>
-          <Header hiddenFolks={hiddenFolks} />
+          <Header
+            hiddenFolks={hiddenFolks}
+            checkStatus={checkStatus}
+            background={background}
+          />
           <StyledMain>
             <StyledImageWrapper
               cursorPointer={cursorStyle}
-              onMouseMove={updateMousePosition}
+              onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
+                updateMousePosition(e);
+                getMouseLocationInPercent(e);
+              }}
               onMouseDown={updateMousePosition}
               onClick={(e) => {
-                getMouseLocationInPercent(e);
+                getMousePositionOnClick(e);
                 setUpdateUseEffect(updateUseEffect ? false : true);
                 setShowCustomCursor(false);
               }}
             >
               {namesOfFolks}
               {customizedCursor}
-              <img
-                src={src}
-                alt={alt}
-                onMouseMove={getMouseLocationInPercent}
-              />
+              <img src={src} alt={alt} />
             </StyledImageWrapper>
           </StyledMain>
         </>

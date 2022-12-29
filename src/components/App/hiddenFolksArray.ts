@@ -35,7 +35,7 @@ export const hiddenFolksArray = [
     Card: "LocNar",
     Folks: [
       { Name: "Bower", url: LocNarBower },
-      { Name: "The Knight", url: LocNarTheKnight },
+      { Name: "TheKnight", url: LocNarTheKnight },
       { Name: "Yubaba", url: LocNarYubaba },
     ],
   },

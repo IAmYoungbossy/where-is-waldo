@@ -102,11 +102,13 @@ export const StyledTargetFolks = styled.div<{
     }
 
     & button {
-      color: red;
       width: 100%;
       height: 100%;
+      padding: 2px;
+      color: #a50101;
       cursor: pointer;
       font-weight: bold;
+      font-size: 0.75rem;
     }
 
     & button:hover {
@@ -116,6 +118,18 @@ export const StyledTargetFolks = styled.div<{
       border: 1px solid black;
     }
   }
+`;
+
+export const StyledStatusChecker = styled.div<{ background: string }>`
+  top: 83px;
+  left: 41vw;
+  color: white;
+  padding: 2px 15px;
+  font-weight: bold;
+  border-radius: 5px;
+  position: absolute;
+  font-family: monospace;
+  background-color: ${({ background }) => background};
 `;
 
 /**Note To Self:

@@ -1,4 +1,5 @@
 import { hiddenFolksType } from "../App/App";
+import { CheckStatus } from "../Main/SwipeEffect/MapImage/MapImage";
 import { StyledHeader } from "./Header.styled";
 
 type FolksProps = {
@@ -6,6 +7,8 @@ type FolksProps = {
   name?: string;
   signOut?: () => void;
   avatar?: string | null | undefined;
+  checkStatus?: string;
+  background?: string;
 };
 
 export default function Header({
@@ -13,7 +16,15 @@ export default function Header({
   name,
   signOut,
   avatar,
+  checkStatus,
+  background,
 }: FolksProps): JSX.Element {
+  const StatusLoading = () => {
+    if (checkStatus !== undefined && background !== undefined)
+      return <CheckStatus status={checkStatus} background={background} />;
+    else return null;
+  };
+
   return (
     <StyledHeader>
       <h1>Hidden Folks</h1>
@@ -23,6 +34,7 @@ export default function Header({
         <p>{name}</p>
         {name && <button onClick={signOut}>Log Out</button>}
       </div>
+      {checkStatus !== "" && <StatusLoading />}
     </StyledHeader>
   );
 }

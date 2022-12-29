@@ -25,7 +25,6 @@ export function SignIn(): JSX.Element {
       // TODO: loading screen
       return;
     }
-    console.log(user);
     if (user) navigate("/dashboard");
   }, [user, loading]);
 

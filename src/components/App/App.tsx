@@ -7,6 +7,7 @@ import { hiddenFolksArray } from "./hiddenFolksArray";
 export type hiddenFolksType = {
   Name: string;
   url: string;
+  imageName: string;
 };
 
 function App() {
@@ -16,7 +17,11 @@ function App() {
   const handleDisplayHiddenFolks = (alt: string): void => {
     hiddenFolksArray.forEach((image) => {
       if (image.Card === alt) {
-        setHiddenFolks(image.Folks);
+        const folksCopy = [...image.Folks].map((folk) => ({
+          ...folk,
+          imageName: alt,
+        }));
+        setHiddenFolks(folksCopy);
       }
     });
   };
