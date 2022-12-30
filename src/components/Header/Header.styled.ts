@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-export const StyledHeader = styled.header`
+export const StyledHeader = styled.header<{ spaceBetween: string }>`
   z-index: 1;
   display: flex;
   position: fixed;
   align-items: center;
   background-color: #222;
   width: -webkit-fill-available;
-  justify-content: space-between;
   border-bottom: 2px solid #909cff;
+  justify-content: ${({ spaceBetween }) => spaceBetween};
 
   button {
     border: none;
