@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
 export const StyledFooter = styled.footer`
+  z-index: 1;
   color: #eee;
   padding: 10px;
   margin-top: auto;
   text-align: center;
-  border-top: 2px solid;
-  background-color: #040610;
+  background-color: #222;
+  border-top: 2px solid #909cff;
 
   i {
     color: white;

@@ -5,10 +5,10 @@ export const StyledHeader = styled.header`
   display: flex;
   position: fixed;
   align-items: center;
-  border-bottom: 2px solid;
-  background-color: #040610;
+  background-color: #222;
   width: -webkit-fill-available;
   justify-content: space-between;
+  border-bottom: 2px solid #909cff;
 
   button {
     border: none;

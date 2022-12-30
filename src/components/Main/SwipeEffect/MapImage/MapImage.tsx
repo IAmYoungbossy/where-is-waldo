@@ -10,6 +10,7 @@ import { StyledMain } from "../../Main.styled";
 import {
   StyledImageWrapper,
   StyledMousePointer,
+  StyledPlayTime,
   StyledStatusChecker,
   StyledTargetFolks,
 } from "./MapImage.styled";
@@ -105,6 +106,33 @@ export const CheckStatus = ({ status, background }: CheckStatusProps) => {
   );
 };
 
+const ReportPlayTime = () => {
+  return (
+    <StyledPlayTime>
+      <div>
+        <div>
+          <p>You Finished in .... seconds</p>
+        </div>
+        <div>
+          <p>Submit your score on the global leaderboard!</p>
+          <div>
+            <form action="#">
+              <div>
+                <label htmlFor="name">Enter Name:</label>
+                <input type="name" id="name" placeholder="Letam" />
+              </div>
+              <div>
+                <button type="button">Cancel</button>
+                <button type="submit">Submit Score</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </StyledPlayTime>
+  );
+};
+
 export default function MapImage({
   src,
   alt,
@@ -149,6 +177,7 @@ export default function MapImage({
   const [checkStatus, setCheckStatus] = useState("");
   const [background, setBackground] = useState("black");
   const [folkName, setFolkName] = useState("");
+  const [foundAllFolks, setFoundAllFolks] = useState(false);
 
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
@@ -268,7 +297,7 @@ export default function MapImage({
   useEffect(() => {
     if (hiddenFolks.length === 0) return;
     const allTrue = hiddenFolks.every((folk) => folk.checked);
-    if (allTrue) console.log("Yo! You made it.");
+    if (allTrue) setFoundAllFolks(true);
   }, [hiddenFolks]);
 
   const getHiddenFolksCoords = async (imageName: string, folkName: string) => {
@@ -329,6 +358,7 @@ export default function MapImage({
               <img src={src} alt={alt} />
             </StyledImageWrapper>
           </StyledMain>
+          {foundAllFolks && <ReportPlayTime />}
         </>
       )}
     </>
