@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { hiddenFolksType } from "../../../App/App";
-import Header from "../../../Header/Header";
+import Header, { StyledTimer, TimeString } from "../../../Header/Header";
 import { auth, db } from "../../../utilities/firebase";
 import { StyledMain } from "../../Main.styled";
 import {
@@ -106,12 +106,32 @@ export const CheckStatus = ({ status, background }: CheckStatusProps) => {
   );
 };
 
-const ReportPlayTime = () => {
+interface ReportPlayTimeProps {
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+const ReportPlayTime = ({ hours, minutes, seconds }: ReportPlayTimeProps) => {
   return (
     <StyledPlayTime>
       <div>
         <div>
-          <p>You Finished in .... seconds</p>
+          <div>
+            You Finished in{" "}
+            {
+              <StyledTimer padding="0px">
+                {
+                  <TimeString
+                    hours={hours}
+                    minutes={minutes}
+                    seconds={seconds}
+                  />
+                }
+              </StyledTimer>
+            }{" "}
+            seconds
+          </div>
         </div>
         <div>
           <p>Submit your score on the global leaderboard!</p>
@@ -172,6 +192,13 @@ export default function MapImage({
   const [correctCoords, setCorrectCoords] = useState({
     height: { max: 0, min: 0 },
     width: { max: 0, min: 0 },
+  });
+
+  // Declare a new state variable, which we'll call "time"
+  const [time, setTime] = useState({
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
 
   const [checkStatus, setCheckStatus] = useState("");
@@ -335,9 +362,12 @@ export default function MapImage({
       {user && (
         <>
           <Header
+            time={time}
+            setTime={setTime}
+            background={background}
             hiddenFolks={hiddenFolks}
             checkStatus={checkStatus}
-            background={background}
+            foundAllFolks={foundAllFolks}
           />
           <StyledMain>
             <StyledImageWrapper
@@ -358,7 +388,13 @@ export default function MapImage({
               <img src={src} alt={alt} />
             </StyledImageWrapper>
           </StyledMain>
-          {foundAllFolks && <ReportPlayTime />}
+          {foundAllFolks && (
+            <ReportPlayTime
+              hours={time.hours}
+              minutes={time.minutes}
+              seconds={time.seconds}
+            />
+          )}
         </>
       )}
     </>

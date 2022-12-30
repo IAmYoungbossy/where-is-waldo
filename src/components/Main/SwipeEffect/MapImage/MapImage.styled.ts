@@ -162,23 +162,26 @@ export const StyledPlayTime = styled.div`
   font-family: monospace;
   justify-content: center;
   & > div {
-    background: #222;
     width: 100%;
+    padding: 0 10px;
     max-width: 350px;
-    padding: 10px;
+    background: #222;
+    border-radius: 5px;
 
     & > div:first-of-type {
-      text-align: center;
-      padding: 10px 0px;
-      font-weight: bold;
       font-size: 1rem;
+      font-weight: bold;
+      padding: 10px 0px;
+      text-align: center;
     }
 
     & > div:last-of-type {
       border-top: 1px solid white;
 
       p {
+        font-weight: 900;
         padding: 10px 0px;
+        font-size: 0.85rem;
       }
 
       & form > div:first-of-type {

@@ -22,6 +22,7 @@ export const StyledHeader = styled.header<{ spaceBetween: string }>`
   div {
     gap: 5px;
     display: flex;
+    padding: 0 20px 0 0;
     align-items: center;
   }
 
@@ -42,7 +43,6 @@ export const StyledHeader = styled.header<{ spaceBetween: string }>`
 
       /* Hidden folk image */
       img {
-        width: 40px;
         transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
         &:hover {
