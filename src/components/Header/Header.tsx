@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from "styled-components";
-import { useEffect } from "react";
 import { hiddenFolksType } from "../App/App";
 import { StyledHeader } from "./Header.styled";
 import { CheckStatus } from "../Main/SwipeEffect/MapImage/MapImage";
@@ -12,19 +11,11 @@ type FolksProps = {
   avatar?: string | null | undefined;
   checkStatus?: string;
   background?: string;
-  foundAllFolks?: boolean;
   time?: {
     hours: number;
     minutes: number;
     seconds: number;
   };
-  setTime?: React.Dispatch<
-    React.SetStateAction<{
-      hours: number;
-      minutes: number;
-      seconds: number;
-    }>
-  >;
 };
 
 export const StyledTimer = styled.h2<{ padding: string }>`
@@ -37,19 +28,11 @@ export const StyledTimer = styled.h2<{ padding: string }>`
 `;
 
 interface TimerProps {
-  foundAllFolks?: boolean;
   time: {
     hours: number;
     minutes: number;
     seconds: number;
   };
-  setTime: React.Dispatch<
-    React.SetStateAction<{
-      hours: number;
-      minutes: number;
-      seconds: number;
-    }>
-  >;
 }
 
 interface TimeStringProps {
@@ -76,36 +59,7 @@ export const TimeString = ({ hours, minutes, seconds }: TimeStringProps) => {
   );
 };
 
-const Timer = ({ foundAllFolks, time, setTime }: TimerProps) => {
-  useEffect(() => {
-    if (foundAllFolks) return;
-    const interval = setInterval(() => {
-      // Increment the seconds by 1
-      setTime((prevTime) => ({
-        ...prevTime,
-        seconds: prevTime.seconds + 1,
-      }));
-
-      if (time.seconds === 59) {
-        setTime((prevTime) => ({
-          ...prevTime,
-          seconds: 0,
-          minutes: prevTime.minutes + 1,
-        }));
-      }
-
-      if (time.minutes === 59) {
-        setTime((prevTime) => ({
-          ...prevTime,
-          minutes: 0,
-          hours: prevTime.hours + 1,
-        }));
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [time, foundAllFolks]);
-
+const Timer = ({ time }: TimerProps) => {
   return (
     <StyledTimer padding="20px">
       {
@@ -124,11 +78,9 @@ export default function Header({
   time,
   avatar,
   signOut,
-  setTime,
   background,
   hiddenFolks,
   checkStatus,
-  foundAllFolks,
 }: FolksProps): JSX.Element {
   const StatusLoading = () => {
     if (checkStatus !== undefined && background !== undefined)
@@ -137,10 +89,8 @@ export default function Header({
   };
 
   const DisplayTime = () => {
-    if (time !== undefined && setTime !== undefined) {
-      return (
-        <Timer foundAllFolks={foundAllFolks} time={time} setTime={setTime} />
-      );
+    if (time !== undefined) {
+      return <Timer time={time} />;
     } else return null;
   };
 

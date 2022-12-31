@@ -4,16 +4,16 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { hiddenFolksType } from "../../../App/App";
-import Header, { StyledTimer, TimeString } from "../../../Header/Header";
+import Header from "../../../Header/Header";
 import { auth, db } from "../../../utilities/firebase";
 import { StyledMain } from "../../Main.styled";
 import {
   StyledImageWrapper,
   StyledMousePointer,
-  StyledPlayTime,
   StyledStatusChecker,
   StyledTargetFolks,
 } from "./MapImage.styled";
+import { ReportPlayTime } from "./ReportPlayTime/ReportPlayTime";
 
 interface ImageProps {
   src: string;
@@ -103,53 +103,6 @@ export const CheckStatus = ({ status, background }: CheckStatusProps) => {
     <StyledStatusChecker background={background}>
       <p>{status}</p>
     </StyledStatusChecker>
-  );
-};
-
-interface ReportPlayTimeProps {
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-const ReportPlayTime = ({ hours, minutes, seconds }: ReportPlayTimeProps) => {
-  return (
-    <StyledPlayTime>
-      <div>
-        <div>
-          <div>
-            You Finished in{" "}
-            {
-              <StyledTimer padding="0px">
-                {
-                  <TimeString
-                    hours={hours}
-                    minutes={minutes}
-                    seconds={seconds}
-                  />
-                }
-              </StyledTimer>
-            }{" "}
-            seconds
-          </div>
-        </div>
-        <div>
-          <p>Submit your score on the global leaderboard!</p>
-          <div>
-            <form action="#">
-              <div>
-                <label htmlFor="name">Enter Name:</label>
-                <input type="name" id="name" placeholder="Letam" />
-              </div>
-              <div>
-                <button type="button">Cancel</button>
-                <button type="submit">Submit Score</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </StyledPlayTime>
   );
 };
 
@@ -327,6 +280,37 @@ export default function MapImage({
     if (allTrue) setFoundAllFolks(true);
   }, [hiddenFolks]);
 
+  useEffect(() => {
+    if (foundAllFolks) {
+      return;
+    }
+    const interval = setInterval(() => {
+      // Increment the seconds by 1
+      setTime((prevTime) => ({
+        ...prevTime,
+        seconds: prevTime.seconds + 1,
+      }));
+
+      if (time.seconds === 59) {
+        setTime((prevTime) => ({
+          ...prevTime,
+          seconds: 0,
+          minutes: prevTime.minutes + 1,
+        }));
+      }
+
+      if (time.minutes === 59) {
+        setTime((prevTime) => ({
+          ...prevTime,
+          minutes: 0,
+          hours: prevTime.hours + 1,
+        }));
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [time, foundAllFolks]);
+
   const getHiddenFolksCoords = async (imageName: string, folkName: string) => {
     const pathToCoords = collection(db, "coords", imageName, folkName);
     const coordsDoc = await getDocs(pathToCoords);
@@ -363,11 +347,9 @@ export default function MapImage({
         <>
           <Header
             time={time}
-            setTime={setTime}
             background={background}
             hiddenFolks={hiddenFolks}
             checkStatus={checkStatus}
-            foundAllFolks={foundAllFolks}
           />
           <StyledMain>
             <StyledImageWrapper
@@ -393,6 +375,7 @@ export default function MapImage({
               hours={time.hours}
               minutes={time.minutes}
               seconds={time.seconds}
+              hiddenFolks={hiddenFolks}
             />
           )}
         </>
