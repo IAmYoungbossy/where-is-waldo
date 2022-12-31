@@ -1,4 +1,10 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  DocumentData,
+  getDocs,
+  QueryDocumentSnapshot,
+} from "firebase/firestore";
 import { db } from "./firebase";
 
 export const addNameToTable = async (
@@ -33,4 +39,20 @@ export const getNameFromTable = async (
   const getAllDocsInSubCollection = await getDocs(getConsoleSubCollection);
   const dataArray = getAllDocsInSubCollection.docs.map((doc) => [doc.data()]);
   console.log(dataArray);
+};
+
+const getSubCollectionPath = (doc: QueryDocumentSnapshot<DocumentData>) =>
+  (async () =>
+    await getDocs(collection(db, "leader-board", `${doc.id}`, "Name")))();
+
+export const getAllNamesFromDatabase = async () => {
+  const mainCollection = collection(db, "leader-board");
+  const docs = await getDocs(mainCollection);
+  const docsArray = docs.docs.map(getSubCollectionPath);
+  const result = await Promise.all(docsArray);
+  const allDocs = result
+    .map((subCol) => subCol.docs.map((doc) => ({ [doc.id]: doc.data() })))
+    .filter((doc) => doc.length > 0)
+    .flat(1);
+  console.log(allDocs);
 };

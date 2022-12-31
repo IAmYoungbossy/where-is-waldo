@@ -1,6 +1,9 @@
 import { hiddenFolksType } from "../../../../App/App";
 import { StyledTimer, TimeString } from "../../../../Header/Header";
-import { addNameToTable } from "../../../../utilities/addToFirebase";
+import {
+  addNameToTable,
+  getAllNamesFromDatabase,
+} from "../../../../utilities/addToFirebase";
 import { useState } from "react";
 import { StyledPlayTime } from "./ReportPlayTime.style";
 
@@ -79,7 +82,9 @@ export const ReportPlayTime = ({
                 />
               </div>
               <div>
-                <button type="button">Cancel</button>
+                <button type="button" onClick={getAllNamesFromDatabase}>
+                  Cancel
+                </button>
                 <button type="submit">Submit Score</button>
               </div>
             </form>
