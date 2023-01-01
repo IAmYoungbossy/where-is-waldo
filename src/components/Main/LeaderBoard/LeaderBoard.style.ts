@@ -94,6 +94,15 @@ export const StyledTable = styled.div`
       background-color: #301c1c;
     }
 
+    td span {
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    td sup {
+      font-size: 0.7rem;
+    }
+
     tr:nth-child(even) {
       background-color: #301c1c;
     }

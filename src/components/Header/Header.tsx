@@ -39,9 +39,15 @@ interface TimeStringProps {
   hours: number;
   minutes: number;
   seconds: number;
+  seperator?: string;
 }
 
-export const TimeString = ({ hours, minutes, seconds }: TimeStringProps) => {
+export const TimeString = ({
+  hours,
+  minutes,
+  seconds,
+  seperator,
+}: TimeStringProps) => {
   const formatTime = (timeUnit: number) =>
     timeUnit < 10 ? `0${timeUnit}` : `${timeUnit}`;
   const hour = formatTime(hours);
@@ -50,11 +56,26 @@ export const TimeString = ({ hours, minutes, seconds }: TimeStringProps) => {
   return (
     <p>
       {`${hour}`}
-      <span>hr</span>
+      {seperator === undefined && <span>hr</span>}
+      {seperator !== undefined && (
+        <span>
+          <sup>hr</sup>:{" "}
+        </span>
+      )}
       {`${minute}`}
-      <span>min</span>
+      {seperator === undefined && <span>min</span>}
+      {seperator !== undefined && (
+        <span>
+          <sup>min</sup>:{" "}
+        </span>
+      )}
       {`${second}`}
-      <span>sec</span>
+      {seperator === undefined && <span>sec</span>}
+      {seperator !== undefined && (
+        <span>
+          <sup>sec</sup>
+        </span>
+      )}
     </p>
   );
 };

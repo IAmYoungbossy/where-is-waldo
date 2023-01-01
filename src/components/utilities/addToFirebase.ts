@@ -26,18 +26,24 @@ export const addNameToTable = async (
   });
 };
 
-export const getNameFromTable = async (
+export const getNamesFromDatabase = async (
   gameConsoleName: string,
-  subCollection: string
+  setNames: React.Dispatch<
+    React.SetStateAction<{ data: DocumentData; id: string }[]>
+  >
 ) => {
   const getConsoleSubCollection = collection(
     db,
     "leader-board",
     gameConsoleName,
-    subCollection
+    "Name"
   );
   const getAllDocsInSubCollection = await getDocs(getConsoleSubCollection);
-  const dataArray = getAllDocsInSubCollection.docs.map((doc) => [doc.data()]);
+  const dataArray = getAllDocsInSubCollection.docs.map((doc) => ({
+    data: doc.data(),
+    id: doc.id,
+  }));
+  setNames(dataArray);
   console.log(dataArray);
 };
 
@@ -45,14 +51,20 @@ const getSubCollectionPath = (doc: QueryDocumentSnapshot<DocumentData>) =>
   (async () =>
     await getDocs(collection(db, "leader-board", `${doc.id}`, "Name")))();
 
-export const getAllNamesFromDatabase = async () => {
+export const getAllNamesFromDatabase = async (
+  setNames: React.Dispatch<
+    React.SetStateAction<{ data: DocumentData; id: string }[]>
+  >
+) => {
   const mainCollection = collection(db, "leader-board");
   const docs = await getDocs(mainCollection);
   const docsArray = docs.docs.map(getSubCollectionPath);
   const result = await Promise.all(docsArray);
   const allDocs = result
-    .map((subCol) => subCol.docs.map((doc) => ({ [doc.id]: doc.data() })))
+    .map((subCol) =>
+      subCol.docs.map((doc) => ({ data: doc.data(), id: doc.id }))
+    )
     .filter((doc) => doc.length > 0)
     .flat(1);
-  console.log(allDocs);
+  setNames(allDocs);
 };
