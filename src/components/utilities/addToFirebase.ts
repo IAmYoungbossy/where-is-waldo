@@ -39,12 +39,13 @@ export const getNamesFromDatabase = async (
     "Name"
   );
   const getAllDocsInSubCollection = await getDocs(getConsoleSubCollection);
-  const dataArray = getAllDocsInSubCollection.docs.map((doc) => ({
-    data: doc.data(),
-    id: doc.id,
-  }));
+  const dataArray = getAllDocsInSubCollection.docs
+    .map((doc) => ({
+      data: doc.data(),
+      id: doc.id,
+    }))
+    .sort((a, b) => a.data["Time In Seconds"] - b.data["Time In Seconds"]);
   setNames(dataArray);
-  console.log(dataArray);
 };
 
 const getSubCollectionPath = (doc: QueryDocumentSnapshot<DocumentData>) =>
@@ -65,6 +66,7 @@ export const getAllNamesFromDatabase = async (
       subCol.docs.map((doc) => ({ data: doc.data(), id: doc.id }))
     )
     .filter((doc) => doc.length > 0)
-    .flat(1);
+    .flat(1)
+    .sort((a, b) => a.data["Time In Seconds"] - b.data["Time In Seconds"]);
   setNames(allDocs);
 };
