@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { Link } from "react-router-dom";
 import { hiddenFolksType } from "../App/App";
 import { StyledHeader, StyledTimer } from "./Header.styled";
 import { CheckStatus } from "../Main/SwipeEffect/MapImage/MapImage";
-import { Link } from "react-router-dom";
 import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
 
 type FolksProps = {

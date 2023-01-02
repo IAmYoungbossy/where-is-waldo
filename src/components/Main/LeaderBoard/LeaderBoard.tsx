@@ -1,11 +1,11 @@
-import Header from "../../Header/Header";
-import { StyledMain } from "../Main.styled";
-import { StyledTable } from "./LeaderBoard.style";
-import { DocumentData } from "firebase/firestore";
 import {
   getAllNamesFromDatabase,
   getNamesFromDatabase,
 } from "../../utilities/firebaseCRUD";
+import Header from "../../Header/Header";
+import { StyledMain } from "../Main.styled";
+import { StyledTable } from "./LeaderBoard.style";
+import { DocumentData } from "firebase/firestore";
 import { FormatTimeToString } from "../../FormatTimeToString/FormatTimeToString";
 
 interface ConsoleLeaderboardProps {
