@@ -30,6 +30,11 @@ export const StyledHeader = styled.header<{ spaceBetween: string }>`
     padding: 20px;
   }
 
+  h1 > a {
+    color: white;
+    text-decoration: none;
+  }
+
   /* Div container for all hidden folks */
   div {
     gap: 5px;

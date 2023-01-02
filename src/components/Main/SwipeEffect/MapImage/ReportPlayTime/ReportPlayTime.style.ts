@@ -50,6 +50,7 @@ export const StyledPlayTime = styled.div`
         padding: 5px;
         color: white;
         border: none;
+        cursor: pointer;
         margin-left: 5px;
         background-color: #eb3d3d;
       }
@@ -65,6 +66,15 @@ export const StyledPlayTime = styled.div`
         margin-top: 5px;
         background-color: #222;
         border: 1px solid white;
+      }
+
+      form a {
+        color: white;
+        text-decoration: none;
+      }
+
+      form span {
+        color: yellow;
       }
 
       form input:not(:placeholder-shown) {

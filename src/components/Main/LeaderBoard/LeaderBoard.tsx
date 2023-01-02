@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Header, { TimeString } from "../../Header/Header";
 import { StyledMain } from "../Main.styled";
 import { StyledTable } from "./LeaderBoard.style";
@@ -9,36 +8,92 @@ import {
 } from "../../utilities/addToFirebase";
 
 interface ConsoleLeaderboardProps {
+  setConsoleName: React.Dispatch<React.SetStateAction<string>>;
   setNames: React.Dispatch<
     React.SetStateAction<{ data: DocumentData; id: string }[]>
   >;
 }
 
-const ConsoleLeaderBoard = ({ setNames }: ConsoleLeaderboardProps) => {
+interface TableProps {
+  consoleName: string;
+  setConsoleName: React.Dispatch<React.SetStateAction<string>>;
+  setNames: React.Dispatch<
+    React.SetStateAction<
+      {
+        data: DocumentData;
+        id: string;
+      }[]
+    >
+  >;
+  names: {
+    data: DocumentData;
+    id: string;
+  }[];
+}
+
+const ConsoleLeaderBoard = ({
+  setNames,
+  setConsoleName,
+}: ConsoleLeaderboardProps) => {
   return (
     <>
       <div>
-        <button onClick={() => getNamesFromDatabase("N64", setNames)}>
+        <button
+          onClick={() => {
+            getNamesFromDatabase("N64", setNames);
+            setConsoleName("N64");
+          }}
+        >
           N64
         </button>
-        <button onClick={() => getNamesFromDatabase("PS1", setNames)}>
+        <button
+          onClick={() => {
+            getNamesFromDatabase("PS1", setNames);
+            setConsoleName("PS1");
+          }}
+        >
           PS1
         </button>
-        <button onClick={() => getNamesFromDatabase("PS2", setNames)}>
+        <button
+          onClick={() => {
+            getNamesFromDatabase("PS2", setNames);
+            setConsoleName("PS2");
+          }}
+        >
           PS2
         </button>
-        <button onClick={() => getNamesFromDatabase("PS4", setNames)}>
+        <button
+          onClick={() => {
+            getNamesFromDatabase("PS4", setNames);
+            setConsoleName("PS4");
+          }}
+        >
           PS4
         </button>
-        <button onClick={() => getNamesFromDatabase("LocNar", setNames)}>
+        <button
+          onClick={() => {
+            getNamesFromDatabase("LocNar", setNames);
+            setConsoleName("Loc Nar");
+          }}
+        >
           Loc Nar
         </button>
-        <button onClick={() => getNamesFromDatabase("Dreamcast", setNames)}>
+        <button
+          onClick={() => {
+            getNamesFromDatabase("Dreamcast", setNames);
+            setConsoleName("Dreamcast");
+          }}
+        >
           Dreamcast
         </button>
       </div>
       <div>
-        <button onClick={() => getAllNamesFromDatabase(setNames)}>
+        <button
+          onClick={() => {
+            getAllNamesFromDatabase(setNames);
+            setConsoleName("Overall");
+          }}
+        >
           Overall
         </button>
       </div>
@@ -46,19 +101,25 @@ const ConsoleLeaderBoard = ({ setNames }: ConsoleLeaderboardProps) => {
   );
 };
 
-const Table = () => {
-  const [names, setNames] = useState<{ data: DocumentData; id: string }[]>([]);
-
+const Table = ({
+  names,
+  setNames,
+  consoleName,
+  setConsoleName,
+}: TableProps) => {
   return (
     <StyledMain>
       <StyledTable>
         <h3>Global Leader Board</h3>
-        <ConsoleLeaderBoard setNames={setNames} />
+        <ConsoleLeaderBoard
+          setNames={setNames}
+          setConsoleName={setConsoleName}
+        />
         <table>
           <thead>
             <tr>
               <th>
-                Place <span>(N64)</span>
+                Place <span>({consoleName})</span>
               </th>
               <th>Name</th>
               <th>
@@ -90,11 +151,21 @@ const Table = () => {
   );
 };
 
-export const LeaderBoard = () => {
+export const LeaderBoard = ({
+  names,
+  setNames,
+  consoleName,
+  setConsoleName,
+}: TableProps) => {
   return (
     <>
-      <Header />
-      <Table />
+      <Header leaderboard="yes" />
+      <Table
+        names={names}
+        setNames={setNames}
+        consoleName={consoleName}
+        setConsoleName={setConsoleName}
+      />
     </>
   );
 };

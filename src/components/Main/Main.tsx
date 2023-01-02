@@ -12,6 +12,8 @@ import PS4 from "../assets/P-PS4-min.jpg";
 import { hiddenFolksType } from "../App/App";
 import { ResetPassword } from "./ResetPassword/ResetPassword";
 import { LeaderBoard } from "./LeaderBoard/LeaderBoard";
+import { DocumentData } from "firebase/firestore";
+import { useState } from "react";
 
 export interface MainProps {
   handleDisplayHiddenFolks: (alt: string) => void;
@@ -20,6 +22,9 @@ export interface MainProps {
 }
 
 export function Main({ ...props }: MainProps): JSX.Element {
+  const [consoleName, setConsoleName] = useState("");
+  const [names, setNames] = useState<{ data: DocumentData; id: string }[]>([]);
+
   return (
     <>
       <Routes>
@@ -27,30 +32,100 @@ export function Main({ ...props }: MainProps): JSX.Element {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/dashboard" element={<SwipeEffect {...props} />} />
-        <Route path="/leader-board" element={<LeaderBoard />} />
+        <Route
+          path="/leader-board"
+          element={
+            <LeaderBoard
+              names={names}
+              setNames={setNames}
+              consoleName={consoleName}
+              setConsoleName={setConsoleName}
+            />
+          }
+        />
         <Route
           path="/dashboard/N64"
-          element={<MapImage src={N64} alt="N64" {...props} />}
+          element={
+            <MapImage
+              src={N64}
+              alt="N64"
+              names={names}
+              setNames={setNames}
+              consoleName={consoleName}
+              setConsoleName={setConsoleName}
+              {...props}
+            />
+          }
         />
         <Route
           path="/dashboard/PS1"
-          element={<MapImage src={PS1} alt="PS1" {...props} />}
+          element={
+            <MapImage
+              src={PS1}
+              alt="PS1"
+              names={names}
+              setNames={setNames}
+              consoleName={consoleName}
+              setConsoleName={setConsoleName}
+              {...props}
+            />
+          }
         />
         <Route
           path="/dashboard/PS2"
-          element={<MapImage src={PS2} alt="PS2" {...props} />}
+          element={
+            <MapImage
+              src={PS2}
+              alt="PS2"
+              names={names}
+              setNames={setNames}
+              consoleName={consoleName}
+              setConsoleName={setConsoleName}
+              {...props}
+            />
+          }
         />
         <Route
           path="/dashboard/PS4"
-          element={<MapImage src={PS4} alt="PS4" {...props} />}
+          element={
+            <MapImage
+              src={PS4}
+              alt="PS4"
+              names={names}
+              setNames={setNames}
+              consoleName={consoleName}
+              setConsoleName={setConsoleName}
+              {...props}
+            />
+          }
         />
         <Route
           path="/dashboard/LocNar"
-          element={<MapImage src={LocNar} alt="LocNar" {...props} />}
+          element={
+            <MapImage
+              src={LocNar}
+              alt="LocNar"
+              names={names}
+              setNames={setNames}
+              consoleName={consoleName}
+              setConsoleName={setConsoleName}
+              {...props}
+            />
+          }
         />
         <Route
           path="/dashboard/Dreamcast"
-          element={<MapImage src={Dreamcast} alt="Dreamcast" {...props} />}
+          element={
+            <MapImage
+              names={names}
+              alt="Dreamcast"
+              src={Dreamcast}
+              setNames={setNames}
+              consoleName={consoleName}
+              setConsoleName={setConsoleName}
+              {...props}
+            />
+          }
         />
       </Routes>
     </>

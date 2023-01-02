@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { collection, getDocs } from "firebase/firestore";
+import { collection, DocumentData, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +20,20 @@ interface ImageProps {
   alt: string;
   hiddenFolks: hiddenFolksType[];
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
+  setNames: React.Dispatch<
+    React.SetStateAction<
+      {
+        data: DocumentData;
+        id: string;
+      }[]
+    >
+  >;
+  names: {
+    data: DocumentData;
+    id: string;
+  }[];
+  setConsoleName: React.Dispatch<React.SetStateAction<string>>;
+  consoleName: string;
 }
 
 interface StyledPointerProps {
@@ -111,6 +125,8 @@ export default function MapImage({
   alt,
   hiddenFolks,
   setHiddenFolks,
+  setNames,
+  setConsoleName,
 }: ImageProps): JSX.Element {
   // State for clicked target in percentage. Use for backend validation
   const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
@@ -372,10 +388,13 @@ export default function MapImage({
           </StyledMain>
           {foundAllFolks && (
             <ReportPlayTime
+              alt={alt}
               hours={time.hours}
               minutes={time.minutes}
               seconds={time.seconds}
               hiddenFolks={hiddenFolks}
+              setNames={setNames}
+              setConsoleName={setConsoleName}
             />
           )}
         </>

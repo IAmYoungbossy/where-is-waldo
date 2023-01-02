@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { hiddenFolksType } from "../App/App";
 import { StyledHeader } from "./Header.styled";
 import { CheckStatus } from "../Main/SwipeEffect/MapImage/MapImage";
+import { Link } from "react-router-dom";
 
 type FolksProps = {
   hiddenFolks?: hiddenFolksType[];
@@ -16,6 +17,7 @@ type FolksProps = {
     minutes: number;
     seconds: number;
   };
+  leaderboard?: string;
 };
 
 export const StyledTimer = styled.h2<{ padding: string }>`
@@ -102,6 +104,7 @@ export default function Header({
   background,
   hiddenFolks,
   checkStatus,
+  leaderboard,
 }: FolksProps): JSX.Element {
   const StatusLoading = () => {
     if (checkStatus !== undefined && background !== undefined)
@@ -115,9 +118,25 @@ export default function Header({
     } else return null;
   };
 
+  const HeaderContent = () => {
+    if (avatar)
+      return (
+        <h1>
+          <Link to="/leader-board">Leaderboard</Link>
+        </h1>
+      );
+    else if (hiddenFolks || leaderboard)
+      return (
+        <h1>
+          <Link to="/dashboard">Home</Link>
+        </h1>
+      );
+    else return <h1>HiddenFolks</h1>;
+  };
+
   return (
     <StyledHeader spaceBetween={hiddenFolks ? "space-evenly" : "space-between"}>
-      <h1>Hidden Folks</h1>
+      {<HeaderContent />}
       <Folks hiddenFolks={hiddenFolks} />
       {avatar && (
         <div>
@@ -146,7 +165,7 @@ function Folks({ hiddenFolks }: FolksProps): JSX.Element {
         <img
           src={folk.url}
           alt={folk.Name}
-          width={folk.Name === "Tommy" || folk.Name === "Aurthur" ? 26 : 40}
+          width={folk.Name === "Tommy" || folk.Name === "Aurthur" ? 25 : 40}
         />
         <p>{folk.Name}</p>
       </div>

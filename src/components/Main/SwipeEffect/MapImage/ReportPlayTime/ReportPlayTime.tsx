@@ -1,14 +1,29 @@
-import { hiddenFolksType } from "../../../../App/App";
-import { StyledTimer, TimeString } from "../../../../Header/Header";
-import { addNameToTable } from "../../../../utilities/addToFirebase";
 import { useState } from "react";
+import {
+  addNameToTable,
+  getNamesFromDatabase,
+} from "../../../../utilities/addToFirebase";
+import { Link, useNavigate } from "react-router-dom";
+import { DocumentData } from "firebase/firestore";
+import { hiddenFolksType } from "../../../../App/App";
 import { StyledPlayTime } from "./ReportPlayTime.style";
+import { StyledTimer, TimeString } from "../../../../Header/Header";
 
 interface ReportPlayTimeProps {
+  setConsoleName: React.Dispatch<React.SetStateAction<string>>;
   hours: number;
   minutes: number;
   seconds: number;
   hiddenFolks: hiddenFolksType[];
+  setNames: React.Dispatch<
+    React.SetStateAction<
+      {
+        data: DocumentData;
+        id: string;
+      }[]
+    >
+  >;
+  alt: string;
 }
 
 const getTotalTimeInSeconds = (
@@ -27,13 +42,25 @@ export const ReportPlayTime = ({
   minutes,
   seconds,
   hiddenFolks,
+  setNames,
+  alt,
+  setConsoleName,
 }: ReportPlayTimeProps) => {
   const [name, setName] = useState("");
+  const [nameErrorMsg, setNameErrorMsg] = useState(false);
 
+  const navigate = useNavigate();
   const gameConsoleName = hiddenFolks[0].imageName;
   const totalTimeInSeconds = getTotalTimeInSeconds(hours, minutes, seconds);
+
   const handleSubmition = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (name.trim() === "") {
+      setNameErrorMsg(true);
+      setTimeout(() => setNameErrorMsg(false), 2000);
+      return;
+    }
+
     addNameToTable(
       gameConsoleName,
       name,
@@ -42,7 +69,9 @@ export const ReportPlayTime = ({
       `${seconds}`,
       totalTimeInSeconds
     );
-    e.currentTarget.reset();
+    navigate("/leader-board", { replace: true });
+    getNamesFromDatabase(alt, setNames);
+    setConsoleName(alt);
   };
 
   return (
@@ -77,9 +106,12 @@ export const ReportPlayTime = ({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
+                {nameErrorMsg && <span>Please enter a valid name</span>}
               </div>
               <div>
-                <button type="button">Cancel</button>
+                <button type="button">
+                  <Link to="/dashboard">Cancel</Link>
+                </button>
                 <button type="submit">Submit Score</button>
               </div>
             </form>
