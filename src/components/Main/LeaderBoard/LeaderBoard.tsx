@@ -5,7 +5,7 @@ import { DocumentData } from "firebase/firestore";
 import {
   getAllNamesFromDatabase,
   getNamesFromDatabase,
-} from "../../utilities/addToFirebase";
+} from "../../utilities/firebaseCRUD";
 
 interface ConsoleLeaderboardProps {
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   addNameToTable,
   getNamesFromDatabase,
-} from "../../../../utilities/addToFirebase";
+} from "../../../../utilities/firebaseCRUD";
 import { Link, useNavigate } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
 import { hiddenFolksType } from "../../../../App/App";
