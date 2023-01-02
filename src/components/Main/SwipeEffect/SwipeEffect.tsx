@@ -26,6 +26,15 @@ import { auth, db, logout } from "../../utilities/firebase";
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
+const consoleImages = [
+  { name: "N64", url: N64 },
+  { name: "PS1", url: PS1 },
+  { name: "PS2", url: PS2 },
+  { name: "PS4", url: PS4 },
+  { name: "LocNar", url: LocNar },
+  { name: "Dreamcast", url: Dreamcast },
+];
+
 export default function SwipeEffect({
   handleDisplayHiddenFolks,
 }: MainProps): JSX.Element {
@@ -77,60 +86,20 @@ export default function SwipeEffect({
               modules={[Pagination, Navigation]}
               className="mySwiper"
             >
-              <SwiperSlide>
-                <Link to="/dashboard/N64">
-                  <img
-                    src={N64}
-                    alt="N64"
-                    onClick={handleDisplayHiddenFolks.bind(null, "N64")}
-                  />
-                </Link>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Link to="/dashboard/PS1">
-                  <img
-                    src={PS1}
-                    alt="PS1"
-                    onClick={handleDisplayHiddenFolks.bind(null, "PS1")}
-                  />
-                </Link>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Link to="/dashboard/Dreamcast">
-                  <img
-                    src={Dreamcast}
-                    alt="Dreamcast"
-                    onClick={handleDisplayHiddenFolks.bind(null, "Dreamcast")}
-                  />
-                </Link>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Link to="/dashboard/PS2">
-                  <img
-                    src={PS2}
-                    alt="PS2"
-                    onClick={handleDisplayHiddenFolks.bind(null, "PS2")}
-                  />
-                </Link>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Link to="/dashboard/LocNar">
-                  <img
-                    src={LocNar}
-                    alt="LocNar"
-                    onClick={handleDisplayHiddenFolks.bind(null, "LocNar")}
-                  />
-                </Link>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Link to="/dashboard/PS4">
-                  <img
-                    src={PS4}
-                    alt="PS4"
-                    onClick={handleDisplayHiddenFolks.bind(null, "PS4")}
-                  />
-                </Link>
-              </SwiperSlide>
+              {consoleImages.map((image) => (
+                <SwiperSlide>
+                  <Link to={`/dashboard/${image.name}`}>
+                    <img
+                      src={image.url}
+                      alt={image.name}
+                      onClick={handleDisplayHiddenFolks.bind(
+                        null,
+                        `${image.name}`
+                      )}
+                    />
+                  </Link>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </StyledMain>
         </>
