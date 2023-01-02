@@ -1,8 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Link } from "react-router-dom";
 import { hiddenFolksType } from "../App/App";
-import { StyledHeader, StyledTimer } from "./Header.styled";
-import { CheckStatus } from "../Main/SwipeEffect/MapImage/MapImage";
+import {
+  StyledHeader,
+  StyledStatusChecker,
+  StyledTimer,
+} from "./Header.styled";
 import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
 
 type FolksProps = {
@@ -39,6 +42,19 @@ const Timer = ({ time }: TimerProps) => {
         />
       }
     </StyledTimer>
+  );
+};
+
+interface CheckStatusProps {
+  status: string;
+  background: string;
+}
+
+export const CheckStatus = ({ status, background }: CheckStatusProps) => {
+  return (
+    <StyledStatusChecker background={background}>
+      <p>{status}</p>
+    </StyledStatusChecker>
   );
 };
 

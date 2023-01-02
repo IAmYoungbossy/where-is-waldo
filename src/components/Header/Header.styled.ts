@@ -66,3 +66,23 @@ export const StyledTimer = styled.h2<{ padding: string }>`
     color: #00a2ff;
   }
 `;
+
+export const StyledStatusChecker = styled.div<{ background: string }>`
+  top: 90px;
+  width: 100%;
+  color: white;
+  padding: 2px 15px;
+  font-weight: bold;
+  border-radius: 5px;
+  position: absolute;
+  font-family: monospace;
+
+  p {
+    margin: auto;
+    font-size: 1.1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: fit-content;
+    background-color: ${({ background }) => background};
+  }
+`;
