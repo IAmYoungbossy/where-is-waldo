@@ -1,4 +1,4 @@
-import Header, { TimeString } from "../../Header/Header";
+import Header from "../../Header/Header";
 import { StyledMain } from "../Main.styled";
 import { StyledTable } from "./LeaderBoard.style";
 import { DocumentData } from "firebase/firestore";
@@ -6,6 +6,7 @@ import {
   getAllNamesFromDatabase,
   getNamesFromDatabase,
 } from "../../utilities/firebaseCRUD";
+import { FormatTimeToString } from "../../FormatTimeToString/FormatTimeToString";
 
 interface ConsoleLeaderboardProps {
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;
@@ -134,7 +135,7 @@ const Table = ({
                 <td>{index + 1}</td>
                 <td>{name.data.Name}</td>
                 <td>
-                  <TimeString
+                  <FormatTimeToString
                     seperator="yes"
                     hours={parseInt(name.data.Hours)}
                     minutes={parseInt(name.data.Minutes)}

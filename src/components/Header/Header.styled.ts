@@ -57,3 +57,12 @@ export const StyledHeader = styled.header<{ spaceBetween: string }>`
     }
   }
 `;
+
+export const StyledTimer = styled.h2<{ padding: string }>`
+  padding: ${({ padding }) => padding};
+
+  & span {
+    font-size: 0.8rem;
+    color: #00a2ff;
+  }
+`;

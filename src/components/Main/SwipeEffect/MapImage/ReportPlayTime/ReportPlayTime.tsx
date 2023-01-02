@@ -7,7 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
 import { hiddenFolksType } from "../../../../App/App";
 import { StyledPlayTime } from "./ReportPlayTime.style";
-import { StyledTimer, TimeString } from "../../../../Header/Header";
+import { FormatTimeToString } from "../../../../FormatTimeToString/FormatTimeToString";
+import { StyledTimer } from "../../../../Header/Header.styled";
 
 interface ReportPlayTimeProps {
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;
@@ -83,7 +84,7 @@ export const ReportPlayTime = ({
             {
               <StyledTimer padding="0px">
                 {
-                  <TimeString
+                  <FormatTimeToString
                     hours={hours}
                     minutes={minutes}
                     seconds={seconds}

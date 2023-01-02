@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styled from "styled-components";
 import { hiddenFolksType } from "../App/App";
-import { StyledHeader } from "./Header.styled";
+import { StyledHeader, StyledTimer } from "./Header.styled";
 import { CheckStatus } from "../Main/SwipeEffect/MapImage/MapImage";
 import { Link } from "react-router-dom";
+import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
 
 type FolksProps = {
   hiddenFolks?: hiddenFolksType[];
@@ -20,15 +20,6 @@ type FolksProps = {
   leaderboard?: string;
 };
 
-export const StyledTimer = styled.h2<{ padding: string }>`
-  padding: ${({ padding }) => padding};
-
-  & span {
-    font-size: 0.8rem;
-    color: #00a2ff;
-  }
-`;
-
 interface TimerProps {
   time: {
     hours: number;
@@ -37,56 +28,11 @@ interface TimerProps {
   };
 }
 
-interface TimeStringProps {
-  hours: number;
-  minutes: number;
-  seconds: number;
-  seperator?: string;
-}
-
-export const TimeString = ({
-  hours,
-  minutes,
-  seconds,
-  seperator,
-}: TimeStringProps) => {
-  const formatTime = (timeUnit: number) =>
-    timeUnit < 10 ? `0${timeUnit}` : `${timeUnit}`;
-  const hour = formatTime(hours);
-  const minute = formatTime(minutes);
-  const second = formatTime(seconds);
-  return (
-    <p>
-      {`${hour}`}
-      {seperator === undefined && <span>hr</span>}
-      {seperator !== undefined && (
-        <span>
-          <sup>hr</sup>:{" "}
-        </span>
-      )}
-      {`${minute}`}
-      {seperator === undefined && <span>min</span>}
-      {seperator !== undefined && (
-        <span>
-          <sup>min</sup>:{" "}
-        </span>
-      )}
-      {`${second}`}
-      {seperator === undefined && <span>sec</span>}
-      {seperator !== undefined && (
-        <span>
-          <sup>sec</sup>
-        </span>
-      )}
-    </p>
-  );
-};
-
 const Timer = ({ time }: TimerProps) => {
   return (
     <StyledTimer padding="20px">
       {
-        <TimeString
+        <FormatTimeToString
           hours={time.hours}
           minutes={time.minutes}
           seconds={time.seconds}
@@ -106,18 +52,22 @@ export default function Header({
   checkStatus,
   leaderboard,
 }: FolksProps): JSX.Element {
+  // This handles when a character is clicked, it shows the three stages
+  // of validating the character. Checking, Error Msg or Success Msg
   const StatusLoading = () => {
     if (checkStatus !== undefined && background !== undefined)
       return <CheckStatus status={checkStatus} background={background} />;
     else return null;
   };
 
+  // This makes sure the timer appears only when image is loaded and ready to play
   const DisplayTime = () => {
     if (time !== undefined) {
       return <Timer time={time} />;
     } else return null;
   };
 
+  // This controls what appears in the h1 tag.
   const HeaderContent = () => {
     if (avatar)
       return (
@@ -158,6 +108,7 @@ export default function Header({
   );
 }
 
+// This component is responsible for displaying the hidden character in header
 function Folks({ hiddenFolks }: FolksProps): JSX.Element {
   const HiddenFolks = hiddenFolks?.map(
     (folk, index): JSX.Element => (
