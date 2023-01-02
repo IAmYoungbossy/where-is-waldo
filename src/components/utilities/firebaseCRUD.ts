@@ -7,6 +7,7 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase";
 
+// This function once triggered adds name and score (time) to firebase database
 export const addNameToDatabase = async (
   gameConsoleName: string,
   name: string,
@@ -26,6 +27,7 @@ export const addNameToDatabase = async (
   });
 };
 
+// This function is used in getting all names in a subcollection
 export const getNamesFromDatabase = async (
   gameConsoleName: string,
   setNames: React.Dispatch<
@@ -48,10 +50,13 @@ export const getNamesFromDatabase = async (
   setNames(dataArray);
 };
 
+// This function used in getting file path to a subcollection under main
+// collection (leader-board).
 const getSubCollectionPath = (doc: QueryDocumentSnapshot<DocumentData>) =>
   (async () =>
     await getDocs(collection(db, "leader-board", `${doc.id}`, "Name")))();
 
+// This gets overall subcollection under documents from leader-board collection
 export const getAllNamesFromDatabase = async (
   setNames: React.Dispatch<
     React.SetStateAction<{ data: DocumentData; id: string }[]>
