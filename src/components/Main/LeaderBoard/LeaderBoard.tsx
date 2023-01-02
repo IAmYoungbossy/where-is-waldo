@@ -2,6 +2,7 @@ import {
   getAllNamesFromDatabase,
   getNamesFromDatabase,
 } from "../../utilities/firebaseCRUD";
+import { consoleImages } from "../Main";
 import Header from "../../Header/Header";
 import { StyledMain } from "../Main.styled";
 import { StyledTable } from "./LeaderBoard.style";
@@ -32,61 +33,25 @@ interface TableProps {
   }[];
 }
 
-const ConsoleLeaderBoard = ({
+// This displays table for each consoles depending on the button clicked
+const DisplayLeaderboardButtons = ({
   setNames,
   setConsoleName,
 }: ConsoleLeaderboardProps) => {
   return (
     <>
       <div>
-        <button
-          onClick={() => {
-            getNamesFromDatabase("N64", setNames);
-            setConsoleName("N64");
-          }}
-        >
-          N64
-        </button>
-        <button
-          onClick={() => {
-            getNamesFromDatabase("PS1", setNames);
-            setConsoleName("PS1");
-          }}
-        >
-          PS1
-        </button>
-        <button
-          onClick={() => {
-            getNamesFromDatabase("PS2", setNames);
-            setConsoleName("PS2");
-          }}
-        >
-          PS2
-        </button>
-        <button
-          onClick={() => {
-            getNamesFromDatabase("PS4", setNames);
-            setConsoleName("PS4");
-          }}
-        >
-          PS4
-        </button>
-        <button
-          onClick={() => {
-            getNamesFromDatabase("LocNar", setNames);
-            setConsoleName("Loc Nar");
-          }}
-        >
-          Loc Nar
-        </button>
-        <button
-          onClick={() => {
-            getNamesFromDatabase("Dreamcast", setNames);
-            setConsoleName("Dreamcast");
-          }}
-        >
-          Dreamcast
-        </button>
+        {consoleImages.map((image) => (
+          <button
+            key={`${image.name}`}
+            onClick={() => {
+              getNamesFromDatabase(`${image.name}`, setNames);
+              setConsoleName(`${image.name}`);
+            }}
+          >
+            {image.name}
+          </button>
+        ))}
       </div>
       <div>
         <button
@@ -112,7 +77,7 @@ const Table = ({
     <StyledMain>
       <StyledTable>
         <h3>Global Leader Board</h3>
-        <ConsoleLeaderBoard
+        <DisplayLeaderboardButtons
           setNames={setNames}
           setConsoleName={setConsoleName}
         />
