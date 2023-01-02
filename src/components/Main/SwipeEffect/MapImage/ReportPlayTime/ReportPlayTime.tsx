@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  addNameToTable,
+  addNameToDatabase,
   getNamesFromDatabase,
 } from "../../../../utilities/firebaseCRUD";
 import { Link, useNavigate } from "react-router-dom";
@@ -61,7 +61,7 @@ export const ReportPlayTime = ({
       return;
     }
 
-    addNameToTable(
+    addNameToDatabase(
       gameConsoleName,
       name,
       `${hours}`,

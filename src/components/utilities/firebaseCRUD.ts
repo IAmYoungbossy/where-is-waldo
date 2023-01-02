@@ -7,7 +7,7 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase";
 
-export const addNameToTable = async (
+export const addNameToDatabase = async (
   gameConsoleName: string,
   name: string,
   hours: string,
