@@ -20,11 +20,9 @@ export function SignIn(): JSX.Element {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
+  // Directs only valid users to dasboard
   useEffect(() => {
-    if (loading) {
-      // TODO: loading screen
-      return;
-    }
+    if (loading) return;
     if (user) navigate("/dashboard");
   }, [user, loading]);
 
