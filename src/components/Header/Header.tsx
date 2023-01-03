@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { hiddenFolksType } from "../App/App";
 import {
   StyledHeader,
+  StyledLogout,
   StyledStatusChecker,
   StyledTimer,
 } from "./Header.styled";
 import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
+import { useState } from "react";
 
 type FolksProps = {
   hiddenFolks?: hiddenFolksType[];
@@ -21,6 +23,7 @@ type FolksProps = {
     seconds: number;
   };
   leaderboard?: string;
+  hoverWidth?: string;
 };
 
 interface TimerProps {
@@ -63,11 +66,13 @@ export default function Header({
   time,
   avatar,
   signOut,
+  hoverWidth,
   background,
   hiddenFolks,
   checkStatus,
   leaderboard,
 }: FolksProps): JSX.Element {
+  const [toggleLogout, setToggleLogOut] = useState(false);
   // This handles when a character is clicked, it shows the three stages
   // of validating the character. Checking, Error Msg or Success Msg
   const StatusLoading = () => {
@@ -100,8 +105,13 @@ export default function Header({
     else return <h1>HiddenFolks</h1>;
   };
 
+  const firstName = name?.split(" ")[0];
+
   return (
-    <StyledHeader spaceBetween={hiddenFolks ? "space-evenly" : "space-between"}>
+    <StyledHeader
+      spaceBetween={hiddenFolks || avatar ? "space-evenly" : "space-between"}
+      hoverWidth={hoverWidth}
+    >
       {<HeaderContent />}
       <Folks hiddenFolks={hiddenFolks} />
       {avatar && (
@@ -112,10 +122,15 @@ export default function Header({
               alt="Avatar"
               width="40px"
               style={{ borderRadius: "50px" }}
+              onClick={() => setToggleLogOut(toggleLogout ? false : true)}
             />
           </div>
-          <p>{name}</p>
-          {name && <button onClick={signOut}>Log Out</button>}
+          {toggleLogout && (
+            <StyledLogout>
+              <p>Hi, {firstName}.</p>
+              {name && <button onClick={signOut}>Log Out</button>}
+            </StyledLogout>
+          )}
         </div>
       )}
       {hiddenFolks && <DisplayTime />}

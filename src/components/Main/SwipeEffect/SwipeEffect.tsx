@@ -65,7 +65,12 @@ export default function SwipeEffect({
     <>
       {user && (
         <>
-          <Header name={name} signOut={logout} avatar={photoUrl} />
+          <Header
+            name={name}
+            signOut={logout}
+            avatar={photoUrl}
+            hoverWidth={"normal"}
+          />
           <StyledMain>
             <Swiper
               loop={true}

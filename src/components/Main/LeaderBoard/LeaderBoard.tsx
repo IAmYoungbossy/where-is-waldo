@@ -91,7 +91,6 @@ const Table = ({
               <th>
                 Score <span>(Time)</span>
               </th>
-              <th>Date</th>
             </tr>
           </thead>
           <tbody>
@@ -107,7 +106,6 @@ const Table = ({
                     seconds={parseInt(name.data.Seconds)}
                   />
                 </td>
-                <td>Nov 13 2022</td>
               </tr>
             ))}
           </tbody>
