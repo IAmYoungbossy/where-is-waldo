@@ -19,7 +19,7 @@ export const ResetPassword = () => {
 
   return (
     <>
-      <Header />
+      <Header></Header>
       <StyledMain>
         <StyledForm>
           <input

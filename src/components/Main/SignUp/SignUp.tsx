@@ -34,7 +34,7 @@ export function SignUp() {
 
   return (
     <>
-      <Header />
+      <Header></Header>
       <StyledMain>
         <StyledForm>
           <input

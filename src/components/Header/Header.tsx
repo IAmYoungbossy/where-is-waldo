@@ -2,28 +2,34 @@
 import { Link } from "react-router-dom";
 import { hiddenFolksType } from "../App/App";
 import {
+  StyledDashboardHeader,
+  StyledFolksAndTimer,
   StyledHeader,
+  StyledHiddenFolks,
   StyledLogout,
+  StyledLogoutWrapper,
+  StyledSignInHeader,
   StyledStatusChecker,
   StyledTimer,
 } from "./Header.styled";
 import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
 import { useState } from "react";
+import HomePng from "../assets/home.png";
 
-type FolksProps = {
-  hiddenFolks?: hiddenFolksType[];
-  name?: string;
-  signOut?: () => void;
-  avatar?: string | null | undefined;
-  checkStatus?: string;
-  background?: string;
-  time?: {
-    hours: number;
-    minutes: number;
-    seconds: number;
-  };
-  leaderboard?: string;
-  hoverWidth?: string;
+interface HeaderProps {
+  children?: JSX.Element;
+}
+
+export default function Header({ children }: HeaderProps) {
+  return <StyledHeader>{children}</StyledHeader>;
+}
+
+export const SignInHeader = () => {
+  return (
+    <StyledSignInHeader>
+      <h1>HiddenFolks</h1>
+    </StyledSignInHeader>
+  );
 };
 
 interface TimerProps {
@@ -34,9 +40,9 @@ interface TimerProps {
   };
 }
 
-const Timer = ({ time }: TimerProps) => {
+export const Timer = ({ time }: TimerProps) => {
   return (
-    <StyledTimer padding="20px">
+    <StyledTimer padding="20px 0">
       {
         <FormatTimeToString
           hours={time.hours}
@@ -61,87 +67,47 @@ export const CheckStatus = ({ status, background }: CheckStatusProps) => {
   );
 };
 
-export default function Header({
-  name,
-  time,
-  avatar,
-  signOut,
-  hoverWidth,
-  background,
-  hiddenFolks,
-  checkStatus,
-  leaderboard,
-}: FolksProps): JSX.Element {
+interface LogoutProps {
+  name: string;
+  avatar: string | null | undefined;
+  signOut: () => void;
+}
+
+export const Logout = ({ avatar, name, signOut }: LogoutProps) => {
   const [toggleLogout, setToggleLogOut] = useState(false);
-  // This handles when a character is clicked, it shows the three stages
-  // of validating the character. Checking, Error Msg or Success Msg
-  const StatusLoading = () => {
-    if (checkStatus !== undefined && background !== undefined)
-      return <CheckStatus status={checkStatus} background={background} />;
-    else return null;
-  };
-
-  // This makes sure the timer appears only when image is loaded and ready to play
-  const DisplayTime = () => {
-    if (time !== undefined) {
-      return <Timer time={time} />;
-    } else return null;
-  };
-
-  // This controls what appears in the h1 tag.
-  const HeaderContent = () => {
-    if (avatar)
-      return (
-        <h1>
-          <Link to="/leader-board">Leaderboard</Link>
-        </h1>
-      );
-    else if (hiddenFolks || leaderboard)
-      return (
-        <h1>
-          <Link to="/dashboard">Home</Link>
-        </h1>
-      );
-    else return <h1>HiddenFolks</h1>;
-  };
-
   const firstName = name?.split(" ")[0];
 
-  return (
-    <StyledHeader
-      spaceBetween={hiddenFolks || avatar ? "space-evenly" : "space-between"}
-      hoverWidth={hoverWidth}
-    >
-      {<HeaderContent />}
-      <Folks hiddenFolks={hiddenFolks} />
-      {avatar && (
-        <div>
-          <div>
-            <img
-              src={avatar}
-              alt="Avatar"
-              width="40px"
-              style={{ borderRadius: "50px" }}
-              onClick={() => setToggleLogOut(toggleLogout ? false : true)}
-            />
-          </div>
+  if (avatar !== null && avatar !== undefined)
+    return (
+      <StyledDashboardHeader>
+        <h1>
+          <Link to={"/leader-board"}>Leaderboard</Link>
+        </h1>
+        <StyledLogoutWrapper>
+          <img
+            src={avatar}
+            alt="Avatar"
+            onClick={() => setToggleLogOut(toggleLogout ? false : true)}
+          />
           {toggleLogout && (
             <StyledLogout>
               <p>Hi, {firstName}.</p>
-              {name && <button onClick={signOut}>Log Out</button>}
+              <button onClick={signOut}>Log Out</button>
             </StyledLogout>
           )}
-        </div>
-      )}
-      {hiddenFolks && <DisplayTime />}
-      {checkStatus !== "" && <StatusLoading />}
-    </StyledHeader>
-  );
-}
+        </StyledLogoutWrapper>
+      </StyledDashboardHeader>
+    );
+  else return null;
+};
 
 // This component is responsible for displaying the hidden character in header
-function Folks({ hiddenFolks }: FolksProps): JSX.Element {
-  const HiddenFolks = hiddenFolks?.map(
+export const HiddenFolks = ({
+  hiddenFolks,
+}: {
+  hiddenFolks: hiddenFolksType[];
+}): JSX.Element => {
+  const Folks = hiddenFolks?.map(
     (folk, index): JSX.Element => (
       <div key={index}>
         <img
@@ -154,5 +120,58 @@ function Folks({ hiddenFolks }: FolksProps): JSX.Element {
     )
   );
 
-  return <div>{HiddenFolks}</div>;
+  return <StyledHiddenFolks>{Folks}</StyledHiddenFolks>;
+};
+
+interface FolksAndTimerProps {
+  time: {
+    hours: number;
+    minutes: number;
+    seconds: number;
+  };
+  background: string;
+  checkStatus: string;
+  hiddenFolks: hiddenFolksType[];
 }
+
+export const FolksAndTimer = ({
+  time,
+  background,
+  checkStatus,
+  hiddenFolks,
+}: FolksAndTimerProps) => {
+  const [showInfo, setShowInfo] = useState(false);
+  return (
+    <StyledFolksAndTimer>
+      <h1>
+        <img src={HomePng} alt="Home" />
+        <Link to={"/dashboard"}>Home</Link>
+      </h1>
+      <div>
+        <p onClick={() => setShowInfo(showInfo ? false : true)}>Info</p>
+        {showInfo && <PhoneMenu time={time} hiddenFolks={hiddenFolks} />}
+      </div>
+      {/* <CheckStatus status={checkStatus} background={background} /> */}
+      <HiddenFolks hiddenFolks={hiddenFolks} />
+      <Timer time={time} />
+    </StyledFolksAndTimer>
+  );
+};
+
+interface PhoneMenuProps {
+  time: {
+    hours: number;
+    minutes: number;
+    seconds: number;
+  };
+  hiddenFolks: hiddenFolksType[];
+}
+
+const PhoneMenu = ({ time, hiddenFolks }: PhoneMenuProps) => {
+  return (
+    <div>
+      <HiddenFolks hiddenFolks={hiddenFolks} />
+      <Timer time={time} />
+    </div>
+  );
+};

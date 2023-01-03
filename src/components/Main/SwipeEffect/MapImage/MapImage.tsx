@@ -5,7 +5,7 @@ import {
   StyledPointer,
 } from "./MouseTarget/MouseTarget";
 import { useEffect, useState } from "react";
-import Header from "../../../Header/Header";
+import Header, { FolksAndTimer } from "../../../Header/Header";
 import { setGameTimer } from "./setGameTimer";
 import { useNavigate } from "react-router-dom";
 import { StyledMain } from "../../Main.styled";
@@ -172,12 +172,14 @@ export default function MapImage({
     <>
       {user && (
         <>
-          <Header
-            time={time}
-            background={background}
-            hiddenFolks={hiddenFolks}
-            checkStatus={checkStatus}
-          />
+          <Header>
+            <FolksAndTimer
+              time={time}
+              background={background}
+              hiddenFolks={hiddenFolks}
+              checkStatus={checkStatus}
+            />
+          </Header>
           <StyledMain>
             <StyledImageWrapper
               cursorPointer={cursorStyle}

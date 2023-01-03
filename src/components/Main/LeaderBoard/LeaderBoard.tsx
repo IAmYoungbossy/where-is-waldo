@@ -123,7 +123,7 @@ export const LeaderBoard = ({
 }: TableProps) => {
   return (
     <>
-      <Header leaderboard="yes" />
+      <Header></Header>
       <Table
         names={names}
         setNames={setNames}

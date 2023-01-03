@@ -19,7 +19,7 @@ import Dreamcast from "../../assets/Dreamcast.jpg";
 import { Pagination, Navigation } from "swiper";
 import { Link, useNavigate } from "react-router-dom";
 import { MainProps } from "../Main";
-import Header from "../../Header/Header";
+import Header, { Logout } from "../../Header/Header";
 import { StyledMain } from "../Main.styled";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db, logout } from "../../utilities/firebase";
@@ -65,12 +65,9 @@ export default function SwipeEffect({
     <>
       {user && (
         <>
-          <Header
-            name={name}
-            signOut={logout}
-            avatar={photoUrl}
-            hoverWidth={"normal"}
-          />
+          <Header>
+            {<Logout name={name} signOut={logout} avatar={photoUrl} />}
+          </Header>
           <StyledMain>
             <Swiper
               loop={true}

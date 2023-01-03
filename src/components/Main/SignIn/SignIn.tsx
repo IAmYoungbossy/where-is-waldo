@@ -2,7 +2,7 @@
 import { StyledForm } from "./SignIn.styled";
 import { Link, useNavigate } from "react-router-dom";
 import { StyledMain } from "../Main.styled";
-import Header from "../../Header/Header";
+import Header, { SignInHeader } from "../../Header/Header";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
 import { useEffect, useState } from "react";
@@ -28,7 +28,9 @@ export function SignIn(): JSX.Element {
 
   return (
     <>
-      <Header />
+      <Header>
+        <SignInHeader />
+      </Header>
       <StyledMain>
         <div>
           <StyledForm>
