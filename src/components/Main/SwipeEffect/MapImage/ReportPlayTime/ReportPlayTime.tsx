@@ -3,12 +3,12 @@ import {
   addNameToDatabase,
   getNamesFromDatabase,
 } from "../../../../utilities/firebaseCRUD";
-import { Link, useNavigate } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
+import { Link, useNavigate } from "react-router-dom";
 import { hiddenFolksType } from "../../../../App/App";
 import { StyledPlayTime } from "./ReportPlayTime.style";
-import { FormatTimeToString } from "../../../../FormatTimeToString/FormatTimeToString";
 import { StyledTimer } from "../../../../Header/Header.styled";
+import { FormatTimeToString } from "../../../../FormatTimeToString/FormatTimeToString";
 
 interface ReportPlayTimeProps {
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;
