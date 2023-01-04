@@ -3,10 +3,11 @@ import {
   getNamesFromDatabase,
 } from "../../utilities/firebaseCRUD";
 import { consoleImages } from "../Main";
+import { Link } from "react-router-dom";
 import Header from "../../Header/Header";
 import { StyledMain } from "../Main.styled";
-import { StyledTable } from "./LeaderBoard.style";
 import { DocumentData } from "firebase/firestore";
+import { StyledHeaderTag, StyledTable } from "./LeaderBoard.style";
 import { FormatTimeToString } from "../../FormatTimeToString/FormatTimeToString";
 
 interface ConsoleLeaderboardProps {
@@ -123,7 +124,11 @@ export const LeaderBoard = ({
 }: TableProps) => {
   return (
     <>
-      <Header></Header>
+      <Header>
+        <StyledHeaderTag>
+          <Link to={"/dashboard"}>Home</Link>
+        </StyledHeaderTag>
+      </Header>
       <Table
         names={names}
         setNames={setNames}

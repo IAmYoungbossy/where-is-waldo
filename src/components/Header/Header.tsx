@@ -1,6 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Link } from "react-router-dom";
-import { hiddenFolksType } from "../App/App";
 import {
   StyledDashboardHeader,
   StyledFolksAndTimer,
@@ -12,18 +10,23 @@ import {
   StyledStatusChecker,
   StyledTimer,
 } from "./Header.styled";
-import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import HomePng from "../assets/home.png";
+import { hiddenFolksType } from "../App/App";
+import { DocumentData } from "firebase/firestore";
+import { getAllNamesFromDatabase } from "../utilities/firebaseCRUD";
+import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
 
 interface HeaderProps {
   children?: JSX.Element;
 }
-
+// Header container with general header styling for all pages
 export default function Header({ children }: HeaderProps) {
   return <StyledHeader>{children}</StyledHeader>;
 }
 
+// Header content for sign in page with its styling.
 export const SignInHeader = () => {
   return (
     <StyledSignInHeader>
@@ -39,7 +42,7 @@ interface TimerProps {
     seconds: number;
   };
 }
-
+// This component displays time for play duration
 export const Timer = ({ time }: TimerProps) => {
   return (
     <StyledTimer padding="20px 0">
@@ -58,7 +61,10 @@ interface CheckStatusProps {
   status: string;
   background: string;
 }
-
+// This component shows the three stages of validation when you click a character.
+// 1. Checking - when getting details from firebase
+// 2. Keep Searching - If you make wrong selection.
+// 3. Congrates, You found [Character Name] - If you pick correct character
 export const CheckStatus = ({ status, background }: CheckStatusProps) => {
   return (
     <StyledStatusChecker background={background}>
@@ -68,12 +74,28 @@ export const CheckStatus = ({ status, background }: CheckStatusProps) => {
 };
 
 interface LogoutProps {
+  setNames: React.Dispatch<
+    React.SetStateAction<
+      {
+        data: DocumentData;
+        id: string;
+      }[]
+    >
+  >;
   name: string;
-  avatar: string | null | undefined;
   signOut: () => void;
+  avatar: string | null | undefined;
+  setConsoleName: React.Dispatch<React.SetStateAction<string>>;
 }
-
-export const Logout = ({ avatar, name, signOut }: LogoutProps) => {
+// Component displays an avatar from Google or Facebook of signed in user.
+// Shows user first name and log out button if avatar is clicked.
+export const Logout = ({
+  avatar,
+  name,
+  signOut,
+  setNames,
+  setConsoleName,
+}: LogoutProps) => {
   const [toggleLogout, setToggleLogOut] = useState(false);
   const firstName = name?.split(" ")[0];
 
@@ -81,7 +103,15 @@ export const Logout = ({ avatar, name, signOut }: LogoutProps) => {
     return (
       <StyledDashboardHeader>
         <h1>
-          <Link to={"/leader-board"}>Leaderboard</Link>
+          <Link
+            to={"/leader-board"}
+            onClick={() => {
+              getAllNamesFromDatabase(setNames);
+              setConsoleName("Overall");
+            }}
+          >
+            Leaderboard
+          </Link>
         </h1>
         <StyledLogoutWrapper>
           <img
@@ -101,12 +131,11 @@ export const Logout = ({ avatar, name, signOut }: LogoutProps) => {
   else return null;
 };
 
-// This component is responsible for displaying the hidden character in header
-export const HiddenFolks = ({
-  hiddenFolks,
-}: {
+interface HiddenFolksProps {
   hiddenFolks: hiddenFolksType[];
-}): JSX.Element => {
+}
+// This component is responsible for displaying the hidden character to search for in header
+export const HiddenFolks = ({ hiddenFolks }: HiddenFolksProps): JSX.Element => {
   const Folks = hiddenFolks?.map(
     (folk, index): JSX.Element => (
       <div key={index}>
@@ -119,7 +148,6 @@ export const HiddenFolks = ({
       </div>
     )
   );
-
   return <StyledHiddenFolks>{Folks}</StyledHiddenFolks>;
 };
 
@@ -148,10 +176,12 @@ export const FolksAndTimer = ({
         <Link to={"/dashboard"}>Home</Link>
       </h1>
       <div>
-        <p onClick={() => setShowInfo(showInfo ? false : true)}>Info</p>
+        <p onClick={() => setShowInfo(showInfo ? false : true)}>INFO</p>
         {showInfo && <PhoneMenu time={time} hiddenFolks={hiddenFolks} />}
       </div>
-      {/* <CheckStatus status={checkStatus} background={background} /> */}
+      {checkStatus !== "" && (
+        <CheckStatus status={checkStatus} background={background} />
+      )}
       <HiddenFolks hiddenFolks={hiddenFolks} />
       <Timer time={time} />
     </StyledFolksAndTimer>
@@ -166,7 +196,9 @@ interface PhoneMenuProps {
   };
   hiddenFolks: hiddenFolksType[];
 }
-
+// This displays a drop down menu with list of hidden characters to
+// search for. This displays only on mobile view or devices with smaller
+// screen size
 const PhoneMenu = ({ time, hiddenFolks }: PhoneMenuProps) => {
   return (
     <div>

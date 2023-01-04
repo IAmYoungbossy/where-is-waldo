@@ -112,3 +112,11 @@ export const StyledTable = styled.div`
     color: #20e7d5;
   }
 `;
+
+export const StyledHeaderTag = styled.h1`
+  padding: 20px;
+  & > a {
+    color: white;
+    text-decoration: none;
+  }
+`;

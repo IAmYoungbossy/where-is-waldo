@@ -24,7 +24,13 @@ import { StyledMain } from "../Main.styled";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db, logout } from "../../utilities/firebase";
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 const consoleImages = [
   { name: "N64", url: N64 },
@@ -35,9 +41,23 @@ const consoleImages = [
   { name: "Dreamcast", url: Dreamcast },
 ];
 
+interface SwipeEffectProps extends MainProps {
+  setNames: React.Dispatch<
+    React.SetStateAction<
+      {
+        data: DocumentData;
+        id: string;
+      }[]
+    >
+  >;
+  setConsoleName: React.Dispatch<React.SetStateAction<string>>;
+}
+
 export default function SwipeEffect({
+  setNames,
+  setConsoleName,
   handleDisplayHiddenFolks,
-}: MainProps): JSX.Element {
+}: SwipeEffectProps): JSX.Element {
   const [user, loading, error] = useAuthState(auth);
   const [name, setName] = useState("");
   const navigate = useNavigate();
@@ -66,7 +86,15 @@ export default function SwipeEffect({
       {user && (
         <>
           <Header>
-            {<Logout name={name} signOut={logout} avatar={photoUrl} />}
+            {
+              <Logout
+                name={name}
+                signOut={logout}
+                avatar={photoUrl}
+                setNames={setNames}
+                setConsoleName={setConsoleName}
+              />
+            }
           </Header>
           <StyledMain>
             <Swiper

@@ -43,7 +43,16 @@ export function Main({ ...props }: MainProps): JSX.Element {
         <Route path="/" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<SwipeEffect {...props} />} />
+        <Route
+          path="/dashboard"
+          element={
+            <SwipeEffect
+              setNames={setNames}
+              setConsoleName={setConsoleName}
+              {...props}
+            />
+          }
+        />
         <Route
           path="/leader-board"
           element={

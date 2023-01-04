@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const StyledHeader = styled.header`
   z-index: 1;
   position: fixed;
+  font-size: 0.85rem;
+  font-family: cursive;
   background-color: #222;
   width: -webkit-fill-available;
   border-bottom: 2px solid #909cff;
@@ -10,10 +12,9 @@ export const StyledHeader = styled.header`
 
 export const StyledTimer = styled.h2<{ padding: string }>`
   padding: ${({ padding }) => padding};
-
   & span {
+    color: #8eff77;
     font-size: 0.8rem;
-    color: #00a2ff;
   }
 `;
 
@@ -26,7 +27,6 @@ export const StyledStatusChecker = styled.div<{ background: string }>`
   border-radius: 5px;
   position: absolute;
   font-family: monospace;
-
   p {
     margin: auto;
     font-size: 1.1rem;
@@ -128,6 +128,7 @@ export const StyledFolksAndTimer = styled.div`
     }
     p:hover {
       color: grey;
+      cursor: pointer;
     }
     h1 > img {
       display: block;
@@ -166,12 +167,18 @@ export const StyledHiddenFolks = styled.div`
   & img {
     transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     &:hover {
-      width: 90px;
+      width: 85px;
+      cursor: pointer;
     }
   }
   div {
+    gap: 5px;
+    width: 100%;
+    padding: 2px;
     display: flex;
+    font-size: 0.9rem;
     align-items: center;
-    justify-content: center;
+    font-family: cursive;
+    justify-content: space-between;
   }
 `;

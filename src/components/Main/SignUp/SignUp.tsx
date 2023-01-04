@@ -13,6 +13,7 @@ import {
 } from "../../utilities/firebase";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
+import { StyledHeaderTag } from "../LeaderBoard/LeaderBoard.style";
 
 export function SignUp() {
   const [name, setName] = useState("");
@@ -34,7 +35,11 @@ export function SignUp() {
 
   return (
     <>
-      <Header></Header>
+      <Header>
+        <StyledHeaderTag>
+          <Link to={"/"}>HiddenFolks</Link>
+        </StyledHeaderTag>
+      </Header>
       <StyledMain>
         <StyledForm>
           <input
