@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/where-is-waldo/static/css/main.7c65c52d.css",
-    "main.js": "/where-is-waldo/static/js/main.21fd8bf6.js",
+    "main.js": "/where-is-waldo/static/js/main.fb9e13ba.js",
     "static/js/787.9220c6c0.chunk.js": "/where-is-waldo/static/js/787.9220c6c0.chunk.js",
     "static/media/P-Loc-Nar-min.jpg": "/where-is-waldo/static/media/P-Loc-Nar-min.ee0b4e3cab928e9de03f.jpg",
     "static/media/Game-bg.jpg": "/where-is-waldo/static/media/Game-bg.73a4e5da714fbf152874.jpg",
@@ -36,11 +36,11 @@
     "static/media/PS1-Parappa-min.png": "/where-is-waldo/static/media/PS1-Parappa-min.854d769594b9d176e9fc.png",
     "index.html": "/where-is-waldo/index.html",
     "main.7c65c52d.css.map": "/where-is-waldo/static/css/main.7c65c52d.css.map",
-    "main.21fd8bf6.js.map": "/where-is-waldo/static/js/main.21fd8bf6.js.map",
+    "main.fb9e13ba.js.map": "/where-is-waldo/static/js/main.fb9e13ba.js.map",
     "787.9220c6c0.chunk.js.map": "/where-is-waldo/static/js/787.9220c6c0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7c65c52d.css",
-    "static/js/main.21fd8bf6.js"
+    "static/js/main.fb9e13ba.js"
   ]
 }
