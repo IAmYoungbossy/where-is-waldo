@@ -83,6 +83,7 @@ export function SignUp() {
               type={input.name}
               name={input.name}
               value={input.value}
+              key={input.placeholder}
               placeholder={input.placeholder}
               onChange={(e) => input.onChange(e.target.value)}
             />
