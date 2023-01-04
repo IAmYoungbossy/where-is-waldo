@@ -83,22 +83,23 @@ interface LogoutProps {
       }[]
     >
   >;
-  name: string;
+  userData: {
+    name: string;
+    profileUrl: string;
+  };
   signOut: () => void;
-  avatar: string | null | undefined;
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;
 }
 // Component displays an avatar from Google or Facebook of signed in user.
 // Shows user first name and log out button if avatar is clicked.
 export const Logout = ({
-  avatar,
-  name,
+  userData,
   signOut,
   setNames,
   setConsoleName,
 }: LogoutProps) => {
   const [toggleLogout, setToggleLogOut] = useState(false);
-  const firstName = name?.split(" ")[0];
+  const firstName = userData.name.split(" ")[0];
 
   return (
     <StyledDashboardHeader>
@@ -115,7 +116,7 @@ export const Logout = ({
       </h1>
       <StyledLogoutWrapper>
         <img
-          src={avatar ? avatar : ProfilePic}
+          src={userData.profileUrl ? userData.profileUrl : ProfilePic}
           alt="Avatar"
           onClick={() => setToggleLogOut(toggleLogout ? false : true)}
         />

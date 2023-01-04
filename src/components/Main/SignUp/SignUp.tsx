@@ -54,7 +54,7 @@ export function SignUp() {
       setTimeout(() => setErrorEntry(""), 2000);
       return;
     }
-    registerWithEmailAndPassword(email, password);
+    registerWithEmailAndPassword(name, email, password);
   };
 
   useEffect(() => {

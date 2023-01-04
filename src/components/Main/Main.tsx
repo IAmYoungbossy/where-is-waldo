@@ -33,6 +33,10 @@ export interface MainProps {
 
 export function Main({ ...props }: MainProps): JSX.Element {
   // This sets name of the console Image responsive for names on table
+  const [userData, setUserData] = useState({
+    name: "",
+    profileUrl: "",
+  });
   const [consoleName, setConsoleName] = useState("");
 
   // This sets names of players with their score to leaderboard table
@@ -41,13 +45,14 @@ export function Main({ ...props }: MainProps): JSX.Element {
   return (
     <>
       <Routes>
-        <Route path="/" element={<SignIn />} />
+        <Route path="/" element={<SignIn setUserData={setUserData} />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/dashboard"
           element={
             <SwipeEffect
+              userData={userData}
               setNames={setNames}
               setConsoleName={setConsoleName}
               {...props}

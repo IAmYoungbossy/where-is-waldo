@@ -14,7 +14,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Header, { SignInHeader } from "../../Header/Header";
 
-export function SignIn(): JSX.Element {
+export function SignIn({
+  setUserData,
+}: {
+  setUserData: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      profileUrl: string;
+    }>
+  >;
+}): JSX.Element {
   const [password, setPassword] = useState("");
   const [user, loading] = useAuthState(auth);
   const [email, setEmail] = useState("");
@@ -56,10 +65,13 @@ export function SignIn(): JSX.Element {
             >
               Login
             </button>
-            <button type="button" onClick={signInWithGoogle}>
+            <button type="button" onClick={() => signInWithGoogle(setUserData)}>
               <FcGoogle /> <span>Sign in with Google</span>
             </button>
-            <button type="button" onClick={signInWithFacebook}>
+            <button
+              type="button"
+              onClick={() => signInWithFacebook(setUserData)}
+            >
               <AiFillFacebook /> <span>Sign in with Facebook</span>
             </button>
             <button

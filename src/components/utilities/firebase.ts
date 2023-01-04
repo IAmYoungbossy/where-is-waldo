@@ -1,18 +1,16 @@
-// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
 import {
   getAuth,
   signOut,
   updateProfile,
-  getRedirectResult,
-  signInWithRedirect,
+  signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBQtYZHU5VWQq7EnODzBM1oOJnzKu2vpf8",
@@ -30,24 +28,56 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const googleProvider = new GoogleAuthProvider();
-const signInWithGoogle = async () => {
+const signInWithGoogle = async (
+  setUserData: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      profileUrl: string;
+    }>
+  >
+) => {
   try {
-    await signInWithRedirect(auth, googleProvider);
+    const res = await signInWithPopup(auth, googleProvider);
+    const user = res.user;
+    if (user.displayName && user.photoURL) {
+      setUserData({
+        name: user?.displayName,
+        profileUrl: user?.photoURL,
+      });
+    }
   } catch (err) {
     console.error(err);
   }
 };
 
-const signInWithFacebook = async () => {
+const facebookProvider = new FacebookAuthProvider();
+const signInWithFacebook = async (
+  setUserData: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      profileUrl: string;
+    }>
+  >
+) => {
   try {
-    const res = await getRedirectResult(auth);
+    const res = await signInWithPopup(auth, facebookProvider);
+    const user = res.user;
 
     // Used in getting facebook profile picture
-    const credential = FacebookAuthProvider.credentialFromResult(res!);
+    const credential = FacebookAuthProvider.credentialFromResult(res);
     const token = credential?.accessToken;
-    let photoUrl = res?.user.photoURL + "?height=500&access_token=" + token;
-    if (auth.currentUser)
+    let photoUrl = res.user.photoURL + "?height=500&access_token=" + token;
+
+    if (auth.currentUser) {
       await updateProfile(auth.currentUser, { photoURL: photoUrl });
+
+      if (user.displayName && user.photoURL) {
+        setUserData({
+          name: user?.displayName,
+          profileUrl: user?.photoURL,
+        });
+      }
+    }
   } catch (err) {
     console.error(err);
   }
@@ -58,16 +88,23 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
     console.error(err);
-    alert("User Not Found");
   }
 };
 
 const registerWithEmailAndPassword = async (
+  name: string,
   email: string,
   password: string
 ) => {
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    await addDoc(collection(db, "users"), {
+      name,
+      email,
+      uid: user.uid,
+      authProvider: "local",
+    });
   } catch (err) {
     console.error(err);
   }
@@ -87,12 +124,12 @@ const logout = () => {
 };
 
 export {
-  auth,
   db,
+  auth,
+  logout,
   signInWithGoogle,
+  sendPasswordReset,
   signInWithFacebook,
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
-  sendPasswordReset,
-  logout,
 };
