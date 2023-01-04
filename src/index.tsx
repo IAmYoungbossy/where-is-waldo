@@ -20,7 +20,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <GlobalStyle />
-    <BrowserRouter basename="/">
+    <BrowserRouter basename="/where-is-waldo">
       <App />
     </BrowserRouter>
   </React.StrictMode>
