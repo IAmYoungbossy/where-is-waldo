@@ -67,13 +67,6 @@ const signInWithFacebook = async () => {
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const docs = await getDocs(q);
 
-    // Used in getting facebook profile picture
-    const credential = await FacebookAuthProvider.credentialFromResult(res);
-    const token = credential?.accessToken;
-    let photoUrl = res.user.photoURL + "?height=500&access_token=" + token;
-    if (auth.currentUser)
-      await updateProfile(auth.currentUser, { photoURL: photoUrl });
-
     if (docs.docs.length === 0) {
       await addDoc(collection(db, "users"), {
         uid: user.uid,
@@ -82,6 +75,12 @@ const signInWithFacebook = async () => {
         email: user.email,
       });
     }
+    // Used in getting facebook profile picture
+    const credential = FacebookAuthProvider.credentialFromResult(res);
+    const token = credential?.accessToken;
+    let photoUrl = res.user.photoURL + "?height=500&access_token=" + token;
+    if (auth.currentUser)
+      await updateProfile(auth.currentUser, { photoURL: photoUrl });
   } catch (err) {
     console.error(err);
   }

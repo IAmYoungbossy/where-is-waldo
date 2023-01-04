@@ -1,19 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  auth,
-  signInWithGoogle,
-  signInWithFacebook,
-  registerWithEmailAndPassword,
-} from "../../utilities/firebase";
 import Header from "../../Header/Header";
-import { FcGoogle } from "react-icons/fc";
 import { StyledMain } from "../Main.styled";
 import { useEffect, useState } from "react";
-import { AiFillFacebook } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { StyledForm } from "../SignIn/SignIn.styled";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { StyledHeaderTag } from "../LeaderBoard/LeaderBoard.style";
+import { auth, registerWithEmailAndPassword } from "../../utilities/firebase";
 
 export function SignUp() {
   const navigate = useNavigate();
@@ -92,20 +85,6 @@ export function SignUp() {
           <button type="button" onClick={register}>
             Sign Up
           </button>
-          <div>
-            <button
-              className="register__btn register__google"
-              onClick={signInWithFacebook}
-            >
-              <FcGoogle />
-            </button>
-            <button
-              className="register__btn register__google"
-              onClick={signInWithGoogle}
-            >
-              <AiFillFacebook />
-            </button>
-          </div>
           <p>
             Already have an account?{" "}
             <span>

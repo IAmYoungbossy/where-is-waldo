@@ -14,6 +14,7 @@ import Dreamcast from "../assets/P-Dreamcast-min.jpg";
 import MapImage from "./SwipeEffect/MapImage/MapImage";
 import { LeaderBoard } from "./LeaderBoard/LeaderBoard";
 import { ResetPassword } from "./ResetPassword/ResetPassword";
+import { PageNotFound } from "../utilities/PageNotFound/PageNotFound";
 
 export const consoleImages = [
   { name: "N64", url: N64 },
@@ -81,6 +82,7 @@ export function Main({ ...props }: MainProps): JSX.Element {
             }
           />
         ))}
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </>
   );
