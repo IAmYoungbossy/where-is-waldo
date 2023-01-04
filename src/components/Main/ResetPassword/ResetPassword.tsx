@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Header/Header";
-import { auth, sendPasswordReset } from "../../utilities/firebase";
 import { StyledMain } from "../Main.styled";
+import { useEffect, useState } from "react";
 import { StyledForm } from "../SignIn/SignIn.styled";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, sendPasswordReset } from "../../utilities/firebase";
 
 export const ResetPassword = () => {
   const [email, setEmail] = useState("");

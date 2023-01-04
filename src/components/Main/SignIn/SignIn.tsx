@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { StyledForm } from "./SignIn.styled";
-import { Link, useNavigate } from "react-router-dom";
-import { StyledMain } from "../Main.styled";
-import Header, { SignInHeader } from "../../Header/Header";
-import { FcGoogle } from "react-icons/fc";
-import { AiFillFacebook } from "react-icons/ai";
-import { useEffect, useState } from "react";
 import {
   auth,
-  logInWithEmailAndPassword,
   signInWithGoogle,
   signInWithFacebook,
+  logInWithEmailAndPassword,
 } from "../../utilities/firebase";
+import { FcGoogle } from "react-icons/fc";
+import { StyledMain } from "../Main.styled";
+import { useEffect, useState } from "react";
+import { StyledForm } from "./SignIn.styled";
+import { AiFillFacebook } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Header, { SignInHeader } from "../../Header/Header";
 
 export function SignIn(): JSX.Element {
   const [password, setPassword] = useState("");

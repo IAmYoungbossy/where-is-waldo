@@ -10,35 +10,17 @@ import { DocumentData } from "firebase/firestore";
 import { StyledHeaderTag, StyledTable } from "./LeaderBoard.style";
 import { FormatTimeToString } from "../../FormatTimeToString/FormatTimeToString";
 
-interface ConsoleLeaderboardProps {
+interface DisplayLeaderboardButtonsProps {
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;
   setNames: React.Dispatch<
     React.SetStateAction<{ data: DocumentData; id: string }[]>
   >;
 }
-
-interface TableProps {
-  consoleName: string;
-  setConsoleName: React.Dispatch<React.SetStateAction<string>>;
-  setNames: React.Dispatch<
-    React.SetStateAction<
-      {
-        data: DocumentData;
-        id: string;
-      }[]
-    >
-  >;
-  names: {
-    data: DocumentData;
-    id: string;
-  }[];
-}
-
 // This displays table for each consoles depending on the button clicked
 const DisplayLeaderboardButtons = ({
   setNames,
   setConsoleName,
-}: ConsoleLeaderboardProps) => {
+}: DisplayLeaderboardButtonsProps) => {
   return (
     <>
       <div>
@@ -67,6 +49,23 @@ const DisplayLeaderboardButtons = ({
     </>
   );
 };
+
+interface TableProps {
+  consoleName: string;
+  setConsoleName: React.Dispatch<React.SetStateAction<string>>;
+  setNames: React.Dispatch<
+    React.SetStateAction<
+      {
+        data: DocumentData;
+        id: string;
+      }[]
+    >
+  >;
+  names: {
+    data: DocumentData;
+    id: string;
+  }[];
+}
 
 const Table = ({
   names,

@@ -27,6 +27,7 @@ export const StyledForm = styled.form`
     padding: 10px;
     color: #7777a7;
     font-size: 1rem;
+    cursor: pointer;
     max-width: 300px;
   }
 
@@ -89,8 +90,9 @@ export const StyledForm = styled.form`
     background-color: #00008b36;
 
     button {
-      width: 100px;
       padding: 0;
+      width: 100px;
+      cursor: pointer;
       background-color: #02122a00 !important;
 
       svg {

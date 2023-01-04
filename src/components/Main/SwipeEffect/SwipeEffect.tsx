@@ -16,20 +16,20 @@ import LocNar from "../../assets/Loc-nar.jpg";
 import Dreamcast from "../../assets/Dreamcast.jpg";
 
 // import required modules
-import { Pagination, Navigation } from "swiper";
-import { Link, useNavigate } from "react-router-dom";
 import { MainProps } from "../Main";
-import Header, { Logout } from "../../Header/Header";
 import { StyledMain } from "../Main.styled";
+import { useEffect, useState } from "react";
+import { Pagination, Navigation } from "swiper";
+import Header, { Logout } from "../../Header/Header";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db, logout } from "../../utilities/firebase";
-import { useEffect, useState } from "react";
 import {
-  collection,
-  DocumentData,
-  getDocs,
   query,
   where,
+  getDocs,
+  collection,
+  DocumentData,
 } from "firebase/firestore";
 
 const consoleImages = [
@@ -52,13 +52,13 @@ interface SwipeEffectProps extends MainProps {
   >;
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;
 }
-
+// The swipe effect on cards is from SwipeJs library
 export default function SwipeEffect({
   setNames,
   setConsoleName,
   handleDisplayHiddenFolks,
 }: SwipeEffectProps): JSX.Element {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const photoUrl: string | null | undefined = user?.photoURL;
@@ -70,13 +70,13 @@ export default function SwipeEffect({
       const data = doc.docs[0].data();
       setName(data.name);
     } catch (err) {
-      console.log(error?.message);
       alert("An error occured while fetching user data");
     }
   };
 
   useEffect(() => {
     if (loading) return;
+    // Redirects to sign in page if not valid user
     if (!user) return navigate("/");
     fetchUserName();
   }, [user, loading]);
@@ -128,6 +128,7 @@ export default function SwipeEffect({
                       )}
                     />
                   </Link>
+                  <p>{image.name}</p>
                 </SwiperSlide>
               ))}
             </Swiper>

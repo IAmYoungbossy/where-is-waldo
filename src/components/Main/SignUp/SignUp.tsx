@@ -1,30 +1,66 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import {
+  auth,
+  signInWithGoogle,
+  signInWithFacebook,
+  registerWithEmailAndPassword,
+} from "../../utilities/firebase";
 import Header from "../../Header/Header";
+import { FcGoogle } from "react-icons/fc";
 import { StyledMain } from "../Main.styled";
 import { useEffect, useState } from "react";
+import { AiFillFacebook } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { StyledForm } from "../SignIn/SignIn.styled";
 import { useAuthState } from "react-firebase-hooks/auth";
-import {
-  auth,
-  registerWithEmailAndPassword,
-  signInWithFacebook,
-  signInWithGoogle,
-} from "../../utilities/firebase";
-import { FcGoogle } from "react-icons/fc";
-import { AiFillFacebook } from "react-icons/ai";
 import { StyledHeaderTag } from "../LeaderBoard/LeaderBoard.style";
 
 export function SignUp() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [user, loading] = useAuthState(auth);
+  const [password, setPassword] = useState("");
+  const [errorEntry, setErrorEntry] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const navigate = useNavigate();
+  const inputFields = [
+    { name: "name", value: name, placeholder: "Name", onChange: setName },
+    {
+      value: email,
+      name: "email",
+      onChange: setEmail,
+      placeholder: "Enter Email",
+    },
+    {
+      value: password,
+      name: "password",
+      onChange: setPassword,
+      placeholder: "Enter Password",
+    },
+    {
+      name: "password",
+      value: confirmPassword,
+      onChange: setConfirmPassword,
+      placeholder: "Confirm Password",
+    },
+  ];
+
+  // Input field validation
   const register = () => {
-    if (!name) alert("Please enter name");
+    if (name.trim() === "") {
+      setErrorEntry("Input a valid name");
+      setTimeout(() => setErrorEntry(""), 2000);
+      return;
+    } else if (password !== confirmPassword) {
+      setErrorEntry("Password doesn't match");
+      setTimeout(() => setErrorEntry(""), 2000);
+      return;
+    } else if (password.length < 6) {
+      setErrorEntry("Password must atleast six letter long");
+      setTimeout(() => setErrorEntry(""), 2000);
+      return;
+    }
     registerWithEmailAndPassword(name, email, password);
   };
 
@@ -42,34 +78,16 @@ export function SignUp() {
       </Header>
       <StyledMain>
         <StyledForm>
-          <input
-            type="name"
-            name="name"
-            value={name}
-            placeholder="Name"
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="email"
-            name="email"
-            value={email}
-            placeholder="Enter Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            name="password"
-            value={password}
-            placeholder="Enter Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <input
-            type="password"
-            name="comfirm-password"
-            value={confirmPassword}
-            placeholder="Comfirm Password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
+          {inputFields.map((input) => (
+            <input
+              type={input.name}
+              name={input.name}
+              value={input.value}
+              placeholder={input.placeholder}
+              onChange={(e) => input.onChange(e.target.value)}
+            />
+          ))}
+          {errorEntry !== "" && <span>{errorEntry}</span>}
           <button type="button" onClick={register}>
             Sign Up
           </button>

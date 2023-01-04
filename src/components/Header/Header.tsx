@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  StyledDashboardHeader,
-  StyledFolksAndTimer,
-  StyledHeader,
-  StyledHiddenFolks,
-  StyledLogout,
-  StyledLogoutWrapper,
-  StyledSignInHeader,
-  StyledStatusChecker,
   StyledTimer,
+  StyledHeader,
+  StyledLogout,
+  StyledHiddenFolks,
+  StyledSignInHeader,
+  StyledLogoutWrapper,
+  StyledFolksAndTimer,
+  StyledStatusChecker,
+  StyledDashboardHeader,
 } from "./Header.styled";
 import { useState } from "react";
 import { Link } from "react-router-dom";
