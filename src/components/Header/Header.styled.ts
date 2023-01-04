@@ -106,11 +106,11 @@ export const StyledFolksAndTimer = styled.div`
   h1 {
     padding: 20px 0;
   }
-  h1 > a {
+  h1 > a:last-of-type {
     color: white;
     text-decoration: none;
   }
-  h1 > img {
+  h1 > a:first-of-type {
     display: none;
   }
   & > div:first-of-type {
@@ -130,11 +130,11 @@ export const StyledFolksAndTimer = styled.div`
       color: grey;
       cursor: pointer;
     }
-    h1 > img {
+    h1 > a:first-of-type {
       display: block;
       padding: 4px;
     }
-    h1 > a {
+    h1 > a:last-of-type {
       display: none;
     }
     & > div:first-of-type > div {

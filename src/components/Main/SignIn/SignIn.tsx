@@ -62,8 +62,13 @@ export function SignIn(): JSX.Element {
             <button type="button" onClick={signInWithFacebook}>
               <AiFillFacebook /> <span>Sign in with Facebook</span>
             </button>
-            <button type="button">
-              <Link to="/dashboard">Try Me</Link>
+            <button
+              type="button"
+              onClick={() =>
+                logInWithEmailAndPassword("testingthis@nomail.com", "123456")
+              }
+            >
+              Demo
             </button>
             <p>
               <Link to="/reset-password">Forgot Password?</Link>

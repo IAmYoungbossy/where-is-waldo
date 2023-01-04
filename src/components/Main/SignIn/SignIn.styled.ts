@@ -32,7 +32,7 @@ export const StyledForm = styled.form`
   }
 
   button:last-of-type {
-    color: black;
+    color: #00398f;
     font-weight: 900;
     background-color: #ffc107;
 

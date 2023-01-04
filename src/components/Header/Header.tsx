@@ -17,6 +17,7 @@ import { hiddenFolksType } from "../App/App";
 import { DocumentData } from "firebase/firestore";
 import { getAllNamesFromDatabase } from "../utilities/firebaseCRUD";
 import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
+import ProfilePic from "../assets/dp.png";
 
 interface HeaderProps {
   children?: JSX.Element;
@@ -99,36 +100,34 @@ export const Logout = ({
   const [toggleLogout, setToggleLogOut] = useState(false);
   const firstName = name?.split(" ")[0];
 
-  if (avatar !== null && avatar !== undefined)
-    return (
-      <StyledDashboardHeader>
-        <h1>
-          <Link
-            to={"/leader-board"}
-            onClick={() => {
-              getAllNamesFromDatabase(setNames);
-              setConsoleName("Overall");
-            }}
-          >
-            Leaderboard
-          </Link>
-        </h1>
-        <StyledLogoutWrapper>
-          <img
-            src={avatar}
-            alt="Avatar"
-            onClick={() => setToggleLogOut(toggleLogout ? false : true)}
-          />
-          {toggleLogout && (
-            <StyledLogout>
-              <p>Hi, {firstName}.</p>
-              <button onClick={signOut}>Log Out</button>
-            </StyledLogout>
-          )}
-        </StyledLogoutWrapper>
-      </StyledDashboardHeader>
-    );
-  else return null;
+  return (
+    <StyledDashboardHeader>
+      <h1>
+        <Link
+          to={"/leader-board"}
+          onClick={() => {
+            getAllNamesFromDatabase(setNames);
+            setConsoleName("Overall");
+          }}
+        >
+          Leaderboard
+        </Link>
+      </h1>
+      <StyledLogoutWrapper>
+        <img
+          src={avatar ? avatar : ProfilePic}
+          alt="Avatar"
+          onClick={() => setToggleLogOut(toggleLogout ? false : true)}
+        />
+        {toggleLogout && (
+          <StyledLogout>
+            <p>Hi, {firstName}.</p>
+            <button onClick={signOut}>Log Out</button>
+          </StyledLogout>
+        )}
+      </StyledLogoutWrapper>
+    </StyledDashboardHeader>
+  );
 };
 
 interface HiddenFolksProps {
@@ -172,7 +171,9 @@ export const FolksAndTimer = ({
   return (
     <StyledFolksAndTimer>
       <h1>
-        <img src={HomePng} alt="Home" />
+        <Link to={"/dashboard"}>
+          <img src={HomePng} alt="Home" />
+        </Link>
         <Link to={"/dashboard"}>Home</Link>
       </h1>
       <div>
