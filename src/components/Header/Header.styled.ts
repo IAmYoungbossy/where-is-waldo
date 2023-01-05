@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 export const StyledHeader = styled.header`
   z-index: 1;
-  height: 80px;
+  display: flex;
   position: fixed;
+  min-height: 80px;
+  align-items: center;
   background-color: #222;
   font-family: sans-serif;
   width: -webkit-fill-available;
@@ -82,7 +84,7 @@ export const StyledSignInHeader = styled.div`
 `;
 
 export const StyledDashboardHeader = styled.div`
-  height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -108,6 +110,7 @@ export const StyledLogoutWrapper = styled.div`
 `;
 
 export const StyledFolksAndTimer = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
