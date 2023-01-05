@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledPlayTime = styled.div`
+  z-index: 10;
   width: 100vw;
   height: 100vh;
   padding: 10px;
