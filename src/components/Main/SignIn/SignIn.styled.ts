@@ -8,8 +8,8 @@ export const StyledForm = styled.form`
   display: flex;
   /* margin-top: 10vh; */
   max-width: 350px;
-  font-family: cursive;
   flex-direction: column;
+  font-family: sans-serif;
   box-shadow: 0px 2px 20px 2px black;
   background-color: rgb(25 48 209 / 20%);
 

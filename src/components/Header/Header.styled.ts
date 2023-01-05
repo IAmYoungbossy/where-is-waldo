@@ -186,7 +186,7 @@ export const StyledHiddenFolks = styled.div`
     display: flex;
     font-size: 0.9rem;
     align-items: center;
-    font-family: cursive;
+    font-family: sans-serif;
     justify-content: space-between;
   }
 `;
