@@ -6,8 +6,9 @@ export const StyledForm = styled.form`
   margin: auto;
   padding: 25px;
   display: flex;
-  /* margin-top: 10vh; */
   max-width: 350px;
+  margin-top: 100px;
+  margin-bottom: 100px;
   flex-direction: column;
   font-family: sans-serif;
   box-shadow: 0px 2px 20px 2px black;
