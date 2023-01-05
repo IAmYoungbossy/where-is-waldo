@@ -7,9 +7,9 @@ export const StyledTable = styled.div`
   max-width: 800px;
   margin-bottom: 50px;
   align-items: center;
-  font-family: cursive;
   align-self: self-start;
   flex-direction: column;
+  font-family: sans-serif;
 
   & > h3 {
     padding: 5px;

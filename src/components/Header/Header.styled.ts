@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const StyledHeader = styled.header`
   z-index: 1;
+  height: 80px;
   position: fixed;
-  font-size: 0.85rem;
-  font-family: cursive;
   background-color: #222;
+  font-family: sans-serif;
   width: -webkit-fill-available;
   border-bottom: 2px solid #909cff;
 `;
@@ -39,8 +39,8 @@ export const StyledStatusChecker = styled.div<{ background: string }>`
 
 export const StyledLogout = styled.div`
   top: 42px;
-  left: -23px;
-  width: 90px;
+  left: -30px;
+  width: 100px;
   padding: 5px;
   display: flex;
   overflow-x: auto;
@@ -52,32 +52,40 @@ export const StyledLogout = styled.div`
   box-shadow: 1px 1px 20px 0px black;
   p {
     color: bisque;
-    font-size: 0.7rem;
-    font-family: cursive;
+    font-size: 1rem;
+    font-family: sans-serif;
   }
   button {
     padding: 5px;
-    border: none;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 1rem;
+    margin-top: 5px;
+    border: 1px solid;
     color: darkturquoise;
-    font-family: cursive;
     background-color: transparent;
+    box-shadow: 1px 1px 20px 0px black;
+    &:hover {
+      color: white;
+    }
   }
 `;
 
 export const StyledSignInHeader = styled.div`
   width: 100%;
-  padding: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  h1 {
+    padding: 0 20px;
+  }
 `;
 
 export const StyledDashboardHeader = styled.div`
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  h1 {
-    padding: 20px 0;
-  }
   h1 > a {
     color: white;
     text-decoration: none;

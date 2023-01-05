@@ -10,7 +10,14 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import {
+  query,
+  where,
+  addDoc,
+  getDocs,
+  collection,
+  getFirestore,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBQtYZHU5VWQq7EnODzBM1oOJnzKu2vpf8",
@@ -83,9 +90,35 @@ const signInWithFacebook = async (
   }
 };
 
-const logInWithEmailAndPassword = async (email: string, password: string) => {
+const logInWithEmailAndPassword = async (
+  email: string,
+  password: string,
+  setUserData: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      profileUrl: string;
+    }>
+  >
+) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    const user = result.user;
+
+    // Since this is local sign in, name was saved to firebase database
+    // during registration so we query for that name here.
+    const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+    const doc = await getDocs(q);
+    const data = doc.docs[0].data();
+    const name = data.name;
+
+    // Photo will be null since it wasn't required during sign in.
+    let avatar = user.photoURL;
+    if (avatar === null) avatar = "";
+
+    setUserData({
+      name: name,
+      profileUrl: avatar,
+    });
   } catch (err) {
     console.error(err);
   }
@@ -94,16 +127,34 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
 const registerWithEmailAndPassword = async (
   name: string,
   email: string,
-  password: string
+  password: string,
+  setUserData: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      profileUrl: string;
+    }>
+  >
 ) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
+
+    // Stores name to firebase database
     await addDoc(collection(db, "users"), {
       name,
       email,
       uid: user.uid,
       authProvider: "local",
+    });
+
+    // photoUrl will be null, so set it to empty strings
+    let avatar = user.photoURL;
+    if (avatar === null) avatar = "";
+
+    // Update state with name from input field
+    setUserData({
+      name: name,
+      profileUrl: avatar,
     });
   } catch (err) {
     console.error(err);

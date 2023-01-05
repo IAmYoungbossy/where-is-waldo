@@ -8,7 +8,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { StyledMain } from "../Main.styled";
 import { useEffect, useState } from "react";
-import { StyledForm } from "./SignIn.styled";
+import { StyledForm, StyledFormContainer } from "./SignIn.styled";
 import { AiFillFacebook } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -41,7 +41,7 @@ export function SignIn({
         <SignInHeader />
       </Header>
       <StyledMain>
-        <div>
+        <StyledFormContainer>
           <StyledForm>
             <input
               id="email"
@@ -61,7 +61,9 @@ export function SignIn({
             />
             <button
               type="button"
-              onClick={() => logInWithEmailAndPassword(email, password)}
+              onClick={() =>
+                logInWithEmailAndPassword(email, password, setUserData)
+              }
             >
               Login
             </button>
@@ -77,7 +79,11 @@ export function SignIn({
             <button
               type="button"
               onClick={() =>
-                logInWithEmailAndPassword("testingthis@nomail.com", "123456")
+                logInWithEmailAndPassword(
+                  "testingthis@nomail.com",
+                  "123456",
+                  setUserData
+                )
               }
             >
               Demo
@@ -92,7 +98,7 @@ export function SignIn({
               </span>
             </p>
           </StyledForm>
-        </div>
+        </StyledFormContainer>
       </StyledMain>
     </>
   );

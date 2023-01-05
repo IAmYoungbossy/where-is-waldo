@@ -116,7 +116,11 @@ export const Logout = ({
       </h1>
       <StyledLogoutWrapper>
         <img
-          src={userData.profileUrl ? userData.profileUrl : ProfilePic}
+          src={
+            userData.profileUrl && userData.profileUrl !== ""
+              ? userData.profileUrl
+              : ProfilePic
+          }
           alt="Avatar"
           onClick={() => setToggleLogOut(toggleLogout ? false : true)}
         />

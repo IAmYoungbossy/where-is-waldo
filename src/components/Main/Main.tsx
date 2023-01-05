@@ -46,7 +46,7 @@ export function Main({ ...props }: MainProps): JSX.Element {
     <>
       <Routes>
         <Route path="/" element={<SignIn setUserData={setUserData} />} />
-        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-up" element={<SignUp setUserData={setUserData} />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/dashboard"

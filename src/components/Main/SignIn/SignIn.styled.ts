@@ -55,7 +55,7 @@ export const StyledForm = styled.form`
     align-items: center;
     justify-content: flex-start;
     span {
-      padding: 0 0 0 50px;
+      padding: 3px 0 0 43px;
     }
     svg {
       position: absolute;
@@ -107,4 +107,8 @@ export const StyledForm = styled.form`
       }
     }
   }
+`;
+
+export const StyledFormContainer = styled.div`
+  width: 100%;
 `;

@@ -8,7 +8,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { StyledHeaderTag } from "../LeaderBoard/LeaderBoard.style";
 import { auth, registerWithEmailAndPassword } from "../../utilities/firebase";
 
-export function SignUp() {
+export function SignUp({
+  setUserData,
+}: {
+  setUserData: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      profileUrl: string;
+    }>
+  >;
+}) {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -54,7 +63,7 @@ export function SignUp() {
       setTimeout(() => setErrorEntry(""), 2000);
       return;
     }
-    registerWithEmailAndPassword(name, email, password);
+    registerWithEmailAndPassword(name, email, password, setUserData);
   };
 
   useEffect(() => {
