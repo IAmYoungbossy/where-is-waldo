@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import "../Main.css";
+import "../SignIn/SignIn.css";
+import "../LeaderBoard/LeaderBoard.css";
 import Header from "../../Header/Header";
-import { StyledMain } from "../Main.styled";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { StyledForm } from "../SignIn/SignIn.styled";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { StyledHeaderTag } from "../LeaderBoard/LeaderBoard.style";
 import { auth, registerWithEmailAndPassword } from "../../utilities/firebase";
 
 export function SignUp({
@@ -74,12 +74,12 @@ export function SignUp({
   return (
     <>
       <Header>
-        <StyledHeaderTag>
+        <h2 className="header-tag">
           <Link to={"/"}>HiddenFolks</Link>
-        </StyledHeaderTag>
+        </h2>
       </Header>
-      <StyledMain>
-        <StyledForm>
+      <main>
+        <form>
           {inputFields.map((input) => (
             <input
               type={input.name}
@@ -100,8 +100,8 @@ export function SignUp({
               <Link to="/">Sign in</Link>
             </span>{" "}
           </p>
-        </StyledForm>
-      </StyledMain>
+        </form>
+      </main>
     </>
   );
 }

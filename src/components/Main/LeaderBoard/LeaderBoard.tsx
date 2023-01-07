@@ -1,3 +1,4 @@
+import "./LeaderBoard.css";
 import {
   getAllNamesFromDatabase,
   getNamesFromDatabase,
@@ -5,9 +6,7 @@ import {
 import { consoleImages } from "../Main";
 import { Link } from "react-router-dom";
 import Header from "../../Header/Header";
-import { StyledMain } from "../Main.styled";
 import { DocumentData } from "firebase/firestore";
-import { StyledHeaderTag, StyledTable } from "./LeaderBoard.style";
 import { FormatTimeToString } from "../../FormatTimeToString/FormatTimeToString";
 
 interface DisplayLeaderboardButtonsProps {
@@ -74,8 +73,8 @@ const Table = ({
   setConsoleName,
 }: TableProps) => {
   return (
-    <StyledMain>
-      <StyledTable>
+    <main>
+      <div className="table-container">
         <h3>Global Leader Board</h3>
         <DisplayLeaderboardButtons
           setNames={setNames}
@@ -110,8 +109,8 @@ const Table = ({
             ))}
           </tbody>
         </table>
-      </StyledTable>
-    </StyledMain>
+      </div>
+    </main>
   );
 };
 
@@ -124,9 +123,9 @@ export const LeaderBoard = ({
   return (
     <>
       <Header>
-        <StyledHeaderTag>
+        <h1 className="header-tag">
           <Link to={"/dashboard"}>Home</Link>
-        </StyledHeaderTag>
+        </h1>
       </Header>
       <Table
         names={names}

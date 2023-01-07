@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import "../../../../Header/Header.css";
 import {
   addNameToDatabase,
   getNamesFromDatabase,
@@ -6,8 +7,6 @@ import {
 import { DocumentData } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { hiddenFolksType } from "../../../../App/App";
-import { StyledPlayTime } from "./ReportPlayTime.style";
-import { StyledTimer } from "../../../../Header/Header.styled";
 import { FormatTimeToString } from "../../../../FormatTimeToString/FormatTimeToString";
 
 interface ReportPlayTimeProps {
@@ -75,14 +74,18 @@ export const ReportPlayTime = ({
     setConsoleName(alt);
   };
 
+  useEffect(() => {
+    document.documentElement.style.setProperty("--padding", "0px");
+  }, []);
+
   return (
-    <StyledPlayTime>
+    <div className="play-time">
       <div>
         <div>
           <div>
             You Finished in{" "}
             {
-              <StyledTimer padding="0px">
+              <h2 className="timer">
                 {
                   <FormatTimeToString
                     hours={hours}
@@ -90,7 +93,7 @@ export const ReportPlayTime = ({
                     seconds={seconds}
                   />
                 }
-              </StyledTimer>
+              </h2>
             }
           </div>
         </div>
@@ -119,6 +122,6 @@ export const ReportPlayTime = ({
           </div>
         </div>
       </div>
-    </StyledPlayTime>
+    </div>
   );
 };

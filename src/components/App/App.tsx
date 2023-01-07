@@ -1,7 +1,7 @@
+import "./App.css";
 import { useState } from "react";
-import Footer from "../Footer/Footer";
 import { Main } from "../Main/Main";
-import { StyledApp } from "./App.styled";
+import Footer from "../Footer/Footer";
 import { hiddenFolksArray } from "./hiddenFolksArray";
 
 export type hiddenFolksType = {
@@ -29,14 +29,14 @@ function App() {
   };
 
   return (
-    <StyledApp>
+    <div className="App">
       <Main
         handleDisplayHiddenFolks={handleDisplayHiddenFolks}
         setHiddenFolks={setHiddenFolks}
         hiddenFolks={hiddenFolks}
       />
       <Footer />
-    </StyledApp>
+    </div>
   );
 }
 

@@ -16,8 +16,9 @@ import LocNar from "../../assets/Loc-nar.jpg";
 import Dreamcast from "../../assets/Dreamcast.jpg";
 
 // import required modules
+import "../Main.css";
+import "../../Header/Header.css";
 import { MainProps } from "../Main";
-import { StyledMain } from "../Main.styled";
 import { useEffect } from "react";
 import { Pagination, Navigation } from "swiper";
 import { DocumentData } from "firebase/firestore";
@@ -80,7 +81,7 @@ export default function SwipeEffect({
               />
             }
           </Header>
-          <StyledMain>
+          <main>
             <Swiper
               loop={true}
               pagination={{
@@ -116,7 +117,7 @@ export default function SwipeEffect({
                 </SwiperSlide>
               ))}
             </Swiper>
-          </StyledMain>
+          </main>
         </>
       )}
     </>

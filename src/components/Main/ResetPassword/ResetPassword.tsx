@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import "../Main.css";
+import "../SignIn/SignIn.css";
+import "../../Header/Header.css";
 import Header from "../../Header/Header";
-import { StyledMain } from "../Main.styled";
 import { useEffect, useState } from "react";
-import { StyledForm } from "../SignIn/SignIn.styled";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, sendPasswordReset } from "../../utilities/firebase";
@@ -19,9 +20,11 @@ export const ResetPassword = () => {
 
   return (
     <>
-      <Header></Header>
-      <StyledMain>
-        <StyledForm>
+      <Header>
+        <h1>HiddenFolks</h1>
+      </Header>
+      <main>
+        <form>
           <input
             type="email"
             name="email"
@@ -39,8 +42,8 @@ export const ResetPassword = () => {
           <p>
             Don't have an account? <Link to="/sign-up">Register</Link> now.
           </p>
-        </StyledForm>
-      </StyledMain>
+        </form>
+      </main>
     </>
   );
 };

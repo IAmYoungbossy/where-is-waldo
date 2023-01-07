@@ -1,5 +1,6 @@
+import "./MouseTarget.css";
+import { useEffect } from "react";
 import { hiddenFolksType } from "../../../../App/App";
-import { StyledMousePointer, StyledMouseTarget } from "./MouseTarget.styled";
 
 interface MouseTargetProps {
   clickedTarget: {
@@ -22,9 +23,9 @@ interface StyledPointerProps {
 export const StyledPointer = ({
   cursorLocation,
 }: StyledPointerProps): JSX.Element => (
-  <StyledMousePointer style={cursorLocation}>
+  <div className="mouse-pointer" style={cursorLocation}>
     <div />
-  </StyledMousePointer>
+  </div>
 );
 
 export const MouseTarget = ({
@@ -64,13 +65,24 @@ export const MouseTarget = ({
     );
   });
 
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--top",
+      `{clickedTarget.top}px`
+    );
+    document.documentElement.style.setProperty(
+      "--left",
+      `{clickedTarget.left}px`
+    );
+  }, [clickedTarget]);
+
   return (
-    <StyledMouseTarget top={clickedTarget.top} left={clickedTarget.left}>
+    <div className="mouse-target">
       <div />
       <div>
         <ul>{nameOfHiddenFolks}</ul>
       </div>
-    </StyledMouseTarget>
+    </div>
   );
 };
 

@@ -1,0 +1,223 @@
+:root {
+    --padding: 0 20px;
+    --background-color: black;
+}
+
+header {
+    z-index: 1;
+    display: flex;
+    position: fixed;
+    min-height: 80px;
+    align-items: center;
+    background-color: #222;
+    font-family: sans-serif;
+    width: -webkit-fill-available;
+    border-bottom: 2px solid #909cff;
+}
+
+.timer {
+    padding: var(--padding)
+}
+
+.timer>span {
+    color: #8eff77;
+    font-size: 0.8rem;
+}
+
+.sigin-in-header {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.sigin-in-header>h1 {
+    padding: 0 20px;
+}
+
+.status-checker {
+    top: 90px;
+    width: 100%;
+    color: white;
+    padding: 2px 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    position: absolute;
+    font-family: monospace;
+}
+
+.status-checker>p {
+    margin: auto;
+    font-size: 1.1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: fit-content;
+    background-color: var(--background-color);
+}
+
+.dashboard-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.dashboard-header>h1>a {
+    color: white;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 300px) {
+    .dashboard-header>h1 {
+        font-size: 1.2rem;
+        padding: 28px 0;
+    }
+}
+
+.logout-wrapper {
+    position: relative;
+}
+
+.logout-wrapper>img {
+    width: 40px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.logout {
+    top: 42px;
+    left: -30px;
+    width: 100px;
+    padding: 5px;
+    display: flex;
+    overflow-x: auto;
+    text-align: center;
+    position: absolute;
+    border-radius: 5px;
+    flex-direction: column;
+    background-color: #333;
+    box-shadow: 1px 1px 20px 0px black;
+}
+
+.logout>p {
+    color: bisque;
+    font-size: 1rem;
+    font-family: sans-serif;
+}
+
+.logout>button {
+    padding: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 5px;
+    border: 1px solid;
+    color: darkturquoise;
+    background-color: transparent;
+    box-shadow: 1px 1px 20px 0px black;
+}
+
+.logout>button:hover {
+    color: white;
+}
+
+.hidden-folks {
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hidden-folks>img {
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hidden-folks>img:hover {
+    width: 85px;
+    cursor: pointer;
+}
+
+.hidden-folks>div {
+    gap: 5px;
+    width: 100%;
+    padding: 2px;
+    display: flex;
+    font-size: 0.9rem;
+    align-items: center;
+    font-family: sans-serif;
+    justify-content: space-between;
+}
+
+.folks-and-timer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.folks-and-timer>h1 {
+    padding: 20px 0;
+}
+
+.folks-and-timer>h1>a:last-of-type {
+    color: white;
+    text-decoration: none;
+}
+
+.folks-and-timer>h1>a:first-of-type {
+    display: none;
+}
+
+.folks-and-timer>div:first-of-type {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .folks-and-timer>div:first-of-type {
+        display: flex;
+        position: relative;
+    }
+
+    .folks-and-timer>p {
+        cursor: pointer;
+        font-weight: 900;
+        font-size: 1.3rem;
+    }
+
+    .folks-and-timer>p:hover {
+        color: grey;
+        cursor: pointer;
+    }
+
+    .folks-and-timer>h1>a:first-of-type {
+        display: block;
+        padding: 4px;
+    }
+
+    .folks-and-timer>h1>a:last-of-type {
+        display: none;
+    }
+
+    .folks-and-timer>div:first-of-type>div {
+        top: 20px;
+        right: -45px;
+        padding: 10px;
+        position: absolute;
+        border-radius: 5px;
+        background-color: #333;
+    }
+
+    .folks-and-timer>div:first-of-type>div>div:first-of-type {
+        flex-direction: column;
+    }
+
+    .folks-and-timer>div:first-of-type>div>h2 {
+        font-size: 1rem;
+        padding: 15px 0 5px 0;
+    }
+
+    .folks-and-timer>div:last-of-type,
+    .folks-and-timer>h2 {
+        display: none;
+    }
+}

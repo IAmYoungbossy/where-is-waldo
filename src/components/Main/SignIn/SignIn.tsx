@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import "../Main.css";
+import "./SignIn.css";
 import {
   auth,
   signInWithGoogle,
@@ -6,9 +8,7 @@ import {
   logInWithEmailAndPassword,
 } from "../../utilities/firebase";
 import { FcGoogle } from "react-icons/fc";
-import { StyledMain } from "../Main.styled";
 import { useEffect, useState } from "react";
-import { StyledForm, StyledFormContainer } from "./SignIn.styled";
 import { AiFillFacebook } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -40,9 +40,9 @@ export function SignIn({
       <Header>
         <SignInHeader />
       </Header>
-      <StyledMain>
-        <StyledFormContainer>
-          <StyledForm>
+      <main>
+        <div className="form-container">
+          <form>
             <input
               id="email"
               type="email"
@@ -97,9 +97,9 @@ export function SignIn({
                 <Link to="/sign-up">Sign-up</Link>
               </span>
             </p>
-          </StyledForm>
-        </StyledFormContainer>
-      </StyledMain>
+          </form>
+        </div>
+      </main>
     </>
   );
 }

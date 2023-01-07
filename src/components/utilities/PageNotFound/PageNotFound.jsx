@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import Header, { SignInHeader } from "../../Header/Header"
-import { StyledMain } from "../../Main/Main.styled"
+import "../../Main/Main.css"
+import "../../Header/Header.css"
 
 export const PageNotFound = () => {
     return (
@@ -8,9 +9,9 @@ export const PageNotFound = () => {
         <Header>
             <SignInHeader />
         </Header>
-        <StyledMain>
+        <main>
             <h1>404 Page Not Found <Link to={"/"}>Home</Link></h1>
-        </StyledMain>
+        </main>
     </>
     )
 }

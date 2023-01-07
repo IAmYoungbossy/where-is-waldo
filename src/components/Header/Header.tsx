@@ -1,16 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  StyledTimer,
-  StyledHeader,
-  StyledLogout,
-  StyledHiddenFolks,
-  StyledSignInHeader,
-  StyledLogoutWrapper,
-  StyledFolksAndTimer,
-  StyledStatusChecker,
-  StyledDashboardHeader,
-} from "./Header.styled";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import HomePng from "../assets/home.png";
 import { hiddenFolksType } from "../App/App";
@@ -24,15 +13,15 @@ interface HeaderProps {
 }
 // Header container with general header styling for all pages
 export default function Header({ children }: HeaderProps) {
-  return <StyledHeader>{children}</StyledHeader>;
+  return <header>{children}</header>;
 }
 
 // Header content for sign in page with its styling.
 export const SignInHeader = () => {
   return (
-    <StyledSignInHeader>
+    <div className="sign-in-header">
       <h1>HiddenFolks</h1>
-    </StyledSignInHeader>
+    </div>
   );
 };
 
@@ -45,8 +34,11 @@ interface TimerProps {
 }
 // This component displays time for play duration
 export const Timer = ({ time }: TimerProps) => {
+  useEffect(() => {
+    document.documentElement.style.setProperty("--padding", "20px 0");
+  });
   return (
-    <StyledTimer padding="20px 0">
+    <h2 className="timer">
       {
         <FormatTimeToString
           hours={time.hours}
@@ -54,7 +46,7 @@ export const Timer = ({ time }: TimerProps) => {
           seconds={time.seconds}
         />
       }
-    </StyledTimer>
+    </h2>
   );
 };
 
@@ -67,10 +59,13 @@ interface CheckStatusProps {
 // 2. Keep Searching - If you make wrong selection.
 // 3. Congrates, You found [Character Name] - If you pick correct character
 export const CheckStatus = ({ status, background }: CheckStatusProps) => {
+  useEffect(() => {
+    document.documentElement.style.setProperty("--background", `${background}`);
+  }, [background]);
   return (
-    <StyledStatusChecker background={background}>
+    <div className="status-checker">
       <p>{status}</p>
-    </StyledStatusChecker>
+    </div>
   );
 };
 
@@ -102,7 +97,7 @@ export const Logout = ({
   const firstName = userData.name.split(" ")[0];
 
   return (
-    <StyledDashboardHeader>
+    <div className="dashboard-header">
       <h1>
         <Link
           to={"/leader-board"}
@@ -114,7 +109,7 @@ export const Logout = ({
           Leaderboard
         </Link>
       </h1>
-      <StyledLogoutWrapper>
+      <div className="logout-wrapper">
         <img
           src={
             userData.profileUrl && userData.profileUrl !== ""
@@ -125,13 +120,13 @@ export const Logout = ({
           onClick={() => setToggleLogOut(toggleLogout ? false : true)}
         />
         {toggleLogout && (
-          <StyledLogout>
+          <div className="logout">
             <p>Hi, {firstName}.</p>
             <button onClick={signOut}>Log Out</button>
-          </StyledLogout>
+          </div>
         )}
-      </StyledLogoutWrapper>
-    </StyledDashboardHeader>
+      </div>
+    </div>
   );
 };
 
@@ -152,7 +147,7 @@ export const HiddenFolks = ({ hiddenFolks }: HiddenFolksProps): JSX.Element => {
       </div>
     )
   );
-  return <StyledHiddenFolks>{Folks}</StyledHiddenFolks>;
+  return <div className="hidden-folks">{Folks}</div>;
 };
 
 interface FolksAndTimerProps {
@@ -174,7 +169,7 @@ export const FolksAndTimer = ({
 }: FolksAndTimerProps) => {
   const [showInfo, setShowInfo] = useState(false);
   return (
-    <StyledFolksAndTimer>
+    <div className="folks-and-timer">
       <h1>
         <Link to={"/dashboard"}>
           <img src={HomePng} alt="Home" />
@@ -190,7 +185,7 @@ export const FolksAndTimer = ({
       )}
       <HiddenFolks hiddenFolks={hiddenFolks} />
       <Timer time={time} />
-    </StyledFolksAndTimer>
+    </div>
   );
 };
 

@@ -1,0 +1,90 @@
+.play-time {
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    padding: 10px;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    background: #000000ad;
+    font-family: monospace;
+    justify-content: center;
+}
+
+.play-time>div {
+    width: 100%;
+    padding: 0 10px;
+    max-width: 350px;
+    background: #222;
+    border-radius: 5px;
+}
+
+.play-time>div>div:first-of-type {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.play-time>div>div:last-of-type {
+    border-top: 1px solid white;
+}
+
+.play-time>div>div:last-of-type p {
+    font-weight: 900;
+    padding: 10px 0px;
+    font-size: 0.85rem;
+}
+
+.play-time>div>div:last-of-type form>div:first-of-type {
+    display: flex;
+    flex-direction: column;
+}
+
+.play-time>div>div:last-of-type form>div:last-child {
+    display: flex;
+    padding: 10px 0px;
+    margin-top: 20px;
+    justify-content: flex-end;
+    border-top: 1px solid white;
+}
+
+.play-time>div>div:last-of-type form button {
+    padding: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+    background-color: #eb3d3d;
+}
+
+.play-time>div>div:last-of-type form button:last-child {
+    background-color: #414141;
+}
+
+.play-time>div>div:last-of-type form input {
+    color: white;
+    padding: 10px;
+    outline: none;
+    margin-top: 5px;
+    background-color: #222;
+    border: 1px solid white;
+}
+
+.play-time>div>div:last-of-type form a {
+    color: white;
+    text-decoration: none;
+}
+
+.play-time>div>div:last-of-type form span {
+    color: yellow;
+}
+
+.play-time>div>div:last-of-type form input:not(:placeholder-shown) {
+    background-color: #222;
+}
+
+.play-time>div>div:last-of-type form label {
+    font-weight: bold;
+    font-size: 0.8rem;
+}

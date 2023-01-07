@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import "../../Main.css";
+import "./MapImage.css";
 import {
   mousePositionOnImage,
   MouseTarget,
@@ -8,12 +10,10 @@ import { useEffect, useState } from "react";
 import Header, { FolksAndTimer } from "../../../Header/Header";
 import { setGameTimer } from "./setGameTimer";
 import { useNavigate } from "react-router-dom";
-import { StyledMain } from "../../Main.styled";
 import { DocumentData } from "firebase/firestore";
 import { validateTarget } from "./validateTarget";
 import { auth } from "../../../utilities/firebase";
 import { hiddenFolksType } from "../../../App/App";
-import { StyledImageWrapper } from "./MapImage.styled";
 import { displayTargetMenu } from "./displayTargetMenu";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { fetchTargetFolkCoordinates } from "./folkCoordinates";
@@ -168,6 +168,13 @@ export default function MapImage({
     <StyledPointer cursorLocation={cursorLocation} />
   );
 
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--cursor-pointer",
+      `${cursorStyle}`
+    );
+  }, [cursorStyle]);
+
   return (
     <>
       {user && (
@@ -180,9 +187,9 @@ export default function MapImage({
               checkStatus={checkStatus}
             />
           </Header>
-          <StyledMain>
-            <StyledImageWrapper
-              cursorPointer={cursorStyle}
+          <main>
+            <div
+              className="image-wrapper"
               onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
                 updateMousePosition(e);
                 getMouseLocationInPercent(e);
@@ -197,8 +204,8 @@ export default function MapImage({
               {namesOfFolks}
               {customizedCursor}
               <img src={src} alt={alt} />
-            </StyledImageWrapper>
-          </StyledMain>
+            </div>
+          </main>
           {foundAllFolks && (
             <ReportPlayTime
               alt={alt}
