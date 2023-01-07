@@ -41,135 +41,14 @@ interface ImageProps {
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
-export default function MapImage({
-  src,
-  alt,
-  setNames,
-  hiddenFolks,
-  setHiddenFolks,
-  setConsoleName,
-}: ImageProps): JSX.Element {
-  const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
-    width: 0,
-    height: 0,
-  });
-  const [cursorLocation, setCursorLocation] = useState({
-    top: "0px",
-    left: "10px",
-  });
-  // const [correctCoords, setCorrectCoords] = useState({
-  //   height: { max: 0, min: 0 },
-  //   width: { max: 0, min: 0 },
-  // });
-  // const [clickedTarget, setClickedTarget] = useState({
-  //   top: "0px",
-  //   left: "10px",
-  // });
-  // const [time, setTime] = useState({
-  //   hours: 0,
-  //   minutes: 0,
-  //   seconds: 0,
-  // });
-  const [showClickedTarget, setShowClickedTarget] = useState(false);
-  const [showCustomCursor, setShowCustomCursor] = useState(true);
-  // const [updateUseEffect, setUpdateUseEffect] = useState(false);
-  // const [foundAllFolks, setFoundAllFolks] = useState(false);
-  const [cursorStyle, setCursorStyle] = useState("default");
-  // const [background, setBackground] = useState("black");
-  // const [checkStatus, setCheckStatus] = useState("");
-  // const [folkName, setFolkName] = useState("");
+export default function MapImage({ src, alt }: ImageProps): JSX.Element {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
-
-  // Handles all mouse movements
-  const {
-    getMouseLocationInPercent,
-    getMousePositionOnClick,
-    updateMousePosition,
-  } = mousePositionOnImage(
-    showClickedTarget,
-    setCursorStyle,
-    setShowCustomCursor,
-    setClickedTargetInPercentage,
-    setCursorLocation
-  );
 
   useEffect(() => {
     // Redirects to login page if user not valid
     if (!user) return navigate("/");
   }, []);
-
-  // useEffect(() => {
-  //   // Makes sure dropdown menu doesnt show if
-  //   // mouse is at extreme end of image
-  //   displayTargetMenu(
-  //     clickedTargetInPercentage,
-  //     setShowCustomCursor,
-  //     setClickedTarget,
-  //     cursorLocation,
-  //     setShowClickedTarget,
-  //     showClickedTarget,
-  //     setCursorStyle,
-  //     cursorStyle
-  //   );
-  // }, [updateUseEffect]);
-
-  // useEffect(() => {
-  //   // This checks if coordinates of selected character
-  //   // matches with coordinates in backend
-  //   validateTarget({
-  //     folkName,
-  //     hiddenFolks,
-  //     correctCoords,
-  //     setBackground,
-  //     setHiddenFolks,
-  //     setCheckStatus,
-  //     clickedTargetInPercentage,
-  //   });
-  // }, [correctCoords]);
-
-  // useEffect(() => {
-  //   // Triggers a pop up modal if all characters are found
-  //   checkIfFoundAllCharacters({
-  //     hiddenFolks,
-  //     setFoundAllFolks,
-  //   });
-  // }, [hiddenFolks]);
-
-  // useEffect(() => {
-  //   // Stops timer if all characters are found
-  //   if (foundAllFolks) {
-  //     return;
-  //   }
-  //   // This sets the time while game is still on
-  //   const interval = setInterval(
-  //     setGameTimer.bind(null, { setTime, time }),
-  //     1000
-  //   );
-  //   return () => clearInterval(interval);
-  // }, [time, foundAllFolks]);
-
-  // const getHiddenFolksCoords = (imageName: string, folkName: string) =>
-  //   fetchTargetFolkCoordinates({ imageName, folkName, setCorrectCoords });
-
-  // Shows dropdown menu with names of hidden characters
-  // const namesOfFolks = showClickedTarget && (
-  //   <MouseTarget
-  //     setFolkName={setFolkName}
-  //     hiddenFolks={hiddenFolks}
-  //     clickedTarget={clickedTarget}
-  //     setCheckStatus={setCheckStatus}
-  //     getCoords={getHiddenFolksCoords}
-  //     updateUseEffect={updateUseEffect}
-  //     setUpdateUseEffect={setUpdateUseEffect}
-  //     setShowCustomCursor={setShowCustomCursor}
-  //   />
-  // );
-
-  // This controls when to show a customizes mouse pointer
-  const customizedCursor = showCustomCursor && (
-    <StyledPointer cursorLocation={cursorLocation} />
-  );
 
   return (
     <>
@@ -177,44 +56,39 @@ export default function MapImage({
         <>
           <Header>
             <div>Hi</div>
-            {/* <FolksAndTimer
-              time={time}
-              background={background}
-              hiddenFolks={hiddenFolks}
-              checkStatus={checkStatus}
-            /> */}
           </Header>
           <StyledMain>
-            <StyledImageWrapper
-              cursorPointer={cursorStyle}
-              onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
-                updateMousePosition(e);
-                // getMouseLocationInPercent(e);
-              }}
-              // onMouseDown={updateMousePosition}
-              // onClick={(e) => {
-              //   getMousePositionOnClick(e);
-              //   setUpdateUseEffect(updateUseEffect ? false : true);
-              //   setShowCustomCursor(false);
-              // }}
-            >
-              {/* {namesOfFolks} */}
-              {customizedCursor}
-              <img src={src} alt={alt} />
-            </StyledImageWrapper>
+            <ImageWrap src={src} alt={alt} />
           </StyledMain>
-          {/* {foundAllFolks && (
-            <ReportPlayTime
-              alt={alt}
-              hours={time.hours}
-              minutes={time.minutes}
-              seconds={time.seconds}
-              hiddenFolks={hiddenFolks}
-              setNames={setNames}
-              setConsoleName={setConsoleName}
-            /> })*/}
         </>
       )}
     </>
+  );
+}
+
+function ImageWrap({ src, alt }: { src: string; alt: string }) {
+  const [cursorLocation, setCursorLocation] = useState({
+    top: "0px",
+    left: "10px",
+  });
+
+  // This function gets the X and Y coordinates for the style mouse pointer.
+  const updateMousePosition = (e: React.MouseEvent<HTMLDivElement>) => {
+    setCursorLocation({
+      top: `${e.pageY - 118}px`,
+      left: `${e.pageX - 40}px`,
+    });
+  };
+
+  return (
+    <StyledImageWrapper
+      cursorPointer={"default"}
+      onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
+        updateMousePosition(e);
+      }}
+    >
+      <StyledPointer cursorLocation={cursorLocation} />
+      <img src={src} alt={alt} />
+    </StyledImageWrapper>
   );
 }

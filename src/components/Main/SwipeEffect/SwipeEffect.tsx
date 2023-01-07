@@ -101,7 +101,7 @@ export default function SwipeEffect({
               className="mySwiper"
             > */}
             {consoleImages.map((image) => (
-              <SwiperSlide key={image.name}>
+              <div key={image.name}>
                 <Link to={`/dashboard/${image.name}`}>
                   <img
                     src={image.url}
@@ -113,7 +113,7 @@ export default function SwipeEffect({
                   />
                 </Link>
                 <p>{image.name}</p>
-              </SwiperSlide>
+              </div>
             ))}
             {/* </Swiper> */}
           </StyledMain>
