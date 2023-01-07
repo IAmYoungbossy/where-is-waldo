@@ -87,8 +87,7 @@ interface StyledMousePointerProps {
 export const StyledMousePointer = styled.div.attrs(
   ({ style }: StyledMousePointerProps) => ({
     style: {
-      top: style.top,
-      left: style.left,
+      transform: `translate(${style.left}px, ${style.top}px)`,
     },
   })
 )`
