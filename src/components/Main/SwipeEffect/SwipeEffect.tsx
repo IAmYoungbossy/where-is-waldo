@@ -25,6 +25,8 @@ import Header, { Logout } from "../../Header/Header";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, logout } from "../../utilities/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { hiddenFolksArray } from "../../App/hiddenFolksArray";
+import { hiddenFolksType } from "../../App/App";
 
 const consoleImages = [
   { name: "N64", url: N64 },
@@ -49,16 +51,31 @@ interface SwipeEffectProps extends MainProps {
     profileUrl: string;
   };
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;
+  setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 // The swipe effect on cards is from SwipeJs library
 export default function SwipeEffect({
   setNames,
   userData,
+  setHiddenFolks,
   setConsoleName,
-  handleDisplayHiddenFolks,
 }: SwipeEffectProps): JSX.Element {
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
+
+  // This function sets the hidden characters to search for.
+  const handleDisplayHiddenFolks = (alt: string): void => {
+    hiddenFolksArray.forEach((image) => {
+      if (image.Card === alt) {
+        const folksCopy = [...image.Folks].map((folk) => ({
+          ...folk,
+          checked: false,
+          imageName: alt,
+        }));
+        setHiddenFolks(folksCopy);
+      }
+    });
+  };
 
   useEffect(() => {
     if (loading) return;
@@ -81,7 +98,7 @@ export default function SwipeEffect({
             }
           </Header>
           <StyledMain>
-            {/* <Swiper
+            <Swiper
               loop={true}
               pagination={{
                 clickable: true,
@@ -99,23 +116,23 @@ export default function SwipeEffect({
               navigation={true}
               modules={[Pagination, Navigation]}
               className="mySwiper"
-            > */}
-            {consoleImages.map((image) => (
-              <div key={image.name}>
-                <Link to={`/dashboard/${image.name}`}>
-                  <img
-                    src={image.url}
-                    alt={image.name}
-                    onClick={handleDisplayHiddenFolks.bind(
-                      null,
-                      `${image.name}`
-                    )}
-                  />
-                </Link>
-                <p>{image.name}</p>
-              </div>
-            ))}
-            {/* </Swiper> */}
+            >
+              {consoleImages.map((image) => (
+                <SwiperSlide key={image.name}>
+                  <Link to={`/dashboard/${image.name}`}>
+                    <img
+                      src={image.url}
+                      alt={image.name}
+                      onClick={handleDisplayHiddenFolks.bind(
+                        null,
+                        `${image.name}`
+                      )}
+                    />
+                  </Link>
+                  <p>{image.name}</p>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </StyledMain>
         </>
       )}

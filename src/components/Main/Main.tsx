@@ -26,21 +26,21 @@ export const consoleImages = [
 ];
 
 export interface MainProps {
-  handleDisplayHiddenFolks: (alt: string) => void;
   hiddenFolks: hiddenFolksType[];
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
-export function Main({ ...props }: MainProps): JSX.Element {
+export function Main(): JSX.Element {
+  // This sets names of players with their score to leaderboard table
+  const [names, setNames] = useState<{ data: DocumentData; id: string }[]>([]);
+  const [hiddenFolks, setHiddenFolks] = useState<hiddenFolksType[]>([]);
+  const [consoleName, setConsoleName] = useState("");
+
   // This sets name of the console Image responsive for names on table
   const [userData, setUserData] = useState({
     name: "",
     profileUrl: "",
   });
-  const [consoleName, setConsoleName] = useState("");
-
-  // This sets names of players with their score to leaderboard table
-  const [names, setNames] = useState<{ data: DocumentData; id: string }[]>([]);
 
   return (
     <>
@@ -54,8 +54,9 @@ export function Main({ ...props }: MainProps): JSX.Element {
             <SwipeEffect
               userData={userData}
               setNames={setNames}
+              hiddenFolks={hiddenFolks}
               setConsoleName={setConsoleName}
-              {...props}
+              setHiddenFolks={setHiddenFolks}
             />
           }
         />
@@ -76,13 +77,14 @@ export function Main({ ...props }: MainProps): JSX.Element {
             path={`/dashboard/${image.name}`}
             element={
               <MapImage
+                names={names}
                 src={image.url}
                 alt={image.name}
-                names={names}
                 setNames={setNames}
                 consoleName={consoleName}
+                hiddenFolks={hiddenFolks}
                 setConsoleName={setConsoleName}
-                {...props}
+                setHiddenFolks={setHiddenFolks}
               />
             }
           />
