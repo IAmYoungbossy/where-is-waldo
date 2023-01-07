@@ -57,27 +57,27 @@ export default function MapImage({
     top: "0px",
     left: "10px",
   });
-  const [correctCoords, setCorrectCoords] = useState({
-    height: { max: 0, min: 0 },
-    width: { max: 0, min: 0 },
-  });
-  const [clickedTarget, setClickedTarget] = useState({
-    top: "0px",
-    left: "10px",
-  });
-  const [time, setTime] = useState({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  // const [correctCoords, setCorrectCoords] = useState({
+  //   height: { max: 0, min: 0 },
+  //   width: { max: 0, min: 0 },
+  // });
+  // const [clickedTarget, setClickedTarget] = useState({
+  //   top: "0px",
+  //   left: "10px",
+  // });
+  // const [time, setTime] = useState({
+  //   hours: 0,
+  //   minutes: 0,
+  //   seconds: 0,
+  // });
   const [showClickedTarget, setShowClickedTarget] = useState(false);
   const [showCustomCursor, setShowCustomCursor] = useState(true);
-  const [updateUseEffect, setUpdateUseEffect] = useState(false);
-  const [foundAllFolks, setFoundAllFolks] = useState(false);
-  const [cursorStyle, setCursorStyle] = useState("none");
-  const [background, setBackground] = useState("black");
-  const [checkStatus, setCheckStatus] = useState("");
-  const [folkName, setFolkName] = useState("");
+  // const [updateUseEffect, setUpdateUseEffect] = useState(false);
+  // const [foundAllFolks, setFoundAllFolks] = useState(false);
+  const [cursorStyle, setCursorStyle] = useState("default");
+  // const [background, setBackground] = useState("black");
+  // const [checkStatus, setCheckStatus] = useState("");
+  // const [folkName, setFolkName] = useState("");
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -97,71 +97,74 @@ export default function MapImage({
   useEffect(() => {
     // Redirects to login page if user not valid
     if (!user) return navigate("/");
-    // Makes sure dropdown menu doesnt show if
-    // mouse is at extreme end of image
-    displayTargetMenu(
-      clickedTargetInPercentage,
-      setShowCustomCursor,
-      setClickedTarget,
-      cursorLocation,
-      setShowClickedTarget,
-      showClickedTarget,
-      setCursorStyle,
-      cursorStyle
-    );
-  }, [updateUseEffect]);
+  }, []);
 
-  useEffect(() => {
-    // This checks if coordinates of selected character
-    // matches with coordinates in backend
-    validateTarget({
-      folkName,
-      hiddenFolks,
-      correctCoords,
-      setBackground,
-      setHiddenFolks,
-      setCheckStatus,
-      clickedTargetInPercentage,
-    });
-  }, [correctCoords]);
+  // useEffect(() => {
+  //   // Makes sure dropdown menu doesnt show if
+  //   // mouse is at extreme end of image
+  //   displayTargetMenu(
+  //     clickedTargetInPercentage,
+  //     setShowCustomCursor,
+  //     setClickedTarget,
+  //     cursorLocation,
+  //     setShowClickedTarget,
+  //     showClickedTarget,
+  //     setCursorStyle,
+  //     cursorStyle
+  //   );
+  // }, [updateUseEffect]);
 
-  useEffect(() => {
-    // Triggers a pop up modal if all characters are found
-    checkIfFoundAllCharacters({
-      hiddenFolks,
-      setFoundAllFolks,
-    });
-  }, [hiddenFolks]);
+  // useEffect(() => {
+  //   // This checks if coordinates of selected character
+  //   // matches with coordinates in backend
+  //   validateTarget({
+  //     folkName,
+  //     hiddenFolks,
+  //     correctCoords,
+  //     setBackground,
+  //     setHiddenFolks,
+  //     setCheckStatus,
+  //     clickedTargetInPercentage,
+  //   });
+  // }, [correctCoords]);
 
-  useEffect(() => {
-    // Stops timer if all characters are found
-    if (foundAllFolks) {
-      return;
-    }
-    // This sets the time while game is still on
-    const interval = setInterval(
-      setGameTimer.bind(null, { setTime, time }),
-      1000
-    );
-    return () => clearInterval(interval);
-  }, [time, foundAllFolks]);
+  // useEffect(() => {
+  //   // Triggers a pop up modal if all characters are found
+  //   checkIfFoundAllCharacters({
+  //     hiddenFolks,
+  //     setFoundAllFolks,
+  //   });
+  // }, [hiddenFolks]);
 
-  const getHiddenFolksCoords = (imageName: string, folkName: string) =>
-    fetchTargetFolkCoordinates({ imageName, folkName, setCorrectCoords });
+  // useEffect(() => {
+  //   // Stops timer if all characters are found
+  //   if (foundAllFolks) {
+  //     return;
+  //   }
+  //   // This sets the time while game is still on
+  //   const interval = setInterval(
+  //     setGameTimer.bind(null, { setTime, time }),
+  //     1000
+  //   );
+  //   return () => clearInterval(interval);
+  // }, [time, foundAllFolks]);
+
+  // const getHiddenFolksCoords = (imageName: string, folkName: string) =>
+  //   fetchTargetFolkCoordinates({ imageName, folkName, setCorrectCoords });
 
   // Shows dropdown menu with names of hidden characters
-  const namesOfFolks = showClickedTarget && (
-    <MouseTarget
-      setFolkName={setFolkName}
-      hiddenFolks={hiddenFolks}
-      clickedTarget={clickedTarget}
-      setCheckStatus={setCheckStatus}
-      getCoords={getHiddenFolksCoords}
-      updateUseEffect={updateUseEffect}
-      setUpdateUseEffect={setUpdateUseEffect}
-      setShowCustomCursor={setShowCustomCursor}
-    />
-  );
+  // const namesOfFolks = showClickedTarget && (
+  //   <MouseTarget
+  //     setFolkName={setFolkName}
+  //     hiddenFolks={hiddenFolks}
+  //     clickedTarget={clickedTarget}
+  //     setCheckStatus={setCheckStatus}
+  //     getCoords={getHiddenFolksCoords}
+  //     updateUseEffect={updateUseEffect}
+  //     setUpdateUseEffect={setUpdateUseEffect}
+  //     setShowCustomCursor={setShowCustomCursor}
+  //   />
+  // );
 
   // This controls when to show a customizes mouse pointer
   const customizedCursor = showCustomCursor && (
@@ -173,33 +176,34 @@ export default function MapImage({
       {user && (
         <>
           <Header>
-            <FolksAndTimer
+            <div>Hi</div>
+            {/* <FolksAndTimer
               time={time}
               background={background}
               hiddenFolks={hiddenFolks}
               checkStatus={checkStatus}
-            />
+            /> */}
           </Header>
           <StyledMain>
             <StyledImageWrapper
               cursorPointer={cursorStyle}
               onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
                 updateMousePosition(e);
-                getMouseLocationInPercent(e);
+                // getMouseLocationInPercent(e);
               }}
-              onMouseDown={updateMousePosition}
-              onClick={(e) => {
-                getMousePositionOnClick(e);
-                setUpdateUseEffect(updateUseEffect ? false : true);
-                setShowCustomCursor(false);
-              }}
+              // onMouseDown={updateMousePosition}
+              // onClick={(e) => {
+              //   getMousePositionOnClick(e);
+              //   setUpdateUseEffect(updateUseEffect ? false : true);
+              //   setShowCustomCursor(false);
+              // }}
             >
-              {namesOfFolks}
+              {/* {namesOfFolks} */}
               {customizedCursor}
               <img src={src} alt={alt} />
             </StyledImageWrapper>
           </StyledMain>
-          {foundAllFolks && (
+          {/* {foundAllFolks && (
             <ReportPlayTime
               alt={alt}
               hours={time.hours}
@@ -208,8 +212,7 @@ export default function MapImage({
               hiddenFolks={hiddenFolks}
               setNames={setNames}
               setConsoleName={setConsoleName}
-            />
-          )}
+            /> })*/}
         </>
       )}
     </>

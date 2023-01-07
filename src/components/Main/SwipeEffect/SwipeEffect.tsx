@@ -81,7 +81,7 @@ export default function SwipeEffect({
             }
           </Header>
           <StyledMain>
-            <Swiper
+            {/* <Swiper
               loop={true}
               pagination={{
                 clickable: true,
@@ -99,23 +99,23 @@ export default function SwipeEffect({
               navigation={true}
               modules={[Pagination, Navigation]}
               className="mySwiper"
-            >
-              {consoleImages.map((image) => (
-                <SwiperSlide key={image.name}>
-                  <Link to={`/dashboard/${image.name}`}>
-                    <img
-                      src={image.url}
-                      alt={image.name}
-                      onClick={handleDisplayHiddenFolks.bind(
-                        null,
-                        `${image.name}`
-                      )}
-                    />
-                  </Link>
-                  <p>{image.name}</p>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            > */}
+            {consoleImages.map((image) => (
+              <SwiperSlide key={image.name}>
+                <Link to={`/dashboard/${image.name}`}>
+                  <img
+                    src={image.url}
+                    alt={image.name}
+                    onClick={handleDisplayHiddenFolks.bind(
+                      null,
+                      `${image.name}`
+                    )}
+                  />
+                </Link>
+                <p>{image.name}</p>
+              </SwiperSlide>
+            ))}
+            {/* </Swiper> */}
           </StyledMain>
         </>
       )}
