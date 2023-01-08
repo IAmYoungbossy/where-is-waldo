@@ -8,13 +8,6 @@ import "./SwipeEffect.css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import PS1 from "../../assets/PS1.jpg";
-import PS2 from "../../assets/PS2.jpg";
-import PS4 from "../../assets/PS4.jpg";
-import N64 from "../../assets/N64.jpg";
-import LocNar from "../../assets/Loc-nar.jpg";
-import Dreamcast from "../../assets/Dreamcast.jpg";
-
 // import required modules
 import "../Main.css";
 import "../../Header/Header.css";
@@ -26,15 +19,6 @@ import Header, { Logout } from "../../Header/Header";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, logout } from "../../utilities/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-
-const consoleImages = [
-  { name: "N64", url: N64 },
-  { name: "PS1", url: PS1 },
-  { name: "PS2", url: PS2 },
-  { name: "PS4", url: PS4 },
-  { name: "LocNar", url: LocNar },
-  { name: "Dreamcast", url: Dreamcast },
-];
 
 interface SwipeEffectProps extends MainProps {
   setNames: React.Dispatch<
@@ -49,12 +33,17 @@ interface SwipeEffectProps extends MainProps {
     name: string;
     profileUrl: string;
   };
+  imageSlide: {
+    name: string;
+    url: string;
+  }[];
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;
 }
 // The swipe effect on cards is from SwipeJs library
 export default function SwipeEffect({
   setNames,
   userData,
+  imageSlide,
   setConsoleName,
   handleDisplayHiddenFolks,
 }: SwipeEffectProps): JSX.Element {
@@ -101,7 +90,7 @@ export default function SwipeEffect({
               modules={[Pagination, Navigation]}
               className="mySwiper"
             >
-              {consoleImages.map((image) => (
+              {imageSlide.map((image) => (
                 <SwiperSlide key={image.name}>
                   <Link to={`/dashboard/${image.name}`}>
                     <img

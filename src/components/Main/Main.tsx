@@ -1,29 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SignIn } from "./SignIn/SignIn";
 import { SignUp } from "./SignUp/SignUp";
-import N64 from "../assets/P-N64-min.jpg";
-import PS1 from "../assets/P-PS1-min.jpg";
-import PS2 from "../assets/P-PS2-min.jpg";
-import PS4 from "../assets/P-PS4-min.jpg";
 import { hiddenFolksType } from "../App/App";
-import LocNar from "../assets/P-Loc-Nar-min.jpg";
 import { Route, Routes } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
 import SwipeEffect from "./SwipeEffect/SwipeEffect";
-import Dreamcast from "../assets/P-Dreamcast-min.jpg";
 import MapImage from "./SwipeEffect/MapImage/MapImage";
 import { LeaderBoard } from "./LeaderBoard/LeaderBoard";
 import { ResetPassword } from "./ResetPassword/ResetPassword";
 import { PageNotFound } from "../utilities/PageNotFound/PageNotFound";
-
-export const consoleImages = [
-  { name: "N64", url: N64 },
-  { name: "PS1", url: PS1 },
-  { name: "PS2", url: PS2 },
-  { name: "PS4", url: PS4 },
-  { name: "LocNar", url: LocNar },
-  { name: "Dreamcast", url: Dreamcast },
-];
+import { getImageURL } from "../utilities/firebase";
 
 export interface MainProps {
   handleDisplayHiddenFolks: (alt: string) => void;
@@ -32,15 +18,22 @@ export interface MainProps {
 }
 
 export function Main({ ...props }: MainProps): JSX.Element {
-  // This sets name of the console Image responsive for names on table
-  const [userData, setUserData] = useState({
-    name: "",
-    profileUrl: "",
-  });
+  const [gameImage, setGameImage] = useState<{ name: string; url: string }[]>(
+    []
+  );
+  const [imageSlide, setImageSlide] = useState<{ name: string; url: string }[]>(
+    []
+  );
+  const [userData, setUserData] = useState({ name: "", profileUrl: "" });
   const [consoleName, setConsoleName] = useState("");
 
   // This sets names of players with their score to leaderboard table
   const [names, setNames] = useState<{ data: DocumentData; id: string }[]>([]);
+
+  useEffect(() => {
+    getImageURL("game-console", setGameImage);
+    getImageURL("console-slides", setImageSlide);
+  }, []);
 
   return (
     <>
@@ -53,6 +46,7 @@ export function Main({ ...props }: MainProps): JSX.Element {
           element={
             <SwipeEffect
               userData={userData}
+              imageSlide={imageSlide}
               setNames={setNames}
               setConsoleName={setConsoleName}
               {...props}
@@ -65,12 +59,13 @@ export function Main({ ...props }: MainProps): JSX.Element {
             <LeaderBoard
               names={names}
               setNames={setNames}
+              gameImage={gameImage}
               consoleName={consoleName}
               setConsoleName={setConsoleName}
             />
           }
         />
-        {consoleImages.map((image) => (
+        {gameImage.map((image) => (
           <Route
             key={image.name}
             path={`/dashboard/${image.name}`}

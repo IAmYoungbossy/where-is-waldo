@@ -3,7 +3,6 @@ import {
   getAllNamesFromDatabase,
   getNamesFromDatabase,
 } from "../../utilities/firebaseCRUD";
-import { consoleImages } from "../Main";
 import { Link } from "react-router-dom";
 import Header from "../../Header/Header";
 import { DocumentData } from "firebase/firestore";
@@ -14,16 +13,21 @@ interface DisplayLeaderboardButtonsProps {
   setNames: React.Dispatch<
     React.SetStateAction<{ data: DocumentData; id: string }[]>
   >;
+  gameImage: {
+    name: string;
+    url: string;
+  }[];
 }
 // This displays table for each consoles depending on the button clicked
 const DisplayLeaderboardButtons = ({
   setNames,
+  gameImage,
   setConsoleName,
 }: DisplayLeaderboardButtonsProps) => {
   return (
     <>
       <div>
-        {consoleImages.map((image) => (
+        {gameImage.map((image) => (
           <button
             key={`${image.name}`}
             onClick={() => {
@@ -64,11 +68,16 @@ interface TableProps {
     data: DocumentData;
     id: string;
   }[];
+  gameImage: {
+    name: string;
+    url: string;
+  }[];
 }
 
 const Table = ({
   names,
   setNames,
+  gameImage,
   consoleName,
   setConsoleName,
 }: TableProps) => {
@@ -77,6 +86,7 @@ const Table = ({
       <div className="table-container">
         <h3>Global Leader Board</h3>
         <DisplayLeaderboardButtons
+          gameImage={gameImage}
           setNames={setNames}
           setConsoleName={setConsoleName}
         />
@@ -117,6 +127,7 @@ const Table = ({
 export const LeaderBoard = ({
   names,
   setNames,
+  gameImage,
   consoleName,
   setConsoleName,
 }: TableProps) => {
@@ -129,6 +140,7 @@ export const LeaderBoard = ({
       </Header>
       <Table
         names={names}
+        gameImage={gameImage}
         setNames={setNames}
         consoleName={consoleName}
         setConsoleName={setConsoleName}
