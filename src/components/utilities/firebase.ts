@@ -70,6 +70,41 @@ const getImageURL = async (
   }
 };
 
+const getHiddenFolksURL = async () => {
+  try {
+    // Create a reference under which you want to list
+    const listRef = ref(storage, "console-folks");
+    const list = await listAll(listRef);
+    const imageURL = list.prefixes.map((itemRef) =>
+      // This is array with image name and URL
+      (async () => {
+        const gameImageName = itemRef.name;
+        const getCardImages = async () => {
+          const listRef = ref(storage, `${itemRef.fullPath}`);
+          const list = await listAll(listRef);
+          const folkURL = list.items.map((item) =>
+            (async () => {
+              const url = await getDownloadURL(ref(storage, item.fullPath));
+              const name = item.name.split(".")[0];
+              return { Name: name, url };
+            })()
+          );
+          return await Promise.all(folkURL);
+        };
+        return {
+          Card: gameImageName,
+          Folks: await getCardImages(),
+        };
+      })()
+    );
+    // Gets all url
+    const URLList = await Promise.all(imageURL);
+    console.log(URLList);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const googleProvider = new GoogleAuthProvider();
 const signInWithGoogle = async (
   setUserData: React.Dispatch<
@@ -139,6 +174,7 @@ const logInWithEmailAndPassword = async (
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
     const user = result.user;
+    getHiddenFolksURL();
     // Since this is local sign in, name was saved to firebase database
     // during registration so we query for that name here.
     const q = query(collection(db, "users"), where("uid", "==", user?.uid));
