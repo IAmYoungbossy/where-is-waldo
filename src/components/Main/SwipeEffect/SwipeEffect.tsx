@@ -1,58 +1,53 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
+import "../Main.css";
 import "./SwipeEffect.css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
-// import required modules
-import "../Main.css";
 import "../../Header/Header.css";
-import { MainProps } from "../Main";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { hiddenFolksType } from "../../App/App";
 import { Pagination, Navigation } from "swiper";
 import { DocumentData } from "firebase/firestore";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Header, { Logout } from "../../Header/Header";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, logout } from "../../utilities/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { getImageURL } from "../../utilities/firebaseCRUD";
 
-interface SwipeEffectProps extends MainProps {
-  setNames: React.Dispatch<
-    React.SetStateAction<
-      {
-        data: DocumentData;
-        id: string;
-      }[]
-    >
-  >;
-  userData: {
-    name: string;
-    profileUrl: string;
-  };
-  imageSlide: {
-    name: string;
-    url: string;
-  }[];
-  setConsoleName: React.Dispatch<React.SetStateAction<string>>;
+interface ImageSlideProps {
+  name: string;
+  url: string;
 }
-// The swipe effect on cards is from SwipeJs library
+
+interface SwipeEffectProps {
+  hiddenFolks: hiddenFolksType[];
+  userData: { name: string; profileUrl: string };
+  handleDisplayHiddenFolks: (alt: string) => void;
+  setPlayerName: React.Dispatch<
+    React.SetStateAction<{ data: DocumentData; id: string }[]>
+  >;
+  setConsoleName: React.Dispatch<React.SetStateAction<string>>;
+  setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
+}
+
 export default function SwipeEffect({
-  setNames,
   userData,
-  imageSlide,
+  setPlayerName,
   setConsoleName,
   handleDisplayHiddenFolks,
 }: SwipeEffectProps): JSX.Element {
-  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
+  const [user, loading] = useAuthState(auth);
+  const [imageSlide, setImageSlide] = useState<ImageSlideProps[]>([]);
+
+  useEffect(() => {
+    getImageURL("console-slides", setImageSlide);
+  }, []);
 
   useEffect(() => {
     if (loading) return;
-    // Redirects to sign in page if not valid user
     if (!user) return navigate("/");
   }, [user, loading]);
 
@@ -63,9 +58,9 @@ export default function SwipeEffect({
           <Header>
             {
               <Logout
-                userData={userData}
                 signOut={logout}
-                setNames={setNames}
+                userData={userData}
+                setNames={setPlayerName}
                 setConsoleName={setConsoleName}
               />
             }

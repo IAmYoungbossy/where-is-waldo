@@ -14,16 +14,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Header, { SignInHeader } from "../../Header/Header";
 
-export function SignIn({
-  setUserData,
-}: {
+interface SignInProps {
   setUserData: React.Dispatch<
-    React.SetStateAction<{
-      name: string;
-      profileUrl: string;
-    }>
+    React.SetStateAction<{ name: string; profileUrl: string }>
   >;
-}): JSX.Element {
+}
+
+export function SignIn({ setUserData }: SignInProps): JSX.Element {
   const [password, setPassword] = useState("");
   const [user, loading] = useAuthState(auth);
   const [email, setEmail] = useState("");
@@ -42,7 +39,7 @@ export function SignIn({
       </Header>
       <main>
         <div className="form-container">
-          <form>
+          <form className="form">
             <input
               id="email"
               type="email"

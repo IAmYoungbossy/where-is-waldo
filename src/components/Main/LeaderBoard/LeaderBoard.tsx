@@ -56,7 +56,7 @@ const DisplayLeaderboardButtons = ({
 interface TableProps {
   consoleName: string;
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;
-  setNames: React.Dispatch<
+  setPlayerName: React.Dispatch<
     React.SetStateAction<
       {
         data: DocumentData;
@@ -64,7 +64,7 @@ interface TableProps {
       }[]
     >
   >;
-  names: {
+  playerName: {
     data: DocumentData;
     id: string;
   }[];
@@ -75,8 +75,8 @@ interface TableProps {
 }
 
 const Table = ({
-  names,
-  setNames,
+  playerName,
+  setPlayerName,
   gameImage,
   consoleName,
   setConsoleName,
@@ -87,7 +87,7 @@ const Table = ({
         <h3>Global Leader Board</h3>
         <DisplayLeaderboardButtons
           gameImage={gameImage}
-          setNames={setNames}
+          setNames={setPlayerName}
           setConsoleName={setConsoleName}
         />
         <table>
@@ -103,7 +103,7 @@ const Table = ({
             </tr>
           </thead>
           <tbody>
-            {names.map((name, index) => (
+            {playerName.map((name, index) => (
               <tr key={name.id}>
                 <td>{index + 1}</td>
                 <td>{name.data.Name}</td>
@@ -125,8 +125,8 @@ const Table = ({
 };
 
 export const LeaderBoard = ({
-  names,
-  setNames,
+  playerName,
+  setPlayerName,
   gameImage,
   consoleName,
   setConsoleName,
@@ -139,9 +139,9 @@ export const LeaderBoard = ({
         </h1>
       </Header>
       <Table
-        names={names}
+        playerName={playerName}
         gameImage={gameImage}
-        setNames={setNames}
+        setPlayerName={setPlayerName}
         consoleName={consoleName}
         setConsoleName={setConsoleName}
       />

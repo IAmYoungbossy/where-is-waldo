@@ -79,7 +79,7 @@ export function SignUp({
         </h2>
       </Header>
       <main>
-        <form>
+        <form className="form">
           {inputFields.map((input) => (
             <input
               type={input.name}

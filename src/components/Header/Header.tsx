@@ -9,6 +9,7 @@ import {
   profilePic,
 } from "../utilities/firebaseCRUD";
 import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
+import { setGameTimer } from "../Main/SwipeEffect/MapImage/setGameTimer";
 
 interface HeaderProps {
   children?: JSX.Element;
@@ -24,31 +25,6 @@ export const SignInHeader = () => {
     <div className="sign-in-header">
       <h1>HiddenFolks</h1>
     </div>
-  );
-};
-
-interface TimerProps {
-  time: {
-    hours: number;
-    minutes: number;
-    seconds: number;
-  };
-}
-// This component displays time for play duration
-export const Timer = ({ time }: TimerProps) => {
-  useEffect(() => {
-    document.documentElement.style.setProperty("--padding", "20px 0");
-  });
-  return (
-    <h2 className="timer">
-      {
-        <FormatTimeToString
-          hours={time.hours}
-          minutes={time.minutes}
-          seconds={time.seconds}
-        />
-      }
-    </h2>
   );
 };
 
@@ -156,23 +132,45 @@ export const HiddenFolks = ({ hiddenFolks }: HiddenFolksProps): JSX.Element => {
 };
 
 interface FolksAndTimerProps {
-  time: {
-    hours: number;
-    minutes: number;
-    seconds: number;
-  };
   background: string;
   checkStatus: string;
+  foundAllFolks: boolean;
   hiddenFolks: hiddenFolksType[];
+  setPlayTime: React.Dispatch<
+    React.SetStateAction<{
+      hr: number;
+      min: number;
+      sec: number;
+    }>
+  >;
 }
 
 export const FolksAndTimer = ({
-  time,
   background,
   checkStatus,
   hiddenFolks,
+  foundAllFolks,
+  setPlayTime,
 }: FolksAndTimerProps) => {
   const [showInfo, setShowInfo] = useState(false);
+  const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--padding", "20px 0");
+  }, []);
+
+  useEffect(() => {
+    if (foundAllFolks) {
+      setPlayTime({ hr: time.hours, min: time.minutes, sec: time.seconds });
+      return;
+    }
+    const interval = setInterval(
+      setGameTimer.bind(null, { setTime, time }),
+      1000
+    );
+    return () => clearInterval(interval);
+  }, [time, foundAllFolks]);
+
   return (
     <div className="folks-and-timer">
       <h1>
@@ -189,27 +187,39 @@ export const FolksAndTimer = ({
         <CheckStatus status={checkStatus} background={background} />
       )}
       <HiddenFolks hiddenFolks={hiddenFolks} />
-      <Timer time={time} />
+      <h2 className="timer">
+        <FormatTimeToString
+          hours={time.hours}
+          minutes={time.minutes}
+          seconds={time.seconds}
+        />
+      </h2>
     </div>
   );
 };
 
 interface PhoneMenuProps {
+  hiddenFolks: hiddenFolksType[];
   time: {
     hours: number;
     minutes: number;
     seconds: number;
   };
-  hiddenFolks: hiddenFolksType[];
 }
 // This displays a drop down menu with list of hidden characters to
 // search for. This displays only on mobile view or devices with smaller
 // screen size
-const PhoneMenu = ({ time, hiddenFolks }: PhoneMenuProps) => {
+const PhoneMenu = ({ hiddenFolks, time }: PhoneMenuProps) => {
   return (
     <div>
       <HiddenFolks hiddenFolks={hiddenFolks} />
-      <Timer time={time} />
+      <h2 className="timer">
+        <FormatTimeToString
+          hours={time.hours}
+          minutes={time.minutes}
+          seconds={time.seconds}
+        />
+      </h2>
     </div>
   );
 };

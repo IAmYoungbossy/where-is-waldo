@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../../../../Header/Header.css";
+import "./ReportPlayTime.css";
 import {
   addNameToDatabase,
   getNamesFromDatabase,
@@ -15,7 +16,7 @@ interface ReportPlayTimeProps {
   minutes: number;
   seconds: number;
   hiddenFolks: hiddenFolksType[];
-  setNames: React.Dispatch<
+  setPlayerName: React.Dispatch<
     React.SetStateAction<
       {
         data: DocumentData;
@@ -42,7 +43,7 @@ export const ReportPlayTime = ({
   minutes,
   seconds,
   hiddenFolks,
-  setNames,
+  setPlayerName,
   alt,
   setConsoleName,
 }: ReportPlayTimeProps) => {
@@ -70,12 +71,12 @@ export const ReportPlayTime = ({
       totalTimeInSeconds
     );
     navigate("/leader-board", { replace: true });
-    getNamesFromDatabase(alt, setNames);
+    getNamesFromDatabase(alt, setPlayerName);
     setConsoleName(alt);
   };
 
   useEffect(() => {
-    document.documentElement.style.setProperty("--padding", "0px");
+    document.documentElement.style.setProperty("--padding", "0 20px");
   }, []);
 
   return (

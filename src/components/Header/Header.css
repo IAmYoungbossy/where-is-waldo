@@ -148,6 +148,14 @@ header {
     justify-content: space-between;
 }
 
+.folks-and-timer p {
+    cursor: pointer;
+}
+
+.folks-and-timer p:hover {
+    color: gray;
+}
+
 .folks-and-timer {
     width: 100%;
     display: flex;
