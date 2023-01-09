@@ -19,7 +19,7 @@ header {
     padding: var(--padding)
 }
 
-.timer>span {
+.timer span {
     color: #8eff77;
     font-size: 0.8rem;
 }
@@ -128,11 +128,11 @@ header {
     justify-content: center;
 }
 
-.hidden-folks>img {
+.hidden-folks img {
     transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.hidden-folks>img:hover {
+.hidden-folks img:hover {
     width: 85px;
     cursor: pointer;
 }

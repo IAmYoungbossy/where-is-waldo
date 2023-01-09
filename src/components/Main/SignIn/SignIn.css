@@ -51,8 +51,8 @@ form button:first-of-type {
     background-color: #0d6efd;
 }
 
-form button:nth-of-type(2),
-form button:nth-of-type(3) {
+form>button:nth-of-type(2),
+form>button:nth-of-type(3) {
     gap: 10px;
     display: flex;
     position: relative;
@@ -60,13 +60,13 @@ form button:nth-of-type(3) {
     justify-content: flex-start;
 }
 
-form button:nth-of-type(2) span,
-form button:nth-of-type(3) span {
+form>button:nth-of-type(2)>span,
+form>button:nth-of-type(3)>span {
     padding: 3px 0 0 43px;
 }
 
-form button:nth-of-type(2) svg,
-form button:nth-of-type(3) span {
+form>button:nth-of-type(2)>svg,
+form>button:nth-of-type(3)>svg {
     position: absolute;
     left: 10px;
     height: 2.5rem;
@@ -92,26 +92,26 @@ form p span a {
     text-decoration: underline;
 }
 
-form div {
+form>div {
     display: flex;
     padding-top: 5px;
     background-color: #00008b36;
 }
 
-form button {
+form>div>button {
     padding: 0;
     width: 100px;
     cursor: pointer;
     background-color: #02122a00 !important;
 }
 
-form button svg {
+form>div>button svg {
     height: 2.5rem;
     width: 2.5rem;
     border-radius: 50%;
     box-shadow: 1px 1px 7px 0px black;
 }
 
-form button svg:last-of-type {
+form>div>button svg:last-of-type {
     color: white;
 }
