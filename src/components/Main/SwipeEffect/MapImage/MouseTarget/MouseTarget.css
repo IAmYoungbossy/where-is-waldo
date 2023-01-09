@@ -1,7 +1,5 @@
 :root {
-    --top: 0px;
-    --left: 0px;
-    --custom-mouse: translate(0px, 0px)
+    --display: none
 }
 
 .mouse-pointer {
@@ -31,13 +29,14 @@
     height: 70px;
     display: flex;
     cursor: default;
+    top: var(--top);
+    left: var(--left);
     position: absolute;
     border-radius: 50px;
     align-items: center;
+    display: var(--display);
     justify-content: center;
     border: 5px dotted white;
-    top: var(--top);
-    left: var(--left);
     background-color: #00000054;
 }
 

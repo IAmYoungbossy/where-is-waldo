@@ -66,14 +66,12 @@ export const MouseTarget = ({
   });
 
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--top",
-      `{clickedTarget.top}px`
-    );
+    document.documentElement.style.setProperty("--top", `${clickedTarget.top}`);
     document.documentElement.style.setProperty(
       "--left",
-      `{clickedTarget.left}px`
+      `${clickedTarget.left}`
     );
+    document.documentElement.style.setProperty("--display", "flex");
   }, [clickedTarget]);
 
   return (

@@ -62,7 +62,10 @@ interface CheckStatusProps {
 // 3. Congrates, You found [Character Name] - If you pick correct character
 export const CheckStatus = ({ status, background }: CheckStatusProps) => {
   useEffect(() => {
-    document.documentElement.style.setProperty("--background", `${background}`);
+    document.documentElement.style.setProperty(
+      "--background-color",
+      `${background}`
+    );
   }, [background]);
   return (
     <div className="status-checker">
