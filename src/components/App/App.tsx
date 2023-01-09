@@ -1,8 +1,11 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Main } from "../Main/Main";
 import Footer from "../Footer/Footer";
-import { hiddenFolksArray } from "./hiddenFolksArray";
+import {
+  getHiddenFolksURL,
+  getHiddenFolksURLType,
+} from "../utilities/firebaseCRUD";
 
 export type hiddenFolksType = {
   url: string;
@@ -12,7 +15,13 @@ export type hiddenFolksType = {
 };
 
 function App() {
+  const [hiddenFolksArray, setHiddenFolksArray] =
+    useState<getHiddenFolksURLType>([]);
   const [hiddenFolks, setHiddenFolks] = useState<hiddenFolksType[]>([]);
+
+  useEffect(() => {
+    getHiddenFolksURL(setHiddenFolksArray);
+  }, []);
 
   // This function sets the hidden characters to search for.
   const handleDisplayHiddenFolks = (alt: string): void => {

@@ -6,10 +6,10 @@ import { Route, Routes } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
 import SwipeEffect from "./SwipeEffect/SwipeEffect";
 import MapImage from "./SwipeEffect/MapImage/MapImage";
+import { getImageURL } from "../utilities/firebaseCRUD";
 import { LeaderBoard } from "./LeaderBoard/LeaderBoard";
 import { ResetPassword } from "./ResetPassword/ResetPassword";
 import { PageNotFound } from "../utilities/PageNotFound/PageNotFound";
-import { getImageURL } from "../utilities/firebase";
 
 export interface MainProps {
   handleDisplayHiddenFolks: (alt: string) => void;

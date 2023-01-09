@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import HomePng from "../assets/home.png";
 import { hiddenFolksType } from "../App/App";
 import { DocumentData } from "firebase/firestore";
-import { getAllNamesFromDatabase } from "../utilities/firebaseCRUD";
+import {
+  getAllNamesFromDatabase,
+  home,
+  profilePic,
+} from "../utilities/firebaseCRUD";
 import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
-import ProfilePic from "../assets/dp.png";
 
 interface HeaderProps {
   children?: JSX.Element;
@@ -114,7 +116,7 @@ export const Logout = ({
           src={
             userData.profileUrl && userData.profileUrl !== ""
               ? userData.profileUrl
-              : ProfilePic
+              : profilePic
           }
           alt="Avatar"
           onClick={() => setToggleLogOut(toggleLogout ? false : true)}
@@ -172,7 +174,7 @@ export const FolksAndTimer = ({
     <div className="folks-and-timer">
       <h1>
         <Link to={"/dashboard"}>
-          <img src={HomePng} alt="Home" />
+          <img src={home} alt="Home" />
         </Link>
         <Link to={"/dashboard"}>Home</Link>
       </h1>
