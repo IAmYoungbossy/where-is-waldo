@@ -34,6 +34,6 @@ export const displayTargetMenu = (
   });
 
   // Toggles the cursor style and whether to show the clicked target
-  document.documentElement.style.setProperty("--display", "none");
+  // document.documentElement.style.setProperty("--display", "none");
   setShowClickedTarget(!showClickedTarget);
 };

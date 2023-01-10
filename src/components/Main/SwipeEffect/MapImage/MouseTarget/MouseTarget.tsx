@@ -15,26 +15,6 @@ interface MouseTargetProps {
   setShowClickedTarget: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface StyledPointerProps {
-  cursorLocation: { top: string; left: string };
-}
-
-export const StyledPointer = React.memo(
-  ({ cursorLocation }: StyledPointerProps): JSX.Element => {
-    useEffect(() => {
-      document.documentElement.style.setProperty(
-        "--pointer",
-        `translate(${cursorLocation.left}, ${cursorLocation.top})`
-      );
-    });
-    return (
-      <div className="mouse-pointer">
-        <div />
-      </div>
-    );
-  }
-);
-
 export const MouseTarget = React.memo(
   ({
     getCoords,
@@ -81,7 +61,6 @@ export const MouseTarget = React.memo(
         "--left",
         `${clickedTarget.left}`
       );
-      // document.documentElement.style.setProperty("--display", "flex");
     }, [clickedTarget]);
 
     return (

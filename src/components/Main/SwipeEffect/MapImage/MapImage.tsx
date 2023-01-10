@@ -1,11 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import "../../Main.css";
 import "./MapImage.css";
-import {
-  mousePositionOnImage,
-  MouseTarget,
-  StyledPointer,
-} from "./MouseTarget/MouseTarget";
+import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
@@ -18,7 +14,7 @@ import Header, { FolksAndTimer } from "../../../Header/Header";
 import { fetchTargetFolkCoordinates } from "./folkCoordinates";
 import { ReportPlayTime } from "./ReportPlayTime/ReportPlayTime";
 import { checkIfFoundAllCharacters } from "./checkIfFoundAllCharactersProps";
-import React from "react";
+import { mousePositionOnImage, MouseTarget } from "./MouseTarget/MouseTarget";
 
 interface ImageMapProps {
   src: string;
@@ -38,10 +34,7 @@ const ImageMap = React.memo(
     setCheckStatus,
     setHiddenFolks,
   }: ImageMapProps) => {
-    const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
-      width: 0,
-      height: 0,
-    });
+    const [folkName, setFolkName] = useState("");
     const [cursorLocation, setCursorLocation] = useState({
       top: "0px",
       left: "10px",
@@ -54,9 +47,12 @@ const ImageMap = React.memo(
       height: { max: 0, min: 0 },
       width: { max: 0, min: 0 },
     });
-    const [folkName, setFolkName] = useState("");
     const [customPointer, setCustomPointer] = useState("custom");
     const [showClickedTarget, setShowClickedTarget] = useState(false);
+    const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
+      width: 0,
+      height: 0,
+    });
 
     useEffect(() => {
       displayTargetMenu(
@@ -68,8 +64,6 @@ const ImageMap = React.memo(
       );
       if (customPointer === "custom")
         document.documentElement.style.setProperty("--display", "none");
-      else if (customPointer === "default")
-        document.documentElement.style.setProperty("--display", "flex");
     }, [customPointer]);
 
     useEffect(() => {
@@ -83,6 +77,11 @@ const ImageMap = React.memo(
         clickedTargetInPercentage,
       });
     }, [correctCoords]);
+
+    useEffect(() => {
+      if (customPointer === "default")
+        document.documentElement.style.setProperty("--display", "flex");
+    }, [clickedTarget]);
 
     const { getMousePositionOnClick, updateMousePosition } =
       mousePositionOnImage(setClickedTargetInPercentage, setCursorLocation);
