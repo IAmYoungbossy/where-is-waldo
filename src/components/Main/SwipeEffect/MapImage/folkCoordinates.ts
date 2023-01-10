@@ -3,7 +3,7 @@ import { collection, getDocs } from "firebase/firestore";
 
 interface fetchTargetFolksCoordinatesProps {
   imageName: string;
-  folkName: string;
+  foundFolkName: string;
   setCorrectCoords: React.Dispatch<
     React.SetStateAction<{
       height: {
@@ -20,10 +20,10 @@ interface fetchTargetFolksCoordinatesProps {
 
 export const fetchTargetFolkCoordinates = async ({
   imageName,
-  folkName,
+  foundFolkName,
   setCorrectCoords,
 }: fetchTargetFolksCoordinatesProps) => {
-  const pathToCoords = collection(db, "coords", imageName, folkName);
+  const pathToCoords = collection(db, "coords", imageName, foundFolkName);
   const coordsDoc = await getDocs(pathToCoords);
   const coordsArr = coordsDoc.docs.map((doc) => ({ [doc.id]: doc.data() }));
 

@@ -3,38 +3,38 @@ import React, { useEffect } from "react";
 import { hiddenFolksType } from "../../../../App/App";
 
 interface MouseTargetProps {
-  clickedTarget: {
+  clickedCoords: {
     top: string;
     left: string;
   };
   hiddenFolks?: hiddenFolksType[];
   setCheckStatus: (status: string) => void;
-  getCoords: (imageName: string, folkName: string) => void;
-  setFolkName: React.Dispatch<React.SetStateAction<string>>;
-  setCustomPointer: React.Dispatch<React.SetStateAction<string>>;
-  setShowClickedTarget: React.Dispatch<React.SetStateAction<boolean>>;
+  getCoords: (imageName: string, foundFolkName: string) => void;
+  setFoundfoundFolkName: React.Dispatch<React.SetStateAction<string>>;
+  setCustomCursor: React.Dispatch<React.SetStateAction<string>>;
+  setNameList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const MouseTarget = React.memo(
   ({
     getCoords,
     hiddenFolks,
-    setFolkName,
-    clickedTarget,
+    setFoundfoundFolkName,
+    clickedCoords,
     setCheckStatus,
-    setCustomPointer,
-    setShowClickedTarget,
+    setCustomCursor,
+    setNameList,
   }: MouseTargetProps): JSX.Element => {
     const handleClick = (
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
       folk: hiddenFolksType
     ) => {
       e.stopPropagation();
-      setFolkName(folk.Name);
+      setFoundfoundFolkName(folk.Name);
       setCheckStatus("Checking...");
       getCoords(folk.imageName, folk.Name);
-      setShowClickedTarget(false);
-      setCustomPointer("custom");
+      setNameList(false);
+      setCustomCursor("custom");
     };
 
     const nameOfHiddenFolks = hiddenFolks?.map((folk, index) => {
@@ -55,13 +55,13 @@ export const MouseTarget = React.memo(
     useEffect(() => {
       document.documentElement.style.setProperty(
         "--top",
-        `${clickedTarget.top}`
+        `${clickedCoords.top}`
       );
       document.documentElement.style.setProperty(
         "--left",
-        `${clickedTarget.left}`
+        `${clickedCoords.left}`
       );
-    }, [clickedTarget]);
+    }, [clickedCoords]);
 
     return (
       <div className="mouse-target">
@@ -88,13 +88,13 @@ export const mousePosition = (e: React.MouseEvent<HTMLDivElement>) => {
 };
 
 export const mousePositionOnImage = (
-  setClickedTargetInPercentage: React.Dispatch<
+  setCoordsToPercent: React.Dispatch<
     React.SetStateAction<{
       width: number;
       height: number;
     }>
   >,
-  setCursorLocation: React.Dispatch<
+  setClickedCoords: React.Dispatch<
     React.SetStateAction<{
       top: string;
       left: string;
@@ -103,17 +103,15 @@ export const mousePositionOnImage = (
 ) => {
   const getMousePositionOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const { percentHeight, percentWidth } = mousePosition(e);
-    setClickedTargetInPercentage({
+    setCoordsToPercent({
       width: percentWidth,
       height: percentHeight,
     });
   };
 
-  // This function gets the X and Y coordinates for the style mouse pointer.
   const updateMousePosition = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Subtracts 118 and 40 from the Y and X coordinates to center the custom
-    // mouse pointer at the tip of the mouse arrow
-    setCursorLocation({
+    // Subtract 118 and 40 from the Y and X coordinates to center clicked target.
+    setClickedCoords({
       top: `${e.pageY - 118}px`,
       left: `${e.pageX - 40}px`,
     });

@@ -31,20 +31,20 @@ export const SignInHeader = React.memo(() => {
 
 interface CheckStatusProps {
   status: string;
-  background: string;
+  backgroundColor: string;
 }
 // This component shows the three stages of validation when you click a character.
 // 1. Checking - when getting details from firebase
 // 2. Keep Searching - If you make wrong selection.
 // 3. Congrates, You found [Character Name] - If you pick correct character
 export const CheckStatus = React.memo(
-  ({ status, background }: CheckStatusProps) => {
+  ({ status, backgroundColor }: CheckStatusProps) => {
     useEffect(() => {
       document.documentElement.style.setProperty(
         "--background-color",
-        `${background}`
+        `${backgroundColor}`
       );
-    }, [background]);
+    }, [backgroundColor]);
     return (
       <div className="status-checker">
         <p>{status}</p>
@@ -134,7 +134,7 @@ export const HiddenFolks = React.memo(
 );
 
 interface FolksAndTimerProps {
-  background: string;
+  backgroundColor: string;
   checkStatus: string;
   foundAllFolks: boolean;
   hiddenFolks: hiddenFolksType[];
@@ -149,7 +149,7 @@ interface FolksAndTimerProps {
 
 export const FolksAndTimer = React.memo(
   ({
-    background,
+    backgroundColor,
     checkStatus,
     hiddenFolks,
     foundAllFolks,
@@ -187,7 +187,7 @@ export const FolksAndTimer = React.memo(
           {showInfo && <PhoneMenu time={time} hiddenFolks={hiddenFolks} />}
         </div>
         {checkStatus !== "" && (
-          <CheckStatus status={checkStatus} background={background} />
+          <CheckStatus status={checkStatus} backgroundColor={backgroundColor} />
         )}
         <HiddenFolks hiddenFolks={hiddenFolks} />
         <h2 className="timer">

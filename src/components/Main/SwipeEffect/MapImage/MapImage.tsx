@@ -20,7 +20,7 @@ interface ImageMapProps {
   src: string;
   alt: string;
   hiddenFolks: hiddenFolksType[];
-  setBackground: React.Dispatch<React.SetStateAction<string>>;
+  setBackgroundColor: React.Dispatch<React.SetStateAction<string>>;
   setCheckStatus: React.Dispatch<React.SetStateAction<string>>;
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
@@ -30,82 +30,76 @@ const ImageMap = React.memo(
     src,
     alt,
     hiddenFolks,
-    setBackground,
+    setBackgroundColor,
     setCheckStatus,
     setHiddenFolks,
   }: ImageMapProps) => {
-    const [folkName, setFolkName] = useState("");
-    const [cursorLocation, setCursorLocation] = useState({
+    const [nameList, setNameList] = useState(false);
+    const [clickedCoords, setClickedCoords] = useState({
       top: "0px",
-      left: "10px",
-    });
-    const [clickedTarget, setClickedTarget] = useState({
-      top: "0px",
-      left: "10px",
+      left: "0px",
     });
     const [correctCoords, setCorrectCoords] = useState({
       height: { max: 0, min: 0 },
       width: { max: 0, min: 0 },
     });
-    const [customPointer, setCustomPointer] = useState("custom");
-    const [showClickedTarget, setShowClickedTarget] = useState(false);
-    const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
+    const [coordsToPercent, setCoordsToPercent] = useState({
       width: 0,
       height: 0,
     });
+    const [customCursor, setCustomCursor] = useState("custom");
+    const [foundFolkName, setFoundfoundFolkName] = useState("");
 
     useEffect(() => {
-      displayTargetMenu(
-        clickedTargetInPercentage,
-        setClickedTarget,
-        cursorLocation,
-        setShowClickedTarget,
-        showClickedTarget
-      );
-      if (customPointer === "custom")
+      displayTargetMenu(coordsToPercent, setNameList, nameList);
+      if (customCursor === "custom")
         document.documentElement.style.setProperty("--display", "none");
-    }, [customPointer]);
+    }, [customCursor]);
 
     useEffect(() => {
       validateTarget({
-        folkName,
+        foundFolkName,
         hiddenFolks,
         correctCoords,
-        setBackground,
+        setBackgroundColor,
         setHiddenFolks,
         setCheckStatus,
-        clickedTargetInPercentage,
+        coordsToPercent,
       });
     }, [correctCoords]);
 
     useEffect(() => {
-      if (customPointer === "default")
+      if (customCursor === "default")
         document.documentElement.style.setProperty("--display", "flex");
-    }, [clickedTarget]);
+    }, [clickedCoords]);
 
     const { getMousePositionOnClick, updateMousePosition } =
-      mousePositionOnImage(setClickedTargetInPercentage, setCursorLocation);
+      mousePositionOnImage(setCoordsToPercent, setClickedCoords);
 
-    const getHiddenFolksCoords = (imageName: string, folkName: string) =>
-      fetchTargetFolkCoordinates({ imageName, folkName, setCorrectCoords });
+    const getHiddenFolksCoords = (imageName: string, foundFolkName: string) =>
+      fetchTargetFolkCoordinates({
+        imageName,
+        foundFolkName,
+        setCorrectCoords,
+      });
 
     return (
       <div
-        className={`image-wrapper ${customPointer}`}
+        className={`image-wrapper ${customCursor}`}
         onClick={(e) => {
           updateMousePosition(e);
           getMousePositionOnClick(e);
-          setCustomPointer(customPointer === "default" ? "custom" : "default");
+          setCustomCursor(customCursor === "default" ? "custom" : "default");
         }}
       >
         <MouseTarget
-          setFolkName={setFolkName}
+          setFoundfoundFolkName={setFoundfoundFolkName}
+          setNameList={setNameList}
           hiddenFolks={hiddenFolks}
-          clickedTarget={clickedTarget}
+          clickedCoords={clickedCoords}
           setCheckStatus={setCheckStatus}
           getCoords={getHiddenFolksCoords}
-          setCustomPointer={setCustomPointer}
-          setShowClickedTarget={setShowClickedTarget}
+          setCustomCursor={setCustomCursor}
         />
         <img src={src} alt={alt} />
       </div>
@@ -143,8 +137,8 @@ export default React.memo(function MapImage({
   setConsoleName,
 }: ImageProps): JSX.Element {
   const [checkStatus, setCheckStatus] = useState("");
-  const [background, setBackground] = useState("black");
   const [foundAllFolks, setFoundAllFolks] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState("black");
   const [playTime, setPlayTime] = useState({ hr: 0, min: 0, sec: 0 });
 
   const [user] = useAuthState(auth);
@@ -155,7 +149,7 @@ export default React.memo(function MapImage({
   }, []);
 
   useEffect(() => {
-    // Triggers a pop up modal if all characters are found
+    // Triggers a pop up modal if true
     checkIfFoundAllCharacters({
       hiddenFolks,
       setFoundAllFolks,
@@ -169,7 +163,7 @@ export default React.memo(function MapImage({
           <Header>
             <FolksAndTimer
               setPlayTime={setPlayTime}
-              background={background}
+              backgroundColor={backgroundColor}
               hiddenFolks={hiddenFolks}
               checkStatus={checkStatus}
               foundAllFolks={foundAllFolks}
@@ -180,7 +174,7 @@ export default React.memo(function MapImage({
               src={src}
               alt={alt}
               hiddenFolks={hiddenFolks}
-              setBackground={setBackground}
+              setBackgroundColor={setBackgroundColor}
               setHiddenFolks={setHiddenFolks}
               setCheckStatus={setCheckStatus}
             />

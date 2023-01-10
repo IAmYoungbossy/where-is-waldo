@@ -1,7 +1,7 @@
 import { hiddenFolksType } from "../../../App/App";
 
 interface validateTargetProps {
-  clickedTargetInPercentage: {
+  coordsToPercent: {
     width: number;
     height: number;
   };
@@ -15,53 +15,53 @@ interface validateTargetProps {
       min: number;
     };
   };
-  folkName: string;
+  foundFolkName: string;
   hiddenFolks: hiddenFolksType[];
-  setBackground: React.Dispatch<React.SetStateAction<string>>;
+  setBackgroundColor: React.Dispatch<React.SetStateAction<string>>;
   setCheckStatus: React.Dispatch<React.SetStateAction<string>>;
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
 export const validateTarget = ({
-  folkName,
+  foundFolkName,
   hiddenFolks,
   correctCoords,
-  setBackground,
+  setBackgroundColor,
   setHiddenFolks,
   setCheckStatus,
-  clickedTargetInPercentage,
+  coordsToPercent,
 }: validateTargetProps) => {
-  const clickedTarget = clickedTargetInPercentage;
+  const clickedCoords = coordsToPercent;
   // This makes sure the mouse is placed at the appropriate place on image
   if (
-    clickedTarget.width >= correctCoords.width.min &&
-    clickedTarget.width <= correctCoords.width.max &&
-    clickedTarget.height >= correctCoords.height.min &&
-    clickedTarget.height <= correctCoords.height.max &&
-    clickedTarget.width !== 0
+    clickedCoords.width >= correctCoords.width.min &&
+    clickedCoords.width <= correctCoords.width.max &&
+    clickedCoords.height >= correctCoords.height.min &&
+    clickedCoords.height <= correctCoords.height.max &&
+    clickedCoords.width !== 0
   ) {
     // Marks a found character true to disable it from list of available characters
     hiddenFolks.forEach((folk, index) => {
-      if (folk.Name === folkName) {
+      if (folk.Name === foundFolkName) {
         const hiddenFolksCopy = [...hiddenFolks];
         hiddenFolksCopy[index] = { ...folk, checked: true };
         setHiddenFolks(hiddenFolksCopy);
       }
     });
     // Success message if right character is clcicked
-    setBackground("green");
-    setCheckStatus(`Congrats! You found ${folkName}`);
+    setBackgroundColor("green");
+    setCheckStatus(`Congrats! You found ${foundFolkName}`);
     setTimeout(() => {
       setCheckStatus("");
-      setBackground("black");
+      setBackgroundColor("black");
     }, 5000);
-  } else if (clickedTarget.width !== 0) {
+  } else if (clickedCoords.width !== 0) {
     // Fail message if wrong character is clicked
-    setBackground("red");
+    setBackgroundColor("red");
     setCheckStatus("Keep searching");
     setTimeout(() => {
       setCheckStatus("");
-      setBackground("black");
+      setBackgroundColor("black");
     }, 5000);
   }
 };
