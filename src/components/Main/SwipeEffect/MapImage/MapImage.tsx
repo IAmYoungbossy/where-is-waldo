@@ -54,24 +54,23 @@ const ImageMap = React.memo(
       height: { max: 0, min: 0 },
       width: { max: 0, min: 0 },
     });
-    const [showClickedTarget, setShowClickedTarget] = useState(false);
-    const [showCustomCursor, setShowCustomCursor] = useState(true);
-    const [updateUseEffect, setUpdateUseEffect] = useState(false);
-    const [cursorStyle, setCursorStyle] = useState("none");
     const [folkName, setFolkName] = useState("");
+    const [customPointer, setCustomPointer] = useState("custom");
+    const [showClickedTarget, setShowClickedTarget] = useState(false);
 
     useEffect(() => {
       displayTargetMenu(
         clickedTargetInPercentage,
-        setShowCustomCursor,
         setClickedTarget,
         cursorLocation,
         setShowClickedTarget,
-        showClickedTarget,
-        setCursorStyle,
-        cursorStyle
+        showClickedTarget
       );
-    }, [updateUseEffect]);
+      if (customPointer === "custom")
+        document.documentElement.style.setProperty("--display", "none");
+      else if (customPointer === "default")
+        document.documentElement.style.setProperty("--display", "flex");
+    }, [customPointer]);
 
     useEffect(() => {
       validateTarget({
@@ -85,55 +84,30 @@ const ImageMap = React.memo(
       });
     }, [correctCoords]);
 
-    useEffect(() => {
-      document.documentElement.style.setProperty(
-        "--cursor-pointer",
-        `${cursorStyle}`
-      );
-    }, [cursorStyle]);
-
-    const {
-      getMouseLocationInPercent,
-      getMousePositionOnClick,
-      updateMousePosition,
-    } = mousePositionOnImage(
-      showClickedTarget,
-      setCursorStyle,
-      setShowCustomCursor,
-      setClickedTargetInPercentage,
-      setCursorLocation
-    );
+    const { getMousePositionOnClick, updateMousePosition } =
+      mousePositionOnImage(setClickedTargetInPercentage, setCursorLocation);
 
     const getHiddenFolksCoords = (imageName: string, folkName: string) =>
       fetchTargetFolkCoordinates({ imageName, folkName, setCorrectCoords });
 
     return (
       <div
-        className="image-wrapper"
-        onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
-          updateMousePosition(e);
-          getMouseLocationInPercent(e);
-        }}
-        onMouseDown={updateMousePosition}
+        className={`image-wrapper ${customPointer}`}
         onClick={(e) => {
+          updateMousePosition(e);
           getMousePositionOnClick(e);
-          setUpdateUseEffect(updateUseEffect ? false : true);
-          setShowCustomCursor(false);
+          setCustomPointer(customPointer === "default" ? "custom" : "default");
         }}
       >
-        {showClickedTarget && (
-          <MouseTarget
-            setFolkName={setFolkName}
-            hiddenFolks={hiddenFolks}
-            clickedTarget={clickedTarget}
-            setCheckStatus={setCheckStatus}
-            getCoords={getHiddenFolksCoords}
-            updateUseEffect={updateUseEffect}
-            setUpdateUseEffect={setUpdateUseEffect}
-            setShowCustomCursor={setShowCustomCursor}
-          />
-        )}
-        {showCustomCursor && <StyledPointer cursorLocation={cursorLocation} />}
+        <MouseTarget
+          setFolkName={setFolkName}
+          hiddenFolks={hiddenFolks}
+          clickedTarget={clickedTarget}
+          setCheckStatus={setCheckStatus}
+          getCoords={getHiddenFolksCoords}
+          setCustomPointer={setCustomPointer}
+          setShowClickedTarget={setShowClickedTarget}
+        />
         <img src={src} alt={alt} />
       </div>
     );

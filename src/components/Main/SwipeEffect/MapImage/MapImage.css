@@ -1,5 +1,9 @@
-:root {
-    --cursor-pointer: default
+.default {
+    cursor: default;
+}
+
+.custom {
+    cursor: url("../../../assests/custom-cursor.svg") 37.5 37.5, auto;
 }
 
 .image-wrapper {
@@ -7,15 +11,7 @@
     position: relative;
 }
 
-.image-wrapper:hover {
-    cursor: var(--cursor-pointer)
-}
-
 .image-wrapper img {
     width: 100%;
     pointer-events: all;
-}
-
-.image-wrapper img:hover {
-    cursor: var(--cursor-pointer)
 }

@@ -1,10 +1,18 @@
-.App {
-    color: white;
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url("https://firebasestorage.googleapis.com/v0/b/photo-tagging-app-3344.appspot.com/o/bg-and-icons%2FGame-bg.jpg?alt=media&token=3a5f4059-cea3-4b4b-8483-b91db3f5d809");
+}
+
+#root {
+    background-color: rgb(45 26 20 / 61%);
+}
+
+.App {
+    display: flex;
+    color: white;
+    min-height: 100vh;
+    position: relative;
+    flex-direction: column;
 }

@@ -7,13 +7,12 @@ interface MouseTargetProps {
     top: string;
     left: string;
   };
-  updateUseEffect: boolean;
   hiddenFolks?: hiddenFolksType[];
   setCheckStatus: (status: string) => void;
-  setUpdateUseEffect: (status: boolean) => void;
-  setShowCustomCursor: (status: boolean) => void;
   getCoords: (imageName: string, folkName: string) => void;
   setFolkName: React.Dispatch<React.SetStateAction<string>>;
+  setCustomPointer: React.Dispatch<React.SetStateAction<string>>;
+  setShowClickedTarget: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface StyledPointerProps {
@@ -43,9 +42,8 @@ export const MouseTarget = React.memo(
     setFolkName,
     clickedTarget,
     setCheckStatus,
-    updateUseEffect,
-    setUpdateUseEffect,
-    setShowCustomCursor,
+    setCustomPointer,
+    setShowClickedTarget,
   }: MouseTargetProps): JSX.Element => {
     const handleClick = (
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -53,10 +51,10 @@ export const MouseTarget = React.memo(
     ) => {
       e.stopPropagation();
       setFolkName(folk.Name);
-      setShowCustomCursor(false);
       setCheckStatus("Checking...");
       getCoords(folk.imageName, folk.Name);
-      setUpdateUseEffect(updateUseEffect ? false : true);
+      setShowClickedTarget(false);
+      setCustomPointer("custom");
     };
 
     const nameOfHiddenFolks = hiddenFolks?.map((folk, index) => {
@@ -83,7 +81,7 @@ export const MouseTarget = React.memo(
         "--left",
         `${clickedTarget.left}`
       );
-      document.documentElement.style.setProperty("--display", "flex");
+      // document.documentElement.style.setProperty("--display", "flex");
     }, [clickedTarget]);
 
     return (
@@ -96,31 +94,6 @@ export const MouseTarget = React.memo(
     );
   }
 );
-
-// This controls when to display target mouse or default based
-// on the area on image
-export const displayDefaultOrStyledMouse = (
-  percentWidth: number,
-  percentHeight: number,
-  showClickedTarget: boolean,
-  setCursorStyle: (value: React.SetStateAction<string>) => void,
-  setShowCustomCursor: (value: React.SetStateAction<boolean>) => void
-) => {
-  if (
-    percentWidth > 97 ||
-    percentWidth < 3 ||
-    percentHeight > 98 ||
-    percentHeight < 1
-  ) {
-    setShowCustomCursor(false);
-    setCursorStyle("default");
-  } else if (showClickedTarget) {
-    setShowCustomCursor(false);
-  } else {
-    setShowCustomCursor(true);
-    setCursorStyle("none");
-  }
-};
 
 // This gets height and width of image and the position of mouse position
 // in respect to the height and width of image in percentage.
@@ -136,9 +109,6 @@ export const mousePosition = (e: React.MouseEvent<HTMLDivElement>) => {
 };
 
 export const mousePositionOnImage = (
-  showClickedTarget: boolean,
-  setCursorStyle: (value: React.SetStateAction<string>) => void,
-  setShowCustomCursor: (value: React.SetStateAction<boolean>) => void,
   setClickedTargetInPercentage: React.Dispatch<
     React.SetStateAction<{
       width: number;
@@ -152,26 +122,8 @@ export const mousePositionOnImage = (
     }>
   >
 ) => {
-  const getMouseLocationInPercent = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { percentHeight, percentWidth } = mousePosition(e);
-    displayDefaultOrStyledMouse(
-      percentWidth,
-      percentHeight,
-      showClickedTarget,
-      setCursorStyle,
-      setShowCustomCursor
-    );
-  };
-
   const getMousePositionOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const { percentHeight, percentWidth } = mousePosition(e);
-    displayDefaultOrStyledMouse(
-      percentWidth,
-      percentHeight,
-      showClickedTarget,
-      setCursorStyle,
-      setShowCustomCursor
-    );
     setClickedTargetInPercentage({
       width: percentWidth,
       height: percentHeight,
@@ -189,7 +141,6 @@ export const mousePositionOnImage = (
   };
 
   return {
-    getMouseLocationInPercent,
     getMousePositionOnClick,
     updateMousePosition,
   };
