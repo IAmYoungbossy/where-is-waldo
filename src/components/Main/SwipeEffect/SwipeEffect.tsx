@@ -15,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, logout } from "../../utilities/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getImageURL } from "../../utilities/firebaseCRUD";
+import React from "react";
 
 interface ImageSlideProps {
   name: string;
@@ -32,7 +33,7 @@ interface SwipeEffectProps {
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
-export default function SwipeEffect({
+export default React.memo(function SwipeEffect({
   userData,
   setPlayerName,
   setConsoleName,
@@ -106,4 +107,4 @@ export default function SwipeEffect({
       )}
     </>
   );
-}
+});

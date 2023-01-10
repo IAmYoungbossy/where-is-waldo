@@ -10,23 +10,24 @@ import {
 } from "../utilities/firebaseCRUD";
 import { FormatTimeToString } from "../FormatTimeToString/FormatTimeToString";
 import { setGameTimer } from "../Main/SwipeEffect/MapImage/setGameTimer";
+import React from "react";
 
 interface HeaderProps {
   children?: JSX.Element;
 }
 // Header container with general header styling for all pages
-export default function Header({ children }: HeaderProps) {
+export default React.memo(function Header({ children }: HeaderProps) {
   return <header>{children}</header>;
-}
+});
 
 // Header content for sign in page with its styling.
-export const SignInHeader = () => {
+export const SignInHeader = React.memo(() => {
   return (
     <div className="sign-in-header">
       <h1>HiddenFolks</h1>
     </div>
   );
-};
+});
 
 interface CheckStatusProps {
   status: string;
@@ -36,19 +37,21 @@ interface CheckStatusProps {
 // 1. Checking - when getting details from firebase
 // 2. Keep Searching - If you make wrong selection.
 // 3. Congrates, You found [Character Name] - If you pick correct character
-export const CheckStatus = ({ status, background }: CheckStatusProps) => {
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--background-color",
-      `${background}`
+export const CheckStatus = React.memo(
+  ({ status, background }: CheckStatusProps) => {
+    useEffect(() => {
+      document.documentElement.style.setProperty(
+        "--background-color",
+        `${background}`
+      );
+    }, [background]);
+    return (
+      <div className="status-checker">
+        <p>{status}</p>
+      </div>
     );
-  }, [background]);
-  return (
-    <div className="status-checker">
-      <p>{status}</p>
-    </div>
-  );
-};
+  }
+);
 
 interface LogoutProps {
   setNames: React.Dispatch<
@@ -68,68 +71,67 @@ interface LogoutProps {
 }
 // Component displays an avatar from Google or Facebook of signed in user.
 // Shows user first name and log out button if avatar is clicked.
-export const Logout = ({
-  userData,
-  signOut,
-  setNames,
-  setConsoleName,
-}: LogoutProps) => {
-  const [toggleLogout, setToggleLogOut] = useState(false);
-  const firstName = userData.name.split(" ")[0];
+export const Logout = React.memo(
+  ({ userData, signOut, setNames, setConsoleName }: LogoutProps) => {
+    const [toggleLogout, setToggleLogOut] = useState(false);
+    const firstName = userData.name.split(" ")[0];
 
-  return (
-    <div className="dashboard-header">
-      <h1>
-        <Link
-          to={"/leader-board"}
-          onClick={() => {
-            getAllNamesFromDatabase(setNames);
-            setConsoleName("Overall");
-          }}
-        >
-          Leaderboard
-        </Link>
-      </h1>
-      <div className="logout-wrapper">
-        <img
-          src={
-            userData.profileUrl && userData.profileUrl !== ""
-              ? userData.profileUrl
-              : profilePic
-          }
-          alt="Avatar"
-          onClick={() => setToggleLogOut(toggleLogout ? false : true)}
-        />
-        {toggleLogout && (
-          <div className="logout">
-            <p>Hi, {firstName}.</p>
-            <button onClick={signOut}>Log Out</button>
-          </div>
-        )}
+    return (
+      <div className="dashboard-header">
+        <h1>
+          <Link
+            to={"/leader-board"}
+            onClick={() => {
+              getAllNamesFromDatabase(setNames);
+              setConsoleName("Overall");
+            }}
+          >
+            Leaderboard
+          </Link>
+        </h1>
+        <div className="logout-wrapper">
+          <img
+            src={
+              userData.profileUrl && userData.profileUrl !== ""
+                ? userData.profileUrl
+                : profilePic
+            }
+            alt="Avatar"
+            onClick={() => setToggleLogOut(toggleLogout ? false : true)}
+          />
+          {toggleLogout && (
+            <div className="logout">
+              <p>Hi, {firstName}.</p>
+              <button onClick={signOut}>Log Out</button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 interface HiddenFolksProps {
   hiddenFolks: hiddenFolksType[];
 }
 // This component is responsible for displaying the hidden character to search for in header
-export const HiddenFolks = ({ hiddenFolks }: HiddenFolksProps): JSX.Element => {
-  const Folks = hiddenFolks?.map(
-    (folk, index): JSX.Element => (
-      <div key={index}>
-        <img
-          src={folk.url}
-          alt={folk.Name}
-          width={folk.Name === "Tommy" || folk.Name === "Aurthur" ? 25 : 40}
-        />
-        <p>{folk.Name}</p>
-      </div>
-    )
-  );
-  return <div className="hidden-folks">{Folks}</div>;
-};
+export const HiddenFolks = React.memo(
+  ({ hiddenFolks }: HiddenFolksProps): JSX.Element => {
+    const Folks = hiddenFolks?.map(
+      (folk, index): JSX.Element => (
+        <div key={index}>
+          <img
+            src={folk.url}
+            alt={folk.Name}
+            width={folk.Name === "Tommy" || folk.Name === "Aurthur" ? 25 : 40}
+          />
+          <p>{folk.Name}</p>
+        </div>
+      )
+    );
+    return <div className="hidden-folks">{Folks}</div>;
+  }
+);
 
 interface FolksAndTimerProps {
   background: string;
@@ -145,58 +147,60 @@ interface FolksAndTimerProps {
   >;
 }
 
-export const FolksAndTimer = ({
-  background,
-  checkStatus,
-  hiddenFolks,
-  foundAllFolks,
-  setPlayTime,
-}: FolksAndTimerProps) => {
-  const [showInfo, setShowInfo] = useState(false);
-  const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
+export const FolksAndTimer = React.memo(
+  ({
+    background,
+    checkStatus,
+    hiddenFolks,
+    foundAllFolks,
+    setPlayTime,
+  }: FolksAndTimerProps) => {
+    const [showInfo, setShowInfo] = useState(false);
+    const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
-  useEffect(() => {
-    document.documentElement.style.setProperty("--padding", "20px 0");
-  }, []);
+    useEffect(() => {
+      document.documentElement.style.setProperty("--padding", "20px 0");
+    }, []);
 
-  useEffect(() => {
-    if (foundAllFolks) {
-      setPlayTime({ hr: time.hours, min: time.minutes, sec: time.seconds });
-      return;
-    }
-    const interval = setInterval(
-      setGameTimer.bind(null, { setTime, time }),
-      1000
-    );
-    return () => clearInterval(interval);
-  }, [time, foundAllFolks]);
+    useEffect(() => {
+      if (foundAllFolks) {
+        setPlayTime({ hr: time.hours, min: time.minutes, sec: time.seconds });
+        return;
+      }
+      const interval = setInterval(
+        setGameTimer.bind(null, { setTime, time }),
+        1000
+      );
+      return () => clearInterval(interval);
+    }, [time, foundAllFolks]);
 
-  return (
-    <div className="folks-and-timer">
-      <h1>
-        <Link to={"/dashboard"}>
-          <img src={home} alt="Home" />
-        </Link>
-        <Link to={"/dashboard"}>Home</Link>
-      </h1>
-      <div>
-        <p onClick={() => setShowInfo(showInfo ? false : true)}>INFO</p>
-        {showInfo && <PhoneMenu time={time} hiddenFolks={hiddenFolks} />}
+    return (
+      <div className="folks-and-timer">
+        <h1>
+          <Link to={"/dashboard"}>
+            <img src={home} alt="Home" />
+          </Link>
+          <Link to={"/dashboard"}>Home</Link>
+        </h1>
+        <div>
+          <p onClick={() => setShowInfo(showInfo ? false : true)}>INFO</p>
+          {showInfo && <PhoneMenu time={time} hiddenFolks={hiddenFolks} />}
+        </div>
+        {checkStatus !== "" && (
+          <CheckStatus status={checkStatus} background={background} />
+        )}
+        <HiddenFolks hiddenFolks={hiddenFolks} />
+        <h2 className="timer">
+          <FormatTimeToString
+            hours={time.hours}
+            minutes={time.minutes}
+            seconds={time.seconds}
+          />
+        </h2>
       </div>
-      {checkStatus !== "" && (
-        <CheckStatus status={checkStatus} background={background} />
-      )}
-      <HiddenFolks hiddenFolks={hiddenFolks} />
-      <h2 className="timer">
-        <FormatTimeToString
-          hours={time.hours}
-          minutes={time.minutes}
-          seconds={time.seconds}
-        />
-      </h2>
-    </div>
-  );
-};
+    );
+  }
+);
 
 interface PhoneMenuProps {
   hiddenFolks: hiddenFolksType[];
@@ -209,7 +213,7 @@ interface PhoneMenuProps {
 // This displays a drop down menu with list of hidden characters to
 // search for. This displays only on mobile view or devices with smaller
 // screen size
-const PhoneMenu = ({ hiddenFolks, time }: PhoneMenuProps) => {
+const PhoneMenu = React.memo(({ hiddenFolks, time }: PhoneMenuProps) => {
   return (
     <div>
       <HiddenFolks hiddenFolks={hiddenFolks} />
@@ -222,4 +226,4 @@ const PhoneMenu = ({ hiddenFolks, time }: PhoneMenuProps) => {
       </h2>
     </div>
   );
-};
+});

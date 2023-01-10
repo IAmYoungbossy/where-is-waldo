@@ -18,6 +18,7 @@ import Header, { FolksAndTimer } from "../../../Header/Header";
 import { fetchTargetFolkCoordinates } from "./folkCoordinates";
 import { ReportPlayTime } from "./ReportPlayTime/ReportPlayTime";
 import { checkIfFoundAllCharacters } from "./checkIfFoundAllCharactersProps";
+import React from "react";
 
 interface ImageMapProps {
   src: string;
@@ -28,114 +29,116 @@ interface ImageMapProps {
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
-const ImageMap = ({
-  src,
-  alt,
-  hiddenFolks,
-  setBackground,
-  setCheckStatus,
-  setHiddenFolks,
-}: ImageMapProps) => {
-  const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
-    width: 0,
-    height: 0,
-  });
-  const [cursorLocation, setCursorLocation] = useState({
-    top: "0px",
-    left: "10px",
-  });
-  const [clickedTarget, setClickedTarget] = useState({
-    top: "0px",
-    left: "10px",
-  });
-  const [correctCoords, setCorrectCoords] = useState({
-    height: { max: 0, min: 0 },
-    width: { max: 0, min: 0 },
-  });
-  const [showClickedTarget, setShowClickedTarget] = useState(false);
-  const [showCustomCursor, setShowCustomCursor] = useState(true);
-  const [updateUseEffect, setUpdateUseEffect] = useState(false);
-  const [cursorStyle, setCursorStyle] = useState("none");
-  const [folkName, setFolkName] = useState("");
+const ImageMap = React.memo(
+  ({
+    src,
+    alt,
+    hiddenFolks,
+    setBackground,
+    setCheckStatus,
+    setHiddenFolks,
+  }: ImageMapProps) => {
+    const [clickedTargetInPercentage, setClickedTargetInPercentage] = useState({
+      width: 0,
+      height: 0,
+    });
+    const [cursorLocation, setCursorLocation] = useState({
+      top: "0px",
+      left: "10px",
+    });
+    const [clickedTarget, setClickedTarget] = useState({
+      top: "0px",
+      left: "10px",
+    });
+    const [correctCoords, setCorrectCoords] = useState({
+      height: { max: 0, min: 0 },
+      width: { max: 0, min: 0 },
+    });
+    const [showClickedTarget, setShowClickedTarget] = useState(false);
+    const [showCustomCursor, setShowCustomCursor] = useState(true);
+    const [updateUseEffect, setUpdateUseEffect] = useState(false);
+    const [cursorStyle, setCursorStyle] = useState("none");
+    const [folkName, setFolkName] = useState("");
 
-  useEffect(() => {
-    displayTargetMenu(
-      clickedTargetInPercentage,
-      setShowCustomCursor,
-      setClickedTarget,
-      cursorLocation,
-      setShowClickedTarget,
+    useEffect(() => {
+      displayTargetMenu(
+        clickedTargetInPercentage,
+        setShowCustomCursor,
+        setClickedTarget,
+        cursorLocation,
+        setShowClickedTarget,
+        showClickedTarget,
+        setCursorStyle,
+        cursorStyle
+      );
+    }, [updateUseEffect]);
+
+    useEffect(() => {
+      validateTarget({
+        folkName,
+        hiddenFolks,
+        correctCoords,
+        setBackground,
+        setHiddenFolks,
+        setCheckStatus,
+        clickedTargetInPercentage,
+      });
+    }, [correctCoords]);
+
+    useEffect(() => {
+      document.documentElement.style.setProperty(
+        "--cursor-pointer",
+        `${cursorStyle}`
+      );
+    }, [cursorStyle]);
+
+    const {
+      getMouseLocationInPercent,
+      getMousePositionOnClick,
+      updateMousePosition,
+    } = mousePositionOnImage(
       showClickedTarget,
       setCursorStyle,
-      cursorStyle
+      setShowCustomCursor,
+      setClickedTargetInPercentage,
+      setCursorLocation
     );
-  }, [updateUseEffect]);
 
-  useEffect(() => {
-    validateTarget({
-      folkName,
-      hiddenFolks,
-      correctCoords,
-      setBackground,
-      setHiddenFolks,
-      setCheckStatus,
-      clickedTargetInPercentage,
-    });
-  }, [correctCoords]);
+    const getHiddenFolksCoords = (imageName: string, folkName: string) =>
+      fetchTargetFolkCoordinates({ imageName, folkName, setCorrectCoords });
 
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--cursor-pointer",
-      `${cursorStyle}`
+    return (
+      <div
+        className="image-wrapper"
+        onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
+          updateMousePosition(e);
+          getMouseLocationInPercent(e);
+        }}
+        onMouseDown={updateMousePosition}
+        onClick={(e) => {
+          getMousePositionOnClick(e);
+          setUpdateUseEffect(updateUseEffect ? false : true);
+          setShowCustomCursor(false);
+        }}
+      >
+        {showClickedTarget && (
+          <MouseTarget
+            setFolkName={setFolkName}
+            hiddenFolks={hiddenFolks}
+            clickedTarget={clickedTarget}
+            setCheckStatus={setCheckStatus}
+            getCoords={getHiddenFolksCoords}
+            updateUseEffect={updateUseEffect}
+            setUpdateUseEffect={setUpdateUseEffect}
+            setShowCustomCursor={setShowCustomCursor}
+          />
+        )}
+        {showCustomCursor && <StyledPointer cursorLocation={cursorLocation} />}
+        <img src={src} alt={alt} />
+      </div>
     );
-  }, [cursorStyle]);
-
-  const {
-    getMouseLocationInPercent,
-    getMousePositionOnClick,
-    updateMousePosition,
-  } = mousePositionOnImage(
-    showClickedTarget,
-    setCursorStyle,
-    setShowCustomCursor,
-    setClickedTargetInPercentage,
-    setCursorLocation
-  );
-
-  const getHiddenFolksCoords = (imageName: string, folkName: string) =>
-    fetchTargetFolkCoordinates({ imageName, folkName, setCorrectCoords });
-
-  return (
-    <div
-      className="image-wrapper"
-      onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
-        updateMousePosition(e);
-        getMouseLocationInPercent(e);
-      }}
-      onMouseDown={updateMousePosition}
-      onClick={(e) => {
-        getMousePositionOnClick(e);
-        setUpdateUseEffect(updateUseEffect ? false : true);
-        setShowCustomCursor(false);
-      }}
-    >
-      {showClickedTarget && (
-        <MouseTarget
-          setFolkName={setFolkName}
-          hiddenFolks={hiddenFolks}
-          clickedTarget={clickedTarget}
-          setCheckStatus={setCheckStatus}
-          getCoords={getHiddenFolksCoords}
-          updateUseEffect={updateUseEffect}
-          setUpdateUseEffect={setUpdateUseEffect}
-          setShowCustomCursor={setShowCustomCursor}
-        />
-      )}
-      {showCustomCursor && <StyledPointer cursorLocation={cursorLocation} />}
-      <img src={src} alt={alt} />
-    </div>
-  );
-};
+  }
+);
 
 interface ImageProps {
   src: string;
@@ -158,7 +161,7 @@ interface ImageProps {
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
-export default function MapImage({
+export default React.memo(function MapImage({
   src,
   alt,
   hiddenFolks,
@@ -224,4 +227,4 @@ export default function MapImage({
       )}
     </>
   );
-}
+});

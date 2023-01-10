@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, sendPasswordReset } from "../../utilities/firebase";
+import React from "react";
 
-export const ResetPassword = () => {
+export const ResetPassword = React.memo(() => {
   const [email, setEmail] = useState("");
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
@@ -46,4 +47,4 @@ export const ResetPassword = () => {
       </main>
     </>
   );
-};
+});
