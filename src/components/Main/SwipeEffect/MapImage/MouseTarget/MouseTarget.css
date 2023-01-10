@@ -1,5 +1,5 @@
 :root {
-    --display: none
+    --display: none;
 }
 
 .mouse-pointer {
@@ -11,9 +11,9 @@
     align-items: center;
     pointer-events: none;
     justify-content: center;
+    transform: var(--pointer);
     border: 5px dotted black;
     background-color: #00000054;
-    transform: var(--custom-mouse);
 }
 
 .mouse-pointer div {

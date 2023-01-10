@@ -1,5 +1,5 @@
 import "./MouseTarget.css";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { hiddenFolksType } from "../../../../App/App";
 
 interface MouseTargetProps {
@@ -20,69 +20,82 @@ interface StyledPointerProps {
   cursorLocation: { top: string; left: string };
 }
 
-export const StyledPointer = ({
-  cursorLocation,
-}: StyledPointerProps): JSX.Element => (
-  <div className="mouse-pointer" style={cursorLocation}>
-    <div />
-  </div>
+export const StyledPointer = React.memo(
+  ({ cursorLocation }: StyledPointerProps): JSX.Element => {
+    useEffect(() => {
+      document.documentElement.style.setProperty(
+        "--pointer",
+        `translate(${cursorLocation.left}, ${cursorLocation.top})`
+      );
+    });
+    return (
+      <div className="mouse-pointer">
+        <div />
+      </div>
+    );
+  }
 );
 
-export const MouseTarget = ({
-  getCoords,
-  hiddenFolks,
-  setFolkName,
-  clickedTarget,
-  setCheckStatus,
-  updateUseEffect,
-  setUpdateUseEffect,
-  setShowCustomCursor,
-}: MouseTargetProps): JSX.Element => {
-  const handleClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    folk: hiddenFolksType
-  ) => {
-    e.stopPropagation();
-    setFolkName(folk.Name);
-    setShowCustomCursor(false);
-    setCheckStatus("Checking...");
-    getCoords(folk.imageName, folk.Name);
-    setUpdateUseEffect(updateUseEffect ? false : true);
-  };
+export const MouseTarget = React.memo(
+  ({
+    getCoords,
+    hiddenFolks,
+    setFolkName,
+    clickedTarget,
+    setCheckStatus,
+    updateUseEffect,
+    setUpdateUseEffect,
+    setShowCustomCursor,
+  }: MouseTargetProps): JSX.Element => {
+    const handleClick = (
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+      folk: hiddenFolksType
+    ) => {
+      e.stopPropagation();
+      setFolkName(folk.Name);
+      setShowCustomCursor(false);
+      setCheckStatus("Checking...");
+      getCoords(folk.imageName, folk.Name);
+      setUpdateUseEffect(updateUseEffect ? false : true);
+    };
 
-  const nameOfHiddenFolks = hiddenFolks?.map((folk, index) => {
+    const nameOfHiddenFolks = hiddenFolks?.map((folk, index) => {
+      return (
+        <li key={index}>
+          {!folk.checked && (
+            <button onClick={(e) => handleClick(e, folk)}>{folk.Name}</button>
+          )}
+          {folk.checked && (
+            <button disabled onClick={(e) => handleClick(e, folk)}>
+              {folk.Name}
+            </button>
+          )}
+        </li>
+      );
+    });
+
+    useEffect(() => {
+      document.documentElement.style.setProperty(
+        "--top",
+        `${clickedTarget.top}`
+      );
+      document.documentElement.style.setProperty(
+        "--left",
+        `${clickedTarget.left}`
+      );
+      document.documentElement.style.setProperty("--display", "flex");
+    }, [clickedTarget]);
+
     return (
-      <li key={index}>
-        {!folk.checked && (
-          <button onClick={(e) => handleClick(e, folk)}>{folk.Name}</button>
-        )}
-        {folk.checked && (
-          <button disabled onClick={(e) => handleClick(e, folk)}>
-            {folk.Name}
-          </button>
-        )}
-      </li>
-    );
-  });
-
-  useEffect(() => {
-    document.documentElement.style.setProperty("--top", `${clickedTarget.top}`);
-    document.documentElement.style.setProperty(
-      "--left",
-      `${clickedTarget.left}`
-    );
-    document.documentElement.style.setProperty("--display", "flex");
-  }, [clickedTarget]);
-
-  return (
-    <div className="mouse-target">
-      <div />
-      <div>
-        <ul>{nameOfHiddenFolks}</ul>
+      <div className="mouse-target">
+        <div />
+        <div>
+          <ul>{nameOfHiddenFolks}</ul>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 // This controls when to display target mouse or default based
 // on the area on image
