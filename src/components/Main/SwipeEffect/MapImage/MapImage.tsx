@@ -47,8 +47,8 @@ const ImageMap = React.memo(
       width: 0,
       height: 0,
     });
+    const [foundFolkName, setFoundFolkName] = useState("");
     const [customCursor, setCustomCursor] = useState("custom");
-    const [foundFolkName, setFoundfoundFolkName] = useState("");
 
     useEffect(() => {
       displayNameList(coordsToPercent, setNameList, nameList);
@@ -93,7 +93,7 @@ const ImageMap = React.memo(
         }}
       >
         <MouseTarget
-          setFoundfoundFolkName={setFoundfoundFolkName}
+          setFoundFolkName={setFoundFolkName}
           setNameList={setNameList}
           hiddenFolks={hiddenFolks}
           clickedCoords={clickedCoords}

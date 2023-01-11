@@ -10,7 +10,7 @@ interface MouseTargetProps {
   hiddenFolks?: hiddenFolksType[];
   setCheckStatus: (status: string) => void;
   getCoords: (imageName: string, foundFolkName: string) => void;
-  setFoundfoundFolkName: React.Dispatch<React.SetStateAction<string>>;
+  setFoundFolkName: React.Dispatch<React.SetStateAction<string>>;
   setCustomCursor: React.Dispatch<React.SetStateAction<string>>;
   setNameList: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -19,7 +19,7 @@ export const MouseTarget = React.memo(
   ({
     getCoords,
     hiddenFolks,
-    setFoundfoundFolkName,
+    setFoundFolkName,
     clickedCoords,
     setCheckStatus,
     setCustomCursor,
@@ -30,7 +30,7 @@ export const MouseTarget = React.memo(
       folk: hiddenFolksType
     ) => {
       e.stopPropagation();
-      setFoundfoundFolkName(folk.Name);
+      setFoundFolkName(folk.Name);
       setCheckStatus("Checking...");
       getCoords(folk.imageName, folk.Name);
       setNameList(false);
