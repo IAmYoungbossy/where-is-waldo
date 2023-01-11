@@ -19,8 +19,12 @@ You can view [Live Project here](https://iamyoungbossy.github.io/where-is-waldo/
 
 ## Things Learnt
 
-- Storage and retrieval of images from Google cloud storage.
+- CRUD operation Google cloud storage.
 - CRUD operation in firestore.
 - Firebase authentication.
 - Styled Components.
 - TypeScript
+
+## Todo List
+
+- Rearrange my file structure
