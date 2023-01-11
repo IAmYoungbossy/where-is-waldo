@@ -1,6 +1,6 @@
 // This function shows list of hidden characters' name if clicked position is
 // not too close to image edge.
-export const displayTargetMenu = (
+export const displayNameList = (
   coordsToPercent: {
     width: number;
     height: number;

@@ -4,8 +4,8 @@ footer {
     padding: 10px;
     margin-top: auto;
     text-align: center;
-    background-color: #222;
     border-top: 2px solid #909cff;
+    background-color: var(--header-and-footer-bg);
 }
 
 footer>i {

@@ -9,10 +9,10 @@ header {
     position: fixed;
     min-height: 80px;
     align-items: center;
-    background-color: #222;
     font-family: sans-serif;
     width: -webkit-fill-available;
     border-bottom: 2px solid #909cff;
+    background-color: var(--header-and-footer-bg);
 }
 
 .timer {
@@ -96,7 +96,7 @@ header {
     position: absolute;
     border-radius: 5px;
     flex-direction: column;
-    background-color: #333;
+    background-color: var(--drop-down);
     box-shadow: 1px 1px 20px 0px black;
 }
 
@@ -212,7 +212,7 @@ header {
         padding: 10px;
         position: absolute;
         border-radius: 5px;
-        background-color: #333;
+        background-color: var(--drop-down);
     }
 
     .folks-and-timer>div:first-of-type>div>div:first-of-type {

@@ -15,12 +15,10 @@ import React from "react";
 interface HeaderProps {
   children?: JSX.Element;
 }
-// Header container with general header styling for all pages
 export default React.memo(function Header({ children }: HeaderProps) {
   return <header>{children}</header>;
 });
 
-// Header content for sign in page with its styling.
 export const SignInHeader = React.memo(() => {
   return (
     <div className="sign-in-header">
@@ -33,6 +31,7 @@ interface CheckStatusProps {
   status: string;
   backgroundColor: string;
 }
+
 // This component shows the three stages of validation when you click a character.
 // 1. Checking - when getting details from firebase
 // 2. Keep Searching - If you make wrong selection.
@@ -69,6 +68,7 @@ interface LogoutProps {
   signOut: () => void;
   setConsoleName: React.Dispatch<React.SetStateAction<string>>;
 }
+
 // Component displays an avatar from Google or Facebook of signed in user.
 // Shows user first name and log out button if avatar is clicked.
 export const Logout = React.memo(

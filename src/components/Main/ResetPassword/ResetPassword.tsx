@@ -25,7 +25,7 @@ export const ResetPassword = React.memo(() => {
         <h1>HiddenFolks</h1>
       </Header>
       <main>
-        <form>
+        <form className="form">
           <input
             type="email"
             name="email"

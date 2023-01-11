@@ -1,12 +1,17 @@
+:root {
+    --header-and-footer-bg: #1c1110;
+    --drop-down: #4d2c11cf;
+}
+
 body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("https://firebasestorage.googleapis.com/v0/b/photo-tagging-app-3344.appspot.com/o/bg-and-icons%2FGame-bg.jpg?alt=media&token=3a5f4059-cea3-4b4b-8483-b91db3f5d809");
+    background-image: url("../assests/bulb.jpg");
 }
 
 #root {
-    background-color: #000000d4;
+    background-color: #0000007a;
 }
 
 .App {

@@ -8,7 +8,7 @@ import { DocumentData } from "firebase/firestore";
 import { validateTarget } from "./validateTarget";
 import { auth } from "../../../utilities/firebase";
 import { hiddenFolksType } from "../../../App/App";
-import { displayTargetMenu } from "./displayTargetMenu";
+import { displayNameList } from "./displayTargetMenu";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Header, { FolksAndTimer } from "../../../Header/Header";
 import { fetchTargetFolkCoordinates } from "./folkCoordinates";
@@ -51,7 +51,7 @@ const ImageMap = React.memo(
     const [foundFolkName, setFoundfoundFolkName] = useState("");
 
     useEffect(() => {
-      displayTargetMenu(coordsToPercent, setNameList, nameList);
+      displayNameList(coordsToPercent, setNameList, nameList);
       if (customCursor === "custom")
         document.documentElement.style.setProperty("--display", "none");
     }, [customCursor]);
