@@ -90,7 +90,8 @@ function App() {
             />
           }
         />
-        {gameImage.map((image) => (
+        {console.log(gameImage);
+        gameImage.map((image) => (
           <Route
             key={image.name}
             path={`/dashboard/${image.name}`}
