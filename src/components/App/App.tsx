@@ -41,8 +41,10 @@ function App() {
   const [folksArray, setFolksArray] = useState<getHiddenFolksURLType>([]);
 
   useEffect(() => {
-    getHiddenFolksURL(setFolksArray);
-    getImageURL("game-console", setGameImage);
+    (async () => {
+      await getHiddenFolksURL(setFolksArray);
+      await getImageURL("game-console", setGameImage);
+    })();
   }, []);
 
   // This function sets the hidden characters to search for.
@@ -90,8 +92,7 @@ function App() {
             />
           }
         />
-        {console.log(gameImage);
-        gameImage.map((image) => (
+        {gameImage.length > 0 && gameImage.map((image) => (
           <Route
             key={image.name}
             path={`/dashboard/${image.name}`}
