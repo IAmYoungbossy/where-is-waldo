@@ -1,7 +1,7 @@
 import React from "react";
 import "./Footer.css";
 
-const Footer = React.memo(() => {
+const Footer =() => {
   return (
     <footer>
       <small>
@@ -12,6 +12,6 @@ const Footer = React.memo(() => {
       </small>
     </footer>
   );
-});
+};
 
 export default Footer;
