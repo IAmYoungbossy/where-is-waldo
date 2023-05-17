@@ -15,8 +15,8 @@ interface MouseTargetProps {
   setNameList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const MouseTarget = React.memo(
-  ({
+export const MouseTarget =
+({
     getCoords,
     hiddenFolks,
     setFoundFolkName,
@@ -72,7 +72,7 @@ export const MouseTarget = React.memo(
       </div>
     );
   }
-);
+
 
 // This gets height and width of image and the position of mouse position
 // in respect to the height and width of image in percentage.
