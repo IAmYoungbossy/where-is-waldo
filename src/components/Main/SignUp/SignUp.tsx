@@ -9,7 +9,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, registerWithEmailAndPassword } from "../../utilities/firebase";
 import React from "react";
 
-export const SignUp = React.memo(
+export const SignUp =
   ({
     setUserData,
   }: {
@@ -107,4 +107,4 @@ export const SignUp = React.memo(
       </>
     );
   }
-);
+
