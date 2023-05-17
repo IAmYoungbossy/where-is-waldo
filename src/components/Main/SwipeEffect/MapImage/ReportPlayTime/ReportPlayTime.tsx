@@ -39,7 +39,7 @@ const getTotalTimeInSeconds = (
   return hr + min + sec;
 };
 
-export const ReportPlayTime = React.memo(
+export const ReportPlayTime =
   ({
     hours,
     minutes,
@@ -128,4 +128,4 @@ export const ReportPlayTime = React.memo(
       </div>
     );
   }
-);
+
