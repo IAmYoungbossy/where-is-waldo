@@ -20,7 +20,7 @@ interface DisplayLeaderboardButtonsProps {
   }[];
 }
 // This displays table for each consoles depending on the button clicked
-const DisplayLeaderboardButtons = React.memo(
+const DisplayLeaderboardButtons =
   ({ setNames, gameImage, setConsoleName }: DisplayLeaderboardButtonsProps) => {
     return (
       <>
@@ -49,8 +49,8 @@ const DisplayLeaderboardButtons = React.memo(
         </div>
       </>
     );
-  }
-);
+  };
+
 
 interface TableProps {
   consoleName: string;
@@ -73,7 +73,7 @@ interface TableProps {
   }[];
 }
 
-const Table = React.memo(
+const Table =
   ({
     playerName,
     setPlayerName,
@@ -149,5 +149,5 @@ export const LeaderBoard = React.memo(
         />
       </>
     );
-  }
-);
+  };
+
