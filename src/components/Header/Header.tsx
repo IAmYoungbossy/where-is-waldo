@@ -19,13 +19,13 @@ export default React.memo(function Header({ children }: HeaderProps) {
   return <header>{children}</header>;
 });
 
-export const SignInHeader = React.memo(() => {
+export const SignInHeader = () => {
   return (
     <div className="sign-in-header">
       <h1>HiddenFolks</h1>
     </div>
   );
-});
+};
 
 interface CheckStatusProps {
   status: string;
@@ -36,7 +36,7 @@ interface CheckStatusProps {
 // 1. Checking - when getting details from firebase
 // 2. Keep Searching - If you make wrong selection.
 // 3. Congrates, You found [Character Name] - If you pick correct character
-export const CheckStatus = React.memo(
+export const CheckStatus =
   ({ status, backgroundColor }: CheckStatusProps) => {
     useEffect(() => {
       document.documentElement.style.setProperty(
@@ -49,8 +49,8 @@ export const CheckStatus = React.memo(
         <p>{status}</p>
       </div>
     );
-  }
-);
+  };
+
 
 interface LogoutProps {
   setNames: React.Dispatch<
@@ -71,7 +71,7 @@ interface LogoutProps {
 
 // Component displays an avatar from Google or Facebook of signed in user.
 // Shows user first name and log out button if avatar is clicked.
-export const Logout = React.memo(
+export const Logout =
   ({ userData, signOut, setNames, setConsoleName }: LogoutProps) => {
     const [toggleLogout, setToggleLogOut] = useState(false);
     const firstName = userData.name.split(" ")[0];
@@ -108,14 +108,14 @@ export const Logout = React.memo(
         </div>
       </div>
     );
-  }
-);
+  };
+
 
 interface HiddenFolksProps {
   hiddenFolks: hiddenFolksType[];
 }
 // This component is responsible for displaying the hidden character to search for in header
-export const HiddenFolks = React.memo(
+export const HiddenFolks =
   ({ hiddenFolks }: HiddenFolksProps): JSX.Element => {
     const Folks = hiddenFolks?.map(
       (folk, index): JSX.Element => (
@@ -130,8 +130,8 @@ export const HiddenFolks = React.memo(
       )
     );
     return <div className="hidden-folks">{Folks}</div>;
-  }
-);
+  };
+
 
 interface FolksAndTimerProps {
   backgroundColor: string;
@@ -147,7 +147,7 @@ interface FolksAndTimerProps {
   >;
 }
 
-export const FolksAndTimer = React.memo(
+export const FolksAndTimer =
   ({
     backgroundColor,
     checkStatus,
@@ -199,8 +199,8 @@ export const FolksAndTimer = React.memo(
         </h2>
       </div>
     );
-  }
-);
+  };
+
 
 interface PhoneMenuProps {
   hiddenFolks: hiddenFolksType[];
@@ -213,7 +213,7 @@ interface PhoneMenuProps {
 // This displays a drop down menu with list of hidden characters to
 // search for. This displays only on mobile view or devices with smaller
 // screen size
-const PhoneMenu = React.memo(({ hiddenFolks, time }: PhoneMenuProps) => {
+const PhoneMenu = ({ hiddenFolks, time }: PhoneMenuProps) => {
   return (
     <div>
       <HiddenFolks hiddenFolks={hiddenFolks} />
@@ -226,4 +226,4 @@ const PhoneMenu = React.memo(({ hiddenFolks, time }: PhoneMenuProps) => {
       </h2>
     </div>
   );
-});
+};
