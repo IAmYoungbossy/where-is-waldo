@@ -122,10 +122,10 @@ const Table =
         </div>
       </main>
     );
-  }
-);
+  };
 
-export const LeaderBoard = React.memo(
+
+export const LeaderBoard =
   ({
     playerName,
     setPlayerName,
