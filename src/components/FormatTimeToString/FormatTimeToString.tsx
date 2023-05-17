@@ -7,7 +7,7 @@ interface FormatTimeToStringProps {
   seperator?: string;
 }
 
-export const FormatTimeToString = React.memo(
+export const FormatTimeToString =
   ({ hours, minutes, seconds, seperator }: FormatTimeToStringProps) => {
     const formatTime = (timeUnit: number) =>
       timeUnit < 10 ? `0${timeUnit}` : `${timeUnit}`;
@@ -39,5 +39,5 @@ export const FormatTimeToString = React.memo(
         )}
       </p>
     );
-  }
-);
+  };
+
