@@ -25,7 +25,7 @@ interface ImageMapProps {
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
-const ImageMap = React.memo(
+const ImageMap =
   ({
     src,
     alt,
@@ -105,7 +105,7 @@ const ImageMap = React.memo(
       </div>
     );
   }
-);
+
 
 interface ImageProps {
   src: string;
@@ -128,7 +128,7 @@ interface ImageProps {
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
-export default React.memo(function MapImage({
+export default function MapImage({
   src,
   alt,
   hiddenFolks,
@@ -194,4 +194,4 @@ export default React.memo(function MapImage({
       )}
     </>
   );
-});
+}
