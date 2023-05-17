@@ -21,7 +21,7 @@ interface SignInProps {
   >;
 }
 
-export const SignIn = React.memo(
+export const SignIn =
   ({ setUserData }: SignInProps): JSX.Element => {
     const [password, setPassword] = useState("");
     const [user, loading] = useAuthState(auth);
@@ -104,5 +104,5 @@ export const SignIn = React.memo(
         </main>
       </>
     );
-  }
-);
+  };
+
