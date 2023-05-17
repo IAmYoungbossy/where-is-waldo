@@ -33,7 +33,7 @@ interface SwipeEffectProps {
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
-export default React.memo(function SwipeEffect({
+export default function SwipeEffect({
   userData,
   setPlayerName,
   setConsoleName,
@@ -107,4 +107,4 @@ export default React.memo(function SwipeEffect({
       )}
     </>
   );
-});
+}
