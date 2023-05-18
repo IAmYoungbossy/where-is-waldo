@@ -25,8 +25,7 @@ interface ImageMapProps {
   setHiddenFolks: React.Dispatch<React.SetStateAction<hiddenFolksType[]>>;
 }
 
-const ImageMap =
-  ({
+const ImageMap = ({
     src,
     alt,
     hiddenFolks,
@@ -104,7 +103,7 @@ const ImageMap =
         <img src={src} alt={alt} />
       </div>
     );
-  }
+};
 
 
 interface ImageProps {
